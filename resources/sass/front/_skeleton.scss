@@ -1,0 +1,71 @@
+@use 'variables' as *;
+@use 'colors' as *;
+
+// Shared, component-level media loading state. It deliberately applies only
+// to the media host, never to a page, card body, navigation, or form.
+.front-image-skeleton-host {
+    position: relative;
+    overflow: hidden;
+
+    &.is-image-loading::before,
+    &.is-image-error::before {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        display: block;
+        content: '';
+        background: linear-gradient(90deg, $front-primary-soft 0%, $front-surface 50%, $front-primary-soft 100%);
+        background-size: 200% 100%;
+        pointer-events: none;
+    }
+
+    &.is-image-loading::before {
+        animation: front-skeleton-shimmer 1.35s ease-in-out infinite;
+    }
+
+    &.is-image-error::before {
+        background: $front-primary-soft;
+    }
+
+    > .front-skeleton-image {
+        transition: opacity 140ms ease;
+    }
+
+    &.is-image-loading > .front-skeleton-image,
+    &.is-image-error > .front-skeleton-image {
+        opacity: 0;
+    }
+}
+
+.front-async-skeleton {
+    position: relative;
+
+    &.is-async-loading {
+        min-height: 7rem;
+    }
+
+    &.is-async-loading::after {
+        position: absolute;
+        inset: 0;
+        z-index: 3;
+        display: block;
+        content: '';
+        border-radius: inherit;
+        background: linear-gradient(90deg, rgba($front-primary-soft, .96) 0%, rgba($front-surface, .96) 50%, rgba($front-primary-soft, .96) 100%);
+        background-size: 200% 100%;
+        animation: front-skeleton-shimmer 1.35s ease-in-out infinite;
+        pointer-events: none;
+    }
+}
+
+@keyframes front-skeleton-shimmer {
+    from { background-position: 200% 0; }
+    to { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .front-image-skeleton-host.is-image-loading::before,
+    .front-async-skeleton.is-async-loading::after {
+        animation: none;
+    }
+}

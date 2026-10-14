@@ -11,6 +11,84 @@ import './pdf-viewer';
 import './advertise';
 import './ask-question';
 import './newsletter';
+// Image loading is deliberately component-scoped: a card's text and actions
+// remain available while only its visual media is waiting for the browser.
+const frontImageSkeletons = (() => {
+    const imageSelector = 'main img, .front-header img, .front-footer img, .front-auth img';
+
+    const settle = (image, failed = false) => {
+        const host = image._frontImageSkeletonHost;
+
+        if (!host) {
+            return;
+        }
+
+        host.classList.remove('is-image-loading');
+        host.removeAttribute('aria-busy');
+
+        if (failed) {
+            host.classList.add('is-image-error');
+        } else {
+            host.classList.remove('is-image-error');
+        }
+    };
+
+    const bind = (image) => {
+        if (image.dataset.frontImageSkeletonBound || (!image.currentSrc && !image.getAttribute('src'))) {
+            return;
+        }
+
+        const host = image.parentElement;
+
+        // Only decorate a host that contains this one image. This prevents a
+        // skeleton overlay from covering titles, buttons, or other UI.
+        if (!host || Array.from(host.children).some((child) => child !== image && child.tagName !== 'SOURCE')) {
+            return;
+        }
+
+        image.dataset.frontImageSkeletonBound = 'true';
+        image._frontImageSkeletonHost = host;
+        image.classList.add('front-skeleton-image');
+        host.classList.add('front-image-skeleton-host');
+
+        // Complete cached images should never flash a loading placeholder.
+        if (image.complete) {
+            settle(image, image.naturalWidth === 0);
+            return;
+        }
+
+        host.classList.add('is-image-loading');
+        host.setAttribute('aria-busy', 'true');
+        image.addEventListener('load', () => settle(image), { once: true });
+        image.addEventListener('error', () => settle(image, true), { once: true });
+    };
+
+    const scan = (root = document) => {
+        if (root instanceof HTMLImageElement && root.matches(imageSelector)) {
+            bind(root);
+        }
+
+        root.querySelectorAll?.(imageSelector).forEach(bind);
+    };
+
+    const observe = () => {
+        scan();
+
+        new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                mutation.addedNodes.forEach((node) => {
+                    if (node.nodeType === Node.ELEMENT_NODE) {
+                        scan(node);
+                    }
+                });
+            });
+        }).observe(document.body, { childList: true, subtree: true });
+    };
+
+    return { observe };
+})();
+
+frontImageSkeletons.observe();
 
 document.querySelectorAll('[data-front-carousel]').forEach((carousel) => {
     carousel.addEventListener('slide.bs.carousel', () => {
@@ -810,6 +888,15 @@ document.querySelectorAll('[data-front-account-datatable]').forEach((table) => {
         return;
     }
 
+    const resultContainer = table.parentElement;
+    const setLoading = (isLoading) => {
+        resultContainer?.classList.toggle('front-async-skeleton', isLoading);
+        resultContainer?.classList.toggle('is-async-loading', isLoading);
+        resultContainer?.setAttribute('aria-busy', isLoading ? 'true' : 'false');
+    };
+
+    setLoading(true);
+
     table._frontDataTable = new DataTable(table, {
         ajax: table.dataset.sourceUrl,
         columns,
@@ -831,6 +918,10 @@ document.querySelectorAll('[data-front-account-datatable]').forEach((table) => {
             zeroRecords: 'تلاش کے مطابق کوئی ریکارڈ نہیں ملا۔',
         },
     });
+
+    table._frontDataTable.on('preXhr', () => setLoading(true));
+    table._frontDataTable.on('xhr', () => setLoading(false));
+    table._frontDataTable.on('error', () => setLoading(false));
 });
 
 const accountListingDataTableLanguage = {
