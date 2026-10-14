@@ -14,8 +14,8 @@ class NewsletterController extends Controller
         $result = $subscriptions->subscribe($request->string('email')->toString());
 
         $message = $result['already_subscribed']
-            ? 'آپ پہلے ہی نیوز لیٹر کو سبسکرائب کر چکے ہیں۔'
-            : 'آپ کی نیوز لیٹر سبسکرپشن محفوظ ہو گئی ہے۔';
+            ? 'You are already subscribed to the newsletter.'
+            : 'Your newsletter subscription has been saved.';
 
         return response()->json([
             'success' => true,

@@ -15,7 +15,7 @@
 .front-ask-question__heading h2 { color: $front-primary-hover; font-size: 1.3rem; margin: 0 0 1rem; }
 .front-ask-question__heading p { color: $front-muted; line-height: 1.9; margin: 0; }
 .front-ask-question__layout { margin-inline: auto; max-width: 1180px; }
-.front-ask-question__card { background: $front-surface; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow-sm; padding: clamp(1.2rem, 2.2vw, 2rem); }
+.front-ask-question__card { background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow-sm; padding: clamp(1.2rem, 2.2vw, 2rem); }
 .front-ask-question__form-card > h2 { border-bottom: 2px solid $front-primary; color: $front-primary-hover; font-size: clamp(1.35rem, 2vw, 1.75rem); margin: 0 0 1rem; padding-bottom: 1rem; }
 .front-ask-question__intro { color: $front-muted; margin: 0 0 1.5rem; }
 .front-ask-question label { color: $front-primary-hover; display: block; font-weight: 700; margin-bottom: .4rem; }

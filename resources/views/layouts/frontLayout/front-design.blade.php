@@ -12,9 +12,7 @@
 
     <title>@yield('title', 'Home') | {{ $generalSetting?->app_name ?? 'Digital Magazine' }}</title>
 
-    @if ($generalSetting?->favicon)
-        <link rel="icon" href="{{ asset($generalSetting->favicon) }}">
-    @endif
+    <link rel="icon" type="image/png" href="{{ asset('images/backend-images/logo/Thrive-with-Naila-Wellness-Emblem-removebg-preview.png') }}?v=20261014">
 
     @if ($generalSetting?->google_ads_client_id)
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ urlencode($generalSetting->google_ads_client_id) }}" crossorigin="anonymous"></script>

@@ -3,7 +3,7 @@
 
 .front-author-detail { padding-block: 1.25rem 3rem; }
 .front-author-detail__container { max-width: none; padding-inline: clamp(.75rem, 2.5vw, 2.5rem); }
-.front-author-profile { align-items: stretch; background: $front-surface; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow-sm; display: flex; gap: clamp(1.25rem, 3vw, 2.5rem); isolation: isolate; margin-top: 1rem; overflow: hidden; padding: 1rem; position: relative; }
+.front-author-profile { align-items: stretch; background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow-sm; display: flex; gap: clamp(1.25rem, 3vw, 2.5rem); isolation: isolate; margin-top: 1rem; overflow: hidden; padding: 1rem; position: relative; }
 .front-author-profile::before,
 .front-author-profile::after { background: $front-primary; content: ''; height: 78%; position: absolute; top: 11%; transform: skewY(-12deg); width: 42px; z-index: 0; }
 .front-author-profile::before { left: -24px; }
@@ -23,7 +23,7 @@
 .front-author-profile__contacts small { color: $front-muted; font-size: .68rem; }
 .front-author-detail__main { margin-top: 1.5rem; }
 .front-author-detail-sidebar { align-content: start; display: grid; gap: 1rem; }
-.front-author-detail-sidebar__section { background: $front-surface; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow-sm; padding: 1rem; }
+.front-author-detail-sidebar__section { background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow-sm; padding: 1rem; }
 .front-author-detail-sidebar__section h2 { border-bottom: 1px solid $front-border; font-size: 1.35rem; margin: 0 0 .75rem; padding-bottom: .55rem; }
 .front-author-detail-sidebar__authors,
 .front-author-detail-sidebar__filters { display: grid; gap: .4rem; }
@@ -46,7 +46,7 @@
 .front-author-articles__search button { background: $front-accent; border: 1px solid $front-accent; border-radius: $front-radius 0 0 $front-radius; color: $front-white; padding-inline: 1rem; }
 .front-author-articles__search button:hover { background: $front-accent-hover; border-color: $front-accent-hover; }
 .front-author-articles__reset { color: $front-accent; display: inline-flex; font-size: .75rem; margin-top: .35rem; }
-.front-author-article-card { background: $front-surface; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow-sm; display: flex; flex-direction: column; height: 100%; overflow: hidden; transition: box-shadow $front-transition, transform $front-transition; }
+.front-author-article-card { background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow-sm; display: flex; flex-direction: column; height: 100%; overflow: hidden; transition: box-shadow $front-transition, transform $front-transition; }
 .front-author-article-card:hover { box-shadow: $front-shadow; transform: translateY(-3px); }
 .front-author-article-card__image { align-items: center; background: $front-light; display: flex; height: 180px; justify-content: center; overflow: hidden; }
 .front-author-article-card__image img { height: 100%; object-fit: cover; transition: transform $front-transition; width: 100%; }
@@ -61,7 +61,7 @@
 .front-author-articles__pagination { direction: ltr; margin-top: 1.5rem; }
 .front-author-articles__pagination .pagination { justify-content: center; margin-bottom: 0; }
 .front-author-articles__pagination .page-item.active .page-link { background: $front-accent; border-color: $front-accent; color: $front-white; }
-.front-author-articles__empty { background: $front-light; border: 1px solid $front-border; border-radius: $front-radius; padding: 2rem; text-align: center; }
+.front-author-articles__empty { background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius; padding: 2rem; text-align: center; }
 
 @media (max-width: 991.98px) {
     .front-author-profile { align-items: center; }

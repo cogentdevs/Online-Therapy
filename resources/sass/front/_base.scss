@@ -43,7 +43,7 @@ img { max-width: 100%; }
 .front-link { color: $front-primary; font-family: var(--front-font-ui); font-weight: 700; }
 .front-object-cover { height: 100%; object-fit: cover; width: 100%; }
 .front-card {
-    background: $front-surface;
+    background: $front-card-background;
     border: 1px solid $front-border;
     border-radius: $front-radius;
     box-shadow: $front-shadow-sm;

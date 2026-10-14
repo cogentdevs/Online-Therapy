@@ -2,11 +2,10 @@
 @use 'variables' as *;
 
 .front-contact {
-    background:
-        radial-gradient(circle at 2% 18%, rgba($front-primary, .08) 0 85px, transparent 86px),
-        radial-gradient(circle at 96% 22%, rgba($front-primary, .07) 0 125px, transparent 126px),
-        linear-gradient(135deg, $front-primary-soft, $front-surface 48%, $front-primary-soft);
-    padding-block: 1.25rem 3.5rem;
+    background-color: $front-surface;
+    background-image: none;
+    min-height: 620px;
+    padding-block: 1.25rem 2.5rem;
 }
 
 .front-contact__container { max-width: $front-content-width; }
@@ -19,7 +18,7 @@
 .front-contact__alert { margin-inline: auto; max-width: 1120px; }
 .front-contact__layout { margin-inline: auto; max-width: 1120px; }
 
-.front-contact__card { background: $front-surface; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow-sm; height: 100%; padding: clamp(1.25rem, 2.5vw, 2rem); }
+.front-contact__card { background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow-sm; height: 100%; padding: clamp(1.25rem, 2.5vw, 2rem); }
 .front-contact__info-column { align-self: flex-start; }
 .front-contact__info-card { height: auto; }
 .front-contact__card-heading { align-items: center; border-bottom: 1px solid $front-border; display: flex; gap: .85rem; margin-bottom: 1.25rem; padding-bottom: 1rem; }

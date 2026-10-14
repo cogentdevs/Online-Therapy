@@ -2,6 +2,8 @@
 @use 'variables' as *;
 
 .front-taaruf { padding-block: 1.5rem 3rem; }
+.front-taaruf--ltr { direction: ltr; text-align: left; }
+.front-taaruf--ltr .front-taza-breadcrumb { direction: ltr; justify-content: flex-start; text-align: left; }
 .front-taaruf__container { max-width: none; padding-inline: clamp(.75rem, 2.5vw, 2.5rem); }
 .front-taaruf__page-heading { margin: 1rem auto 2rem; text-align: center; }
 .front-taaruf__page-heading h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0; }
@@ -23,7 +25,7 @@
 .front-taaruf__media-only { padding: 0; }
 .front-taaruf__media-only .front-taaruf__image { border-radius: $front-radius; }
 .front-taaruf__two-column .front-taaruf__content { border-inline-start: 2px solid $front-primary-soft; }
-.front-taaruf__empty { background: $front-light; border: 1px solid $front-border; border-radius: $front-radius; color: $front-muted; padding: 2rem; text-align: center; }
+.front-taaruf__empty { background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius; color: $front-muted; padding: 2rem; text-align: center; }
 
 @media (max-width: 991.98px) {
     .front-taaruf__section--3 .front-taaruf__media .front-taaruf__image,

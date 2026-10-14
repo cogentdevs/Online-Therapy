@@ -154,11 +154,15 @@
                             </ul>
                         </li>
                         --}}
+                        {{-- Temporarily hidden - feature retained for future use.
                         <li class="nav-item"><a class="nav-link {{ request()->routeIs('front.mazmoon-nigaar') ? 'active' : '' }}"
                                 href="{{ route('front.mazmoon-nigaar') }}">Authors</a></li>
+                        --}}
                         <li class="nav-item"><a class="nav-link {{ request()->routeIs('front.taaruf') ? 'active' : '' }}"
                                 href="{{ route('front.taaruf') }}" @if (request()->routeIs('front.taaruf')) aria-current="page" @endif>About</a></li>
+                        {{-- Temporarily hidden - feature retained for future use.
                         <li class="nav-item"><a class="nav-link {{ request()->routeIs('front.ask-question*') ? 'active' : '' }}" href="{{ route('front.ask-question') }}" @if (request()->routeIs('front.ask-question*')) aria-current="page" @endif>Ask a Question</a></li>
+                        --}}
                         {{-- Temporarily hidden - feature retained for future use.
                         <li class="nav-item"><a class="nav-link {{ request()->routeIs('front.advertise*') ? 'active' : '' }}" href="{{ route('front.advertise') }}" @if (request()->routeIs('front.advertise*')) aria-current="page" @endif>تشہیر کیجئے</a></li>
                         --}}

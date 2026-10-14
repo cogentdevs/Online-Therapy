@@ -4,16 +4,16 @@
 @section('meta_description', 'About Digital Magazine')
 
 @section('content')
-    <div class="front-taaruf">
+    <div class="front-taaruf front-taaruf--ltr">
         <div class="container-fluid front-taaruf__container">
-            <nav class="front-taza-breadcrumb front-ui" aria-label="بریڈ کرمب">
-                <a href="{{ route('frontend.home') }}"><i class="fa-solid fa-house" aria-hidden="true"></i> صفحہ اول</a>
-                <span aria-hidden="true">/</span>
-                <span aria-current="page">تعارف</span>
+            <nav class="front-taza-breadcrumb front-ui" aria-label="Breadcrumb">
+                <a href="{{ route('frontend.home') }}"><i class="fa-solid fa-house" aria-hidden="true"></i> Home</a>
+                <span aria-hidden="true">&gt;</span>
+                <span aria-current="page">About</span>
             </nav>
 
             <header class="front-taaruf__page-heading">
-                <h1>تعارف</h1>
+                <h1>About Us</h1>
                 <span aria-hidden="true"></span>
             </header>
 

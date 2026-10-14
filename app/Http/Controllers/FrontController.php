@@ -647,6 +647,10 @@ class FrontController extends Controller
             ->orderByDesc('id')
             ->paginate(9);
 
+        $courses->getCollection()->each(function (Course $course): void {
+            $course->setAttribute('image_fit', $this->courseImageFit($course));
+        });
+
         $this->siteVisitService->record($request);
 
         return view('frontend.courses.index', compact('courses'));
@@ -657,13 +661,26 @@ class FrontController extends Controller
         $course = Course::query()
             ->publiclyAvailable()
             ->with([
+                'learningOutcomes',
+                'targetAudiences',
+                'requirements',
+                'sections.lessons',
+                'faqs',
                 'relatedCourses' => fn ($query) => $query
                     ->publiclyAvailable()
+                    ->whereKeyNot($course)
+                    ->distinct()
                     ->orderByDesc('courses.published_at')
                     ->orderByDesc('courses.id')
+                    ->limit(4)
                     ->select(['courses.id', 'courses.title', 'courses.button_label', 'courses.image', 'courses.short_description', 'courses.duration_type', 'courses.duration_value']),
             ])
             ->findOrFail($course);
+
+        $course->setAttribute('image_fit', $this->courseImageFit($course));
+        $course->relatedCourses->each(function (Course $relatedCourse): void {
+            $relatedCourse->setAttribute('image_fit', $this->courseImageFit($relatedCourse));
+        });
 
         $this->siteVisitService->record($request, $course);
 
@@ -776,6 +793,9 @@ class FrontController extends Controller
 
     public function mazmoonNigaar(Request $request): View
     {
+        // Temporarily hidden - feature retained for future use.
+        abort(404);
+
         $search = Str::limit(trim((string) $request->query('q', '')), 100, '');
         $defaultVisibility = $this->authorDefaultVisibility();
 
@@ -809,6 +829,9 @@ class FrontController extends Controller
 
     public function mazmoonNigaarDetail(Request $request, int $id, string $slug): View
     {
+        // Temporarily hidden - feature retained for future use.
+        abort(404);
+
         $defaultVisibility = $this->authorDefaultVisibility();
         $author = Author::query()
             ->where('isActive', true)
@@ -1281,6 +1304,26 @@ class FrontController extends Controller
             });
         }
 
+        $featuredCourses = Course::query()
+            ->publiclyAvailable()
+            ->where('isFeatured', true)
+            ->select(['id', 'title', 'button_label', 'image', 'short_description', 'duration_type', 'duration_value'])
+            ->orderByDesc('published_at')
+            ->orderByDesc('id')
+            ->get();
+
+        $featuredCourses->each(function (Course $course): void {
+            $course->setAttribute('homepage_image_fit', $this->courseImageFit($course));
+        });
+
+        $featuredCoursesDesktopColumns = (int) (GeneralSetting::current()->getAttribute('featured_courses_desktop_columns') ?? 3);
+        $featuredCoursesDesktopColumns = in_array($featuredCoursesDesktopColumns, [3, 4], true)
+            ? $featuredCoursesDesktopColumns
+            : 3;
+        $featuredCoursesColumnClass = $featuredCoursesDesktopColumns === 4
+            ? 'col-12 col-sm-6 col-xl-3'
+            : 'col-12 col-sm-6 col-xl-4';
+
         $homeCardTitlePositions = HomeCardTitlePosition::query()
             ->where('language', config('content_language.code'))
             ->whereIn('card_position', ['below slider', 'above footer'])
@@ -1465,6 +1508,8 @@ class FrontController extends Controller
             'aboveFooterCards' => $aboveFooterCards,
             'belowSliderTitlePosition' => $resolveTitlePosition($homeCardTitlePositions->get('below slider')),
             'belowSliderCards' => $belowSliderCards,
+            'featuredCourses' => $featuredCourses,
+            'featuredCoursesColumnClass' => $featuredCoursesColumnClass,
             'categories' => $categories,
             'editorialCenterArticles' => $editorialCenterArticles,
             'editorialFeaturedArticle' => $editorialFeaturedArticle,
@@ -1481,6 +1526,21 @@ class FrontController extends Controller
                 ->orderBy('id')
                 ->get(),
         ]);
+    }
+
+    private function courseImageFit(Course $course): string
+    {
+        if (! filled($course->image) || ! File::isFile(public_path($course->image))) {
+            return 'cover';
+        }
+
+        $dimensions = getimagesize(public_path($course->image));
+
+        if ($dimensions !== false && ($dimensions[0] < 300 || $dimensions[1] < 180)) {
+            return 'contain';
+        }
+
+        return 'cover';
     }
 
     private function frontendCategoryQuery(bool $withContentCounts = false): Builder

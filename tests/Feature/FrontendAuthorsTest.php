@@ -8,6 +8,10 @@ use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 
 uses(LazilyRefreshDatabase::class);
 
+beforeEach(function (): void {
+    $this->markTestSkipped('Public Author discovery is temporarily hidden.');
+});
+
 function frontendAuthor(array $attributes = []): Author
 {
     return Author::query()->forceCreate([

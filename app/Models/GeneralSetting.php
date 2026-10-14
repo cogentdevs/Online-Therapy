@@ -36,6 +36,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
     'max_concurrent_sessions',
     'cookie_consent_enabled',
     'maintenance_mode',
+    'featured_courses_desktop_columns',
 ])]
 class GeneralSetting extends Model
 {
@@ -62,6 +63,7 @@ class GeneralSetting extends Model
             'max_concurrent_sessions' => 'integer',
             'cookie_consent_enabled' => 'boolean',
             'maintenance_mode' => 'boolean',
+            'featured_courses_desktop_columns' => 'integer',
         ];
     }
 }

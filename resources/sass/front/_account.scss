@@ -15,14 +15,14 @@
 .front-account-layout,
 .front-account-card-grid { direction: ltr; }
 .front-account-layout > *,
-.front-account-card-grid > * { direction: rtl; }
+.front-account-card-grid > * { direction: ltr; }
 
 .front-account-sidebar,
-.front-account-card { background: $front-surface; border: 1px solid $front-border; border-radius: $front-radius-sm; box-shadow: 0 10px 28px rgba(49, 87, 130, .08); }
+.front-account-card { background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius-sm; box-shadow: 0 10px 28px rgba(49, 87, 130, .08); }
 .front-account-sidebar { overflow: hidden; }
 .front-account-sidebar nav { display: grid; }
 .front-account-sidebar form { margin: 0; }
-.front-account-nav-link { align-items: center; background: $front-surface; border: 0; border-bottom: 1px solid $front-border; color: $front-text; display: grid; font: inherit; font-weight: 700; gap: .8rem; grid-template-columns: 28px 1fr; min-height: 61px; padding: .8rem 1.15rem; text-align: right; text-decoration: none; width: 100%; }
+.front-account-nav-link { align-items: center; background: $front-surface; border: 0; border-bottom: 1px solid $front-border; color: $front-text; display: grid; font: inherit; font-weight: 700; gap: .8rem; grid-template-columns: 28px 1fr; min-height: 61px; padding: .8rem 1.15rem; text-align: left; text-decoration: none; width: 100%; }
 .front-account-nav-link i { color: $front-primary; font-size: 1.05rem; text-align: center; }
 .front-account-nav-link.active { background: linear-gradient(135deg, $front-primary-hover, $front-primary); color: $front-white; }
 .front-account-nav-link.active i { color: $front-white; }
@@ -79,7 +79,7 @@
 .front-account-activity-item > div { min-width: 0; }
 .front-account-activity-item strong { color: $front-text; display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .front-account-activity-item strong a { color: inherit; display: block; overflow: hidden; text-decoration: none; text-overflow: ellipsis; white-space: nowrap; }
-.front-account-activity-item time { color: $front-muted; direction: ltr; display: block; font-size: .75rem; margin-top: .2rem; text-align: right; }
+.front-account-activity-item time { color: $front-muted; direction: ltr; display: block; font-size: .75rem; margin-top: .2rem; text-align: left; }
 .front-account-activity-item > a,
 .front-account-activity-item > .is-unavailable { color: $front-primary; padding: .35rem; }
 .front-account-password-card { min-height: 0; padding: clamp(1.25rem, 3vw, 2rem); }
@@ -165,7 +165,7 @@
 .user-subscription-history-table { margin: 0; min-width: 900px; }
 .user-subscription-history-table th { background: $front-primary-soft; color: $front-text; font-weight: 700; white-space: nowrap; }
 .user-subscription-history-table td,
-.user-subscription-history-table th { border-color: $front-border; padding: .9rem; text-align: right; }
+.user-subscription-history-table th { border-color: $front-border; padding: .9rem; text-align: left; }
 .user-subscription-history-table td > strong,
 .user-subscription-history-table td > small { display: block; }
 
@@ -182,7 +182,7 @@
 .front-ad-request-detail-grid { display: grid; gap: 1rem; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; }
 .front-ad-request-detail-grid > div { min-width: 0; }
 .front-ad-request-detail-grid dt { color: $front-muted; font-size: .86rem; font-weight: 600; margin-bottom: .2rem; }
-.front-ad-request-detail-grid dd { color: $front-text; margin: 0; overflow-wrap: anywhere; text-align: right; }
+.front-ad-request-detail-grid dd { color: $front-text; margin: 0; overflow-wrap: anywhere; text-align: left; }
 .front-ad-request-detail-grid__full { grid-column: 1 / -1; }
 .front-ad-request-message { white-space: pre-line; }
 .front-ad-request-placements { margin-top: 1.25rem; }
@@ -209,7 +209,7 @@
 .front-account-bookmarks__labels { background: $front-primary-soft; color: $front-text; font-weight: 700; }
 .front-account-bookmarks__item { border-top: 1px solid $front-border; }
 .front-account-bookmarks__item strong { color: $front-text; overflow-wrap: anywhere; }
-.front-account-bookmarks__item time { color: $front-muted; direction: ltr; text-align: right; }
+.front-account-bookmarks__item time { color: $front-muted; direction: ltr; text-align: left; }
 .front-account-bookmark-view { color: $front-primary; font-weight: 700; text-decoration: none; }
 .front-account-bookmark-unavailable { color: $front-muted; font-size: .8rem; }
 .front-account-bookmark-remove { background: transparent; border: 0; color: #a12f2f; font: inherit; font-weight: 700; padding: .35rem 0; }
@@ -226,8 +226,8 @@
 .front-account-activities__item { align-items: center; display: grid; gap: 1rem; grid-template-columns: 100px minmax(180px, 1fr) 180px 80px; padding: .85rem 1rem; }
 .front-account-activities__labels { background: $front-primary-soft; color: $front-text; font-weight: 700; }
 .front-account-activities__item { border-top: 1px solid $front-border; }
-.front-account-activities__item strong { color: $front-text; overflow-wrap: anywhere; }
-.front-account-activities__item time { color: $front-muted; direction: ltr; text-align: right; }
+.front-account-activities__item strong { color: $front-text; overflow-wrap: anywhere; unicode-bidi: plaintext; }
+.front-account-activities__item time { color: $front-muted; direction: ltr; text-align: left; }
 .front-account-activity-view { color: $front-primary; font-weight: 700; text-decoration: none; }
 .front-account-activity-unavailable { color: $front-muted; font-size: .8rem; }
 .front-account-datatable-title { -webkit-box-orient: vertical; display: -webkit-box; -webkit-line-clamp: 1;; overflow: hidden; }
@@ -235,12 +235,12 @@
 
 .front-account-listing-table-wrap { padding: 0 1.3rem 1.3rem; }
 .front-account-listing-table { margin: 0 !important; width: 100% !important; }
-.front-account-listing-table thead th { background: $front-primary-soft; border-color: $front-border; color: $front-text; font-weight: 700; padding: .85rem; text-align: right; white-space: nowrap; }
-.front-account-listing-table tbody td { border-color: $front-border; padding: .85rem; text-align: right; vertical-align: middle; }
+.front-account-listing-table thead th { background: $front-primary-soft; border-color: $front-border; color: $front-text; font-weight: 700; padding: .85rem; text-align: left; white-space: nowrap; }
+.front-account-listing-table tbody td { border-color: $front-border; padding: .85rem; text-align: left; vertical-align: middle; }
 .front-account-listing-table tbody tr:hover { background: rgba($front-primary, .035); }
 .front-account-listing-table .front-account-outline-action { margin: 0; white-space: nowrap; }
 .front-account-listing-table-wrap + .dt-container,
-.front-account-listing-table-wrap .dt-container { direction: rtl; }
+.front-account-listing-table-wrap .dt-container { direction: ltr; }
 .front-account-card .dt-container { padding: 0 1.3rem 1.3rem; }
 .front-account-card .dt-container .dt-layout-row { align-items: center; gap: .75rem; margin: .8rem 0; }
 .front-account-card .dt-container .dt-search,
@@ -276,7 +276,7 @@
     .front-account-listing-table-wrap { padding-inline: .75rem; }
     .front-account-card .dt-container { padding-inline: .75rem; }
     .front-account-card .dt-container .dt-layout-row { align-items: stretch; flex-direction: column; }
-    .front-account-card .dt-container .dt-layout-cell { text-align: right !important; }
+    .front-account-card .dt-container .dt-layout-cell { text-align: left !important; }
     .front-account-card .dt-container .dt-search,
     .front-account-card .dt-container .dt-length { justify-content: space-between; }
 
@@ -312,3 +312,15 @@
     .front-account-user p { justify-content: center; }
     .front-account-profile-image { align-items: flex-start; flex-direction: column; }
 }
+
+// Account UI is English/LTR. Dynamic names, titles, and messages retain their natural text direction.
+.front-account-page { direction: ltr; text-align: left; }
+.front-account-page .front-taza-breadcrumb { direction: ltr; justify-content: flex-start; text-align: left; }
+.front-account-page [dir='auto'],
+.front-account-datatable-title,
+.front-ad-request-message,
+.front-account-active-item strong,
+.front-account-bookmarks__item strong,
+.front-account-activities__item strong { unicode-bidi: plaintext; }
+.front-account-listing-table td,
+.front-ad-request-detail-grid dd { unicode-bidi: plaintext; }

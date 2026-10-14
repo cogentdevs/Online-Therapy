@@ -13,7 +13,7 @@ uses(LazilyRefreshDatabase::class);
 function publicListingArticle(string $title, array $attributes = []): Article
 {
     return Article::query()->forceCreate(array_merge([
-        'language' => 'ur',
+        'language' => 'en',
         'title' => $title,
         'issue_number' => 'A-2026-01',
         'publish_date' => '2026-08-15',
@@ -47,9 +47,10 @@ test('mazameen lists only eligible articles newest first with article fields and
     $newer = publicListingArticle('Newest Public Article', ['publish_date' => '2026-08-01']);
     publicListingArticle('Inactive Article', ['isActive' => false]);
     publicListingArticle('Draft Article', ['status' => Article::STATUS_DRAFT]);
+    publicListingArticle('Urdu Only Article', ['language' => 'ur']);
     $author = Author::query()->forceCreate(['name' => 'Article Author', 'isActive' => true]);
-    $category = Category::query()->forceCreate(['language' => 'ur', 'name' => 'Article Category', 'isActive' => true]);
-    $tag = Tags::query()->forceCreate(['language' => 'ur', 'name' => 'Article Tag', 'isActive' => true]);
+    $category = Category::query()->forceCreate(['language' => 'en', 'name' => 'Article Category', 'isActive' => true]);
+    $tag = Tags::query()->forceCreate(['language' => 'en', 'name' => 'Article Tag', 'isActive' => true]);
     $newer->authors()->attach($author);
     $newer->categories()->attach($category);
     $newer->tags()->attach($tag);
@@ -58,10 +59,13 @@ test('mazameen lists only eligible articles newest first with article fields and
 
     $response->assertSuccessful()
         ->assertSee('Newest Public Article')->assertSee('Older Public Article')
-        ->assertDontSee('Inactive Article')->assertDontSee('Draft Article')
+        ->assertDontSee('Inactive Article')->assertDontSee('Draft Article')->assertDontSee('Urdu Only Article')
         ->assertSee('A-2026-01')->assertSee('Article Author')
         ->assertSee('Article Category')->assertSee('Article Tag')
         ->assertSee('Searchable public article description')
+        ->assertSee('Home')->assertSee('Articles')->assertSee('Search Articles')
+        ->assertSee('Read More')->assertDontSee('مضامین')
+        ->assertSee('front-mazameen--ltr', false)
         ->assertSee(route('mazmoon-detail', ['id' => $newer->id, 'slug' => 'newest-public-article']), false)
         ->assertSee('front-mazameen-card__description', false)
         ->assertSee('col-lg-3 order-2 order-lg-1', false)
@@ -76,8 +80,8 @@ test('article filters and search combine through article mapping tables', functi
     $match = publicListingArticle('Matched Business Article', ['publish_date' => '2026-06-10']);
     $other = publicListingArticle('Other Business Article', ['publish_date' => '2025-06-10']);
     $author = Author::query()->forceCreate(['name' => 'Mapped Writer', 'isActive' => true]);
-    $category = Category::query()->forceCreate(['language' => 'ur', 'name' => 'Mapped Topic', 'isActive' => true]);
-    $tag = Tags::query()->forceCreate(['language' => 'ur', 'name' => 'Mapped Tag', 'isActive' => true]);
+    $category = Category::query()->forceCreate(['language' => 'en', 'name' => 'Mapped Topic', 'isActive' => true]);
+    $tag = Tags::query()->forceCreate(['language' => 'en', 'name' => 'Mapped Tag', 'isActive' => true]);
     $match->authors()->attach($author);
     $match->categories()->attach($category);
     $match->tags()->attach($tag);
@@ -102,7 +106,7 @@ test('article filters and search combine through article mapping tables', functi
 
 test('mazameen paginates eight articles and preserves filters', function () {
     $this->withoutVite();
-    $tag = Tags::query()->forceCreate(['language' => 'ur', 'name' => 'Paginated Tag', 'isActive' => true]);
+    $tag = Tags::query()->forceCreate(['language' => 'en', 'name' => 'Paginated Tag', 'isActive' => true]);
     foreach (range(1, 9) as $number) {
         $article = publicListingArticle('Paginated Article '.$number, ['publish_date' => '2026-05-'.str_pad((string) $number, 2, '0', STR_PAD_LEFT)]);
         $article->tags()->attach($tag);
@@ -113,6 +117,16 @@ test('mazameen paginates eight articles and preserves filters', function () {
     $response->assertSuccessful()->assertSee('page=2', false)->assertSee('search=Paginated', false)
         ->assertSee('year=2026', false)->assertSee('tag='.$tag->id, false);
     expect(substr_count($response->getContent(), 'front-mazameen-card mb-3'))->toBe(8);
+});
+
+test('mazameen renders the English empty state when no English articles are eligible', function () {
+    $this->withoutVite();
+    publicListingArticle('Urdu Only Article', ['language' => 'ur']);
+
+    $this->get(route('mazameen'))
+        ->assertSuccessful()
+        ->assertSee('No articles are available.')
+        ->assertDontSee('کوئی مضمون دستیاب نہیں۔');
 });
 
 test('mazameen shows enabled article analytics counts without creating article visits', function () {
@@ -153,10 +167,10 @@ test('mazmoon detail renders selected article mappings full content and public r
     $draftRelated = publicListingArticle('Related Draft Article', ['status' => Article::STATUS_DRAFT]);
     $author = Author::query()->forceCreate(['name' => 'Selected Detail Author', 'isActive' => true]);
     Author::query()->forceCreate(['name' => 'Unrelated Detail Author', 'isActive' => true]);
-    $category = Category::query()->forceCreate(['language' => 'ur', 'name' => 'Selected Detail Category', 'isActive' => true]);
-    Category::query()->forceCreate(['language' => 'ur', 'name' => 'Unrelated Detail Category', 'isActive' => true]);
-    $tag = Tags::query()->forceCreate(['language' => 'ur', 'name' => 'Selected Detail Tag', 'isActive' => true]);
-    Tags::query()->forceCreate(['language' => 'ur', 'name' => 'Unrelated Detail Tag', 'isActive' => true]);
+    $category = Category::query()->forceCreate(['language' => 'en', 'name' => 'Selected Detail Category', 'isActive' => true]);
+    Category::query()->forceCreate(['language' => 'en', 'name' => 'Unrelated Detail Category', 'isActive' => true]);
+    $tag = Tags::query()->forceCreate(['language' => 'en', 'name' => 'Selected Detail Tag', 'isActive' => true]);
+    Tags::query()->forceCreate(['language' => 'en', 'name' => 'Unrelated Detail Tag', 'isActive' => true]);
     $article->authors()->attach($author);
     $article->categories()->attach($category);
     $article->tags()->attach($tag);
@@ -165,10 +179,12 @@ test('mazmoon detail renders selected article mappings full content and public r
     $response = $this->get(route('mazmoon-detail', ['id' => $article->id, 'slug' => 'anything']));
 
     $response->assertSuccessful()
-        ->assertSee('صفحہ اول')->assertSee('مضامین')->assertSee('Readable Article')
+        ->assertSee('Home')->assertSee('Articles')->assertSee('Breadcrumb')
+        ->assertSee('Authors')->assertSee('Categories')->assertSee('Tags')->assertSee('Related Articles')
+        ->assertSee('Add to Bookmarks')->assertSee('Issue No.:')
+        ->assertSee('Readable Article')
         ->assertSee('15 Aug 2026')->assertSee('A-2026-01')
         ->assertSee('Selected Detail Author')->assertSee('Selected Detail Category')->assertSee('Selected Detail Tag')
-        ->assertSee(route('front.mazmoon-nigaar.detail', ['id' => $author->id, 'slug' => $author->name]), false)
         ->assertSee(route('mozu-detail', ['id' => $category->id, 'mozuName' => $category->name]), false)
         ->assertSee(route('mazameen', ['tag' => $tag->id]), false)
         ->assertDontSee('Unrelated Detail Author')->assertDontSee('Unrelated Detail Tag')

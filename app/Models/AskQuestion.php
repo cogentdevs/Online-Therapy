@@ -32,9 +32,9 @@ class AskQuestion extends Model
 
     /** @var array<string, string> */
     public const USER_STATUS_LABELS = [
-        self::STATUS_PENDING => 'جواب کا منتظر',
-        self::STATUS_ANSWERED => 'جواب موصول ہو گیا',
-        self::STATUS_CLOSED => 'مکمل / بند',
+        self::STATUS_PENDING => 'Awaiting response',
+        self::STATUS_ANSWERED => 'Response received',
+        self::STATUS_CLOSED => 'Completed / Closed',
     ];
 
     protected $attributes = ['status' => self::STATUS_PENDING];

@@ -35,4 +35,5 @@ export default function initializeArticleEditor() {
             form.addEventListener('submit', () => tinymce.triggerSave());
         }
     });
+
 }

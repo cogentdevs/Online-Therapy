@@ -13,7 +13,7 @@
             <header class="consultancies-page__heading"><h1>Courses</h1><p>Explore our currently available courses.</p></header>
             @forelse ($courses as $course)
                 @if ($loop->first)<div class="row g-4">@endif
-                <div class="col-12 col-md-6 col-xl-4">@include('frontend.courses._card')</div>
+                <div class="col-12 col-md-6 col-xl-4 d-flex">@include('frontend.courses._card')</div>
                 @if ($loop->last)</div>@endif
             @empty
                 <div class="consultancies-page__empty">No courses are currently available.</div>

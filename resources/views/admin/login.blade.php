@@ -7,9 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Admin Login | {{ $generalSetting?->app_name ?? 'Digital Magazine' }}</title>
-    @if ($generalSetting?->favicon)
-        <link rel="icon" href="{{ asset($generalSetting->favicon) }}">
-    @endif
+    <link rel="icon" type="image/png" href="{{ asset('images/backend-images/logo/Thrive-with-Naila-Wellness-Emblem-removebg-preview.png') }}?v=20261014">
 
     @vite(['resources/sass/admin/login.scss', 'resources/js/admin/login.js'])
 </head>
@@ -35,6 +33,10 @@
                 {{-- <h1 id="admin-login-heading">Welcome Back!</h1> --}}
                 <p>Sign in to access the admin dashboard</p>
             </header>
+
+            @if (session('status'))
+                <div class="alert alert-success" role="status">{{ session('status') }}</div>
+            @endif
 
             <form method="POST" action="{{ route('admin.login.submit') }}" novalidate>
                 @csrf
@@ -87,9 +89,7 @@
                         <label class="form-check-label" for="remember">Remember me</label>
                     </div>
 
-                    @if (Route::has('password.request'))
-                        <a href="{{ route('password.request') }}">Forgot Password?</a>
-                    @endif
+                    <a href="{{ route('admin.password.request') }}">Forgot Password?</a>
                 </div>
 
                 <button type="submit" class="btn btn-primary admin-login-submit">

@@ -1,7 +1,11 @@
-<article class="consultancy-card">
-    <a class="consultancy-card__image" href="{{ route('front.courses.show', $course) }}">
+@php($courseImageFit = in_array($course->image_fit ?? $homepageImageFit ?? null, ['contain', 'cover'], true) ? ($course->image_fit ?? $homepageImageFit) : 'cover')
+
+<article class="consultancy-card course-card w-100">
+    <a class="consultancy-card__image consultancy-card__image--{{ $courseImageFit }}" href="{{ route('front.courses.show', $course) }}">
         @if (filled($course->image))
-            <img src="{{ asset($course->image) }}" alt="{{ $course->title }}" loading="lazy">
+            <img @class([
+                'consultancy-card__image-content--'.$courseImageFit,
+            ]) src="{{ asset($course->image) }}" alt="{{ $course->title }}" loading="lazy">
         @else
             <span class="consultancy-card__image-placeholder"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></span>
         @endif

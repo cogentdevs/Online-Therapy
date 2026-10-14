@@ -55,25 +55,13 @@
                                 <h2 id="detail-authors-heading">مضمون نگار</h2>
                                 <div class="front-sabqa-authors">
                                     @foreach ($magazine->authors as $author)
-                                        @php
-                                            $authorUrl = $author->getKey() && filled($author->name)
-                                                ? route('front.mazmoon-nigaar.detail', ['id' => $author->id, 'slug' => $author->name])
-                                                : null;
-                                        @endphp
-                                        @if ($authorUrl)
-                                            <a class="front-sabqa-author" href="{{ $authorUrl }}">
-                                        @else
-                                            <div class="front-sabqa-author">
-                                        @endif
+                                        {{-- Temporarily hidden - feature retained for future use. --}}
+                                        <div class="front-sabqa-author">
                                             @if ($author->picture)
                                                 <img src="{{ asset($author->picture) }}" alt="{{ $author->name }}">
                                             @endif
                                             <span>{{ $author->name }}</span>
-                                        @if ($authorUrl)
-                                            </a>
-                                        @else
-                                            </div>
-                                        @endif
+                                        </div>
                                     @endforeach
                                 </div>
                             </section>

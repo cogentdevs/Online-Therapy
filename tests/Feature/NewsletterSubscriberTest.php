@@ -60,7 +60,7 @@ test('duplicate and re-subscription reuse the same local record', function () {
 
     $this->postJson(route('front.newsletter.subscribe'), ['email' => 'reader@example.com'])
         ->assertSuccessful()
-        ->assertJsonPath('message', 'آپ پہلے ہی نیوز لیٹر کو سبسکرائب کر چکے ہیں۔');
+        ->assertJsonPath('message', 'You are already subscribed to the newsletter.');
     expect(NewsletterSubscriber::query()->count())->toBe(1);
 });
 

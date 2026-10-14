@@ -22,6 +22,48 @@ document.querySelectorAll('[data-front-carousel]').forEach((carousel) => {
     });
 });
 
+document.querySelectorAll('[data-course-copy-link]').forEach((button) => {
+    button.addEventListener('click', async () => {
+        const feedback = button.querySelector('[data-course-copy-feedback]');
+        const courseUrl = button.dataset.courseUrl;
+
+        if (!courseUrl) {
+            return;
+        }
+
+        try {
+            if (navigator.clipboard?.writeText) {
+                await navigator.clipboard.writeText(courseUrl);
+            } else {
+                const fallbackInput = document.createElement('textarea');
+                fallbackInput.value = courseUrl;
+                fallbackInput.setAttribute('readonly', '');
+                fallbackInput.style.position = 'fixed';
+                fallbackInput.style.opacity = '0';
+                document.body.append(fallbackInput);
+                fallbackInput.select();
+                const copied = document.execCommand('copy');
+                fallbackInput.remove();
+
+                if (!copied) {
+                    throw new Error('Copy command was not accepted.');
+                }
+            }
+
+            feedback.textContent = 'Course link copied';
+            button.setAttribute('aria-label', 'Course link copied');
+
+            window.setTimeout(() => {
+                feedback.textContent = 'Copy course link';
+                button.setAttribute('aria-label', 'Copy course link');
+            }, 2000);
+        } catch {
+            feedback.textContent = 'Unable to copy course link';
+            button.setAttribute('aria-label', 'Unable to copy course link');
+        }
+    });
+});
+
 document.querySelectorAll('[data-ranked-carousel]').forEach((carousel) => {
     const rankedContent = carousel.closest('[data-ranked-content]');
     const track = carousel.querySelector('[data-ranked-track]');
@@ -460,16 +502,16 @@ document.querySelectorAll('[data-article-bookmark]').forEach((button) => {
 
         const isBookmarked = button.dataset.bookmarked === 'true';
         const confirmation = await Swal.fire({
-            title: isBookmarked ? 'بک مارک سے ہٹائیں؟' : 'مضمون بک مارک کریں؟',
+            title: isBookmarked ? 'Remove Bookmark?' : 'Add Bookmark?',
             text: isBookmarked
-                ? 'کیا آپ واقعی اس مضمون کو اپنے بک مارکس سے ہٹانا چاہتے ہیں؟'
-                : 'کیا آپ اس مضمون کو اپنے بک مارکس میں محفوظ کرنا چاہتے ہیں؟',
+                ? 'Are you sure you want to remove this article from your bookmarks?'
+                : 'Would you like to save this article to your bookmarks?',
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#3F6CA1',
             cancelButtonColor: '#737078',
-            confirmButtonText: isBookmarked ? 'جی ہاں، ہٹا دیں' : 'جی ہاں، محفوظ کریں',
-            cancelButtonText: 'منسوخ کریں',
+            confirmButtonText: isBookmarked ? 'Remove' : 'Add Bookmark',
+            cancelButtonText: 'Cancel',
             reverseButtons: true,
         });
 
@@ -498,14 +540,14 @@ document.querySelectorAll('[data-article-bookmark]').forEach((button) => {
                 icon: 'success',
                 text: payload.message,
                 confirmButtonColor: '#3F6CA1',
-                confirmButtonText: 'ٹھیک ہے',
+                confirmButtonText: 'OK',
             });
         } catch {
             await Swal.fire({
                 icon: 'error',
-                text: 'بک مارک اپ ڈیٹ نہیں ہو سکا۔ براہ کرم دوبارہ کوشش کریں۔',
+                text: 'The bookmark could not be updated. Please try again.',
                 confirmButtonColor: '#3F6CA1',
-                confirmButtonText: 'ٹھیک ہے',
+                confirmButtonText: 'OK',
             });
         } finally {
             button.disabled = false;

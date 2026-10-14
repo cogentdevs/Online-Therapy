@@ -16,15 +16,15 @@ class BookmarkPresentationService
             $bookmarkable = $bookmark->bookmarkable;
 
             $bookmark->setAttribute('frontend_module_label', match (true) {
-                $bookmarkable instanceof Article => 'مضمون',
-                $bookmarkable instanceof Magazine => 'شمارہ',
-                default => 'مواد',
+                $bookmarkable instanceof Article => 'Article',
+                $bookmarkable instanceof Magazine => 'Issue',
+                default => 'Content',
             });
             $bookmark->setAttribute(
                 'frontend_title',
                 $bookmarkable instanceof Article || $bookmarkable instanceof Magazine
-                    ? ($bookmarkable->title ?: 'بلا عنوان')
-                    : 'مواد دستیاب نہیں ہے'
+                    ? ($bookmarkable->title ?: 'Untitled')
+                    : 'Content unavailable'
             );
             $bookmark->setAttribute('frontend_url', match (true) {
                 $bookmarkable instanceof Article => route('mazmoon-detail', [

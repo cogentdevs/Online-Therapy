@@ -39,14 +39,15 @@
 .front-slider-content {
     bottom: auto;
     display: flex;
+    direction: ltr;
     flex-direction: column;
-    inset-inline: 7% auto;
-    left: auto;
+    inset-inline: auto;
+    left: 7%;
     max-width: min(56%, 560px);
+    margin-right: 0;
     padding: 0;
     right: auto;
-    margin-right: 80px;
-    text-align: right;
+    text-align: left;
     top: auto;
     transform: none;
     z-index: 2;
@@ -99,7 +100,7 @@
 // ========================================
 // Home Hero - Selected Articles Panel
 // ========================================
-.front-latest { border: 1px solid $front-border; border-radius: $front-radius-lg; overflow: hidden; padding: 1rem 1.15rem; }
+.front-latest { background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius-lg; overflow: hidden; padding: 1rem 1.15rem; }
 .front-latest__heading { align-items: center; border-bottom: 2px solid $front-primary; display: flex; justify-content: space-between; margin-bottom: 0; padding-bottom: .7rem; }
 .front-latest__heading h2 { color: $front-primary; font-size: 1.35rem; margin: 0; }
 .front-latest-item { align-items: center; border-bottom: 1px solid $front-border; display: grid; gap: 1rem; grid-template-columns: 132px minmax(0, 1fr); min-height: calc((100% - 54px) / 3); padding-block: .8rem; }
@@ -140,14 +141,14 @@
 // ========================================
 .front-editorial-magazine__container { padding-inline: clamp(.65rem, 1.5vw, 1.5rem); }
 .front-editorial-block,
-.front-weekly-card { border: 1px solid $front-border; border-radius: $front-radius-lg; height: 100%; padding: 1rem; }
+.front-weekly-card { background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius-lg; height: 100%; padding: 1rem; }
 .front-editorial-block__heading,
 .front-weekly-card > h2 { color: $front-primary; font-size: 1.35rem; margin: 0 0 .8rem; }
 
 // ========================================
 // Home Editorial Feature
 // ========================================
-.front-editorial-main { border: 1px solid $front-border; border-radius: $front-radius; height: 100%; overflow: hidden; }
+.front-editorial-main { background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius; height: 100%; overflow: hidden; }
 .front-editorial-main__image { display: block; height: 310px; overflow: hidden; position: relative; }
 .front-editorial-main__image::after { background: linear-gradient(0deg, $front-overlay, transparent 64%); content: ''; inset: 0; position: absolute; }
 .front-editorial-main__image img { height: 100%; width: 100%; }
@@ -162,7 +163,7 @@
 // Home Compact Articles
 // ========================================
 .front-editorial-list { display: grid; gap: .75rem; }
-.front-editorial-item { align-items: center; border: 1px solid $front-border; border-radius: $front-radius-sm; display: grid; gap: .8rem; grid-template-columns: 94px minmax(0, 1fr); padding: .7rem; }
+.front-editorial-item { align-items: center; background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius-sm; display: grid; gap: .8rem; grid-template-columns: 94px minmax(0, 1fr); padding: .7rem; }
 .front-editorial-item img { border-radius: $front-radius-sm; height: 82px; object-fit: cover; width: 94px; }
 .front-editorial-item h3 { font-size: .88rem; line-height: 2; margin: .1rem 0; }
 .front-editorial-item time { color: $front-muted; font-size: .7rem; }
@@ -190,12 +191,15 @@
 .front-most-viewed__container { padding-inline: clamp(.65rem, 1.5vw, 1.5rem); }
 .front-most-viewed__header { align-items: center; border-bottom: 2px solid $front-primary; display: flex; justify-content: space-between; margin-bottom: 1rem; }
 .front-most-viewed__header h2 { align-items: center; background: $front-primary; border-radius: $front-radius-sm $front-radius-sm 0 0; color: $front-white; display: inline-flex; font-size: 1.35rem; gap: .6rem; margin: 0; padding: .65rem 1.2rem; }
-.front-most-viewed__tabs { align-self: stretch; direction: rtl; }
+.front-most-viewed__tabs { align-self: stretch; direction: ltr; }
+.front-most-viewed,
+.front-most-viewed-card,
+.front-most-viewed-card__body { direction: ltr; text-align: left; }
 .front-most-viewed__tabs .nav-link { border: 1px solid $front-border; border-bottom: 0; border-radius: $front-radius-sm $front-radius-sm 0 0; color: $front-dark; min-width: 105px; }
 .front-most-viewed__tabs .nav-link.active { background: $front-primary; border-color: $front-primary; color: $front-white; }
 .front-most-viewed__carousel { position: relative; }
 .front-most-viewed__track { display: grid; gap: 1rem; grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.front-most-viewed-card { background: $front-surface; border: 1px solid $front-border; border-radius: $front-radius; min-width: 0; overflow: hidden; }
+.front-most-viewed-card { background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius; min-width: 0; overflow: hidden; }
 .front-most-viewed-card__media { aspect-ratio: 4 / 3; display: block; overflow: hidden; }
 .front-most-viewed-card__media--magazine { aspect-ratio: 3 / 4; }
 .front-most-viewed-card__media img { height: 100%; object-fit: cover; width: 100%; }
@@ -219,7 +223,7 @@
 // ========================================
 // Home Audio Interview Cards
 // ========================================
-.front-audio-interview-card { background: $front-surface; border: 1px solid $front-border; border-radius: $front-radius; height: 100%; overflow: hidden; }
+.front-audio-interview-card { background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius; height: 100%; overflow: hidden; }
 .front-audio-interview-card__media { aspect-ratio: 16 / 9; display: block; overflow: hidden; position: relative; }
 .front-audio-interview-card__media::after { background: $front-overlay-light; content: ''; inset: 0; position: absolute; }
 .front-audio-interview-card__media img { height: 100%; object-fit: cover; width: 100%; }
@@ -233,16 +237,22 @@
 // ========================================
 // Home Newsletter Subscribe
 // ========================================
-.front-newsletter { background: $front-dark; border-radius: $front-radius-lg; color: $front-white; min-height: 100%; overflow: hidden; padding: 1.1rem 1.2rem; position: relative; }
-.front-newsletter__content { max-width: 82%; position: relative; z-index: 1; }
-.front-newsletter h2 { font-size: 1.35rem; line-height: 1.8; margin-bottom: .45rem; }
-.front-newsletter p { color: $front-white-muted; font-size: .85rem; line-height: 1.8; margin-bottom: .75rem; }
-.front-newsletter__form { display: grid; gap: .65rem; }
-.front-newsletter__form .form-control { border: 0; min-height: 42px; }
-.front-newsletter__button { background: $front-accent; border: 0; border-radius: $front-radius-sm; color: $front-white; justify-self: start; padding: .6rem 1rem; }
-.front-newsletter__button:hover { background: $front-accent-hover; }
-.front-newsletter__button:active { background: $front-accent-active; }
-.front-newsletter__visual { bottom: -.8rem; color: $front-primary; font-size: 5.25rem; opacity: .9; position: absolute; right: .8rem; transform: rotate(-8deg); }
+.front-newsletter { background: linear-gradient(135deg, $front-primary-hover, $front-primary); border: 1px solid rgba($front-white, .13); border-radius: $front-radius-lg; box-shadow: $front-shadow-sm; color: $front-white; overflow: hidden; padding: clamp(1.35rem, 3vw, 2.25rem); position: relative; }
+.front-newsletter__content { align-items: center; display: grid; gap: clamp(1.25rem, 4vw, 4rem); grid-template-columns: minmax(0, 1fr) minmax(300px, .85fr); position: relative; z-index: 1; }
+.front-newsletter__intro { direction: ltr; text-align: left; }
+.front-newsletter__eyebrow { align-items: center; color: $front-white-muted; display: inline-flex; font-family: var(--front-font-ui); font-size: .76rem; font-weight: 700; gap: .45rem; letter-spacing: .08em; margin-bottom: .65rem; text-transform: uppercase; }
+.front-newsletter h2 { font-size: clamp(1.65rem, 3vw, 2.35rem); line-height: 1.2; margin-bottom: .55rem; }
+.front-newsletter p { color: $front-white-muted; font-family: var(--front-font-ui); font-size: .98rem; line-height: 1.75; margin: 0; max-width: 36rem; }
+.front-newsletter__form { align-items: center; background: rgba($front-white, .1); border: 1px solid rgba($front-white, .2); border-radius: $front-radius; display: grid; gap: .65rem; grid-template-columns: minmax(0, 1fr) auto; padding: .65rem; }
+.front-newsletter__form .form-control { border: 0; box-shadow: none; min-height: 48px; padding-inline: 1rem; }
+.front-newsletter__feedback,
+.front-newsletter__note { grid-column: 1 / -1; }
+.front-newsletter__button { align-items: center; background: $front-light; border: 1px solid rgba($front-white, .45); border-radius: $front-radius-sm; color: $front-primary; display: inline-flex; gap: .55rem; justify-content: center; min-height: 48px; padding: .65rem 1rem; transition: background-color $front-transition, border-color $front-transition, color $front-transition, transform $front-transition; white-space: nowrap; }
+.front-newsletter__button:hover,
+.front-newsletter__button:focus-visible { background: $front-white; border-color: $front-white; color: $front-primary-hover; transform: translateY(-1px); }
+.front-newsletter__button:active { background: $front-primary-soft; color: $front-primary; transform: translateY(0); }
+.front-newsletter__note { color: $front-white-muted; font-family: var(--front-font-ui); font-size: .72rem; padding-inline: .25rem; }
+.front-newsletter__visual { bottom: -1.4rem; color: $front-white; font-size: 8rem; opacity: .08; position: absolute; right: 2.5rem; transform: rotate(-12deg); }
 
 // ========================================
 // Home Banners + Login Section
@@ -263,7 +273,7 @@
 // ========================================
 // Home Login Card
 // ========================================
-.front-home-login-card { background: $front-surface; border: 1px solid $front-border; border-radius: $front-radius-lg; box-shadow: $front-shadow-sm; padding: 1rem 1.15rem; }
+.front-home-login-card { background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius-lg; box-shadow: $front-shadow-sm; padding: 1rem 1.15rem; }
 .front-home-login-card h2 { color: $front-primary; font-size: 1.35rem; margin-bottom: .65rem; }
 .front-home-login-card__form { display: grid; gap: .65rem; }
 .front-home-login-card .form-label { font-size: .82rem; margin-bottom: .2rem; }
@@ -297,7 +307,7 @@
 // Home Popular Topics
 // ========================================
 .front-popular-topics { padding-top: .75rem; }
-.front-topic-card { align-items: center; background: $front-surface; border: 1px solid $front-primary; border-radius: $front-radius; color: $front-primary; display: flex; flex-direction: column; gap: .65rem; height: 100%; justify-content: center; min-height: 125px; padding: .9rem .5rem; text-align: center; }
+.front-topic-card { align-items: center; background: $front-card-background; border: 1px solid $front-primary; border-radius: $front-radius; color: $front-primary; display: flex; flex-direction: column; gap: .65rem; height: 100%; justify-content: center; min-height: 125px; padding: .9rem .5rem; text-align: center; }
 .front-topic-card i { color: $front-primary; font-size: 2rem; }
 .front-topic-card img { height: auto; max-height: 48px; max-width: 56px; object-fit: contain; width: auto; }
 .front-topic-card span { font-size: 1rem; font-weight: 700; }

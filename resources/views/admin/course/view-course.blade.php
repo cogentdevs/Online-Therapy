@@ -6,9 +6,14 @@
     <div class="container-fluid">
         <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
             <div><h2 class="mb-1">Courses</h2></div>
-            @can('courses.create')
-                <a class="btn btn-primary admin-primary-button" href="{{ route('admin.course.create') }}"><i class="fa-solid fa-plus me-2"></i>Add Course</a>
-            @endcan
+            <div class="d-flex flex-wrap gap-2">
+                @can('courses.edit')
+                    <a class="btn btn-outline-primary" href="{{ route('admin.course.homepage-layout-settings') }}"><i class="fa-solid fa-table-columns me-2"></i>Homepage Layout Settings</a>
+                @endcan
+                @can('courses.create')
+                    <a class="btn btn-primary admin-primary-button" href="{{ route('admin.course.create') }}"><i class="fa-solid fa-plus me-2"></i>Add Course</a>
+                @endcan
+            </div>
         </div>
         @if (session('status'))
             <div class="alert alert-success">{{ session('status') }}</div>

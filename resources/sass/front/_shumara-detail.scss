@@ -5,7 +5,7 @@
 .front-shumara-detail__container { max-width: none; padding-inline: clamp(.65rem, 1.5vw, 1.5rem); width: 100%; }
 .front-shumara-detail__layout { direction: ltr; }
 .front-shumara-detail__layout > * { direction: rtl; }
-.front-shumara-detail__card { background: $front-surface; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow-sm; overflow: hidden; }
+.front-shumara-detail__card { background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow-sm; overflow: hidden; }
 .front-shumara-detail__cover { align-items: center; display: flex; justify-content: center; padding: 1rem 1rem .5rem; }
 .front-shumara-detail__cover img { height: auto; max-height: 340px; max-width: 100%; object-fit: contain; width: auto; }
 .front-shumara-detail__content { direction: rtl; padding: .75rem 1rem 1rem; text-align: right; }

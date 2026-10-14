@@ -1,20 +1,20 @@
 @extends('layouts.frontLayout.front-design')
 
-@section('title', 'میری سبسکرپشنز')
-@section('meta_description', 'اپنی فعال اور سابقہ ڈیجیٹل میگزین سبسکرپشنز دیکھیں')
+@section('title', 'My Subscriptions')
+@section('meta_description', 'View your active and previous Thrive subscriptions.')
 
 @section('content')
     <div class="front-account-page">
         <div class="container-fluid front-account-container">
-            <nav class="front-taza-breadcrumb front-ui" aria-label="بریڈ کرمب">
-                <a href="{{ route('frontend.home') }}"><i class="fa-solid fa-house" aria-hidden="true"></i> صفحہ اول</a>
-                <span aria-hidden="true">/</span><a href="{{ route('front.account') }}">میرا اکاؤنٹ</a>
-                <span aria-hidden="true">/</span><span aria-current="page">میری سبسکرپشنز</span>
+            <nav class="front-taza-breadcrumb front-ui" aria-label="Breadcrumb">
+                <a href="{{ route('frontend.home') }}"><i class="fa-solid fa-house" aria-hidden="true"></i> Home</a>
+                <span aria-hidden="true">/</span><a href="{{ route('front.account') }}">My Account</a>
+                <span aria-hidden="true">/</span><span aria-current="page">My Subscriptions</span>
             </nav>
 
             <header class="front-account-heading">
-                <h1>میری سبسکرپشنز</h1><span aria-hidden="true"></span>
-                <p>اپنی تمام موجودہ اور سابقہ سبسکرپشنز کی تفصیل دیکھیں۔</p>
+                <h1>My Subscriptions</h1><span aria-hidden="true"></span>
+                <p>View details for all your current and previous subscriptions.</p>
             </header>
 
             @if (session('success'))
@@ -26,25 +26,25 @@
                 <div class="col-12 col-lg-9">
                     <section class="front-account-card user-subscription-history">
                         <header class="user-subscriptions-section-header">
-                            <div><h2>سبسکرپشن ہسٹری</h2><p>تمام خریداریوں کا تازہ ترین سے پرانا ریکارڈ۔</p></div>
+                            <div><h2>Subscription History</h2><p>All purchases are shown from newest to oldest.</p></div>
                         </header>
 
                         <div class="table-responsive user-subscription-history-table-wrap">
                             <table class="table user-subscription-history-table align-middle" data-front-account-datatable="subscriptions"
                                 data-source-url="{{ route('front.account.subscriptions', ['datatable' => 1]) }}">
-                                <thead><tr><th>سبسکرپشن</th><th>ماڈیولز</th><th>رقم</th><th>تاریخیں</th><th>ادائیگی</th><th>حالت</th><th>دستاویزات / ایکشن</th></tr></thead>
+                                <thead><tr><th>Subscription</th><th>Modules</th><th>Amount</th><th>Dates</th><th>Payment</th><th>Status</th><th>Documents / Actions</th></tr></thead>
                                 <tbody>
                                     @foreach ($subscriptions as $subscription)
                                         <tr>
-                                            <td>{{ $subscription->product_name ?: 'سبسکرپشن' }} {{ $subscription->frontend_product_type }}</td>
-                                            <td>{{ $subscription->subscriptionTypes->pluck('frontend_label')->join('، ') ?: 'ماڈیول درج نہیں' }}</td>
+                                            <td>{{ $subscription->product_name ?: 'Subscription' }} {{ $subscription->frontend_product_type }}</td>
+                                            <td>{{ $subscription->subscriptionTypes->pluck('frontend_label')->join('، ') ?: 'No modules listed' }}</td>
                                             <td>{{ $subscription->currency?->code ?? $subscription->currency?->symbol }} {{ $subscription->frontend_amount }}</td>
                                             <td>
-                                                <small class="d-block">جمع: {{ $subscription->payment_submitted_at?->format('d M Y, h:i A') ?? '—' }}</small>
-                                                <small class="d-block">شروع: {{ $subscription->start_date?->format('d M Y') ?? '—' }}</small>
-                                                <small class="d-block">اختتام: {{ $subscription->end_date?->format('d M Y') ?? '—' }}</small>
+                                                <small class="d-block">Submitted: {{ $subscription->payment_submitted_at?->format('d M Y, h:i A') ?? '—' }}</small>
+                                                <small class="d-block">Start: {{ $subscription->start_date?->format('d M Y') ?? '—' }}</small>
+                                                <small class="d-block">End: {{ $subscription->end_date?->format('d M Y') ?? '—' }}</small>
                                                 @if ($subscription->reviewed_at)
-                                                    <small class="d-block">جائزہ: {{ $subscription->reviewed_at->format('d M Y, h:i A') }}</small>
+                                                    <small class="d-block">Reviewed: {{ $subscription->reviewed_at->format('d M Y, h:i A') }}</small>
                                                 @endif
                                             </td>
                                             <td>
@@ -83,7 +83,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        @if ($subscriptions->isEmpty())<span class="visually-hidden">ابھی کوئی سبسکرپشن ریکارڈ موجود نہیں ہے۔</span>@endif
+                        @if ($subscriptions->isEmpty())<span class="visually-hidden">No subscription records are available yet.</span>@endif
                     </section>
                 </div>
             </div>

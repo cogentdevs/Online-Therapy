@@ -38,7 +38,7 @@
         <div class="container-fluid front-hero__container">
             <h1 class="visually-hidden" id="hero-heading">ڈیجیٹل میگزین کی اہم خبریں</h1>
             <div class="row g-3 align-items-stretch front-hero__row">
-                <div class="col-lg-8 order-1 order-lg-2">
+                <div class="col-12">
                     @if ($sliders->isNotEmpty())
                         <div class="carousel slide front-hero-carousel" id="frontHeroCarousel" data-bs-ride="carousel"
                             data-bs-interval="6000" data-bs-pause="hover" data-front-carousel>
@@ -99,7 +99,7 @@
                                                 @if ($slider->button_label && $slider->button_url)
                                                     <a class="front-slider-content__button front-ui"
                                                         href="{{ $slider->button_url }}">{{ $slider->button_label }} <i
-                                                            class="fa-solid fa-arrow-left" aria-hidden="true"></i></a>
+                                                            class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
                                                 @endif
                                             </div>
                                         @endif
@@ -116,6 +116,7 @@
                     @endif
                 </div>
 
+                {{-- Temporarily hidden - feature retained for future use.
                 <div class="col-lg-4 order-2 order-lg-1">
                     <aside class="front-latest"
                         @if ($latestArticlesHeading?->main_title) aria-labelledby="latest-heading" @endif>
@@ -152,6 +153,7 @@
                         @endforeach
                     </aside>
                 </div>
+                --}}
             </div>
         </div>
     </section>
@@ -214,8 +216,26 @@
         </section>
     @endif
 
+    @if ($featuredCourses->isNotEmpty())
+        <section class="front-home-section-spacing" aria-labelledby="featured-courses-heading">
+            <div class="container-fluid front-home-cards__container">
+                <div class="front-section-heading">
+                    <h2 id="featured-courses-heading">Courses</h2>
+                    <span class="front-section-heading__line" aria-hidden="true"></span>
+                </div>
+                <div class="row g-4">
+                    @foreach ($featuredCourses as $course)
+                        <div class="{{ $featuredCoursesColumnClass }} d-flex">
+                            @include('frontend.courses._card', ['course' => $course, 'homepageImageFit' => $course->homepage_image_fit])
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+    @endif
+
     {{-- Temporarily hidden - feature retained for future use.
-    <section class="front-home-section-spacing" aria-label="اشتہار">
+    <section class="front-home-section-spacing" aria-label="Ads">
         <div class="container-fluid front-home-ads__container">
             <div class="row g-3">
                 <div class="col-lg-8 order-1 order-lg-2">
@@ -450,12 +470,12 @@
     <section class="front-most-viewed front-home-section-spacing" aria-labelledby="most-viewed-heading" data-ranked-content>
         <div class="container-fluid front-most-viewed__container">
             <div class="front-most-viewed__header">
-                <h2 id="most-viewed-heading"><i class="fa-solid fa-chart-column" aria-hidden="true"></i> سب سے زیادہ دیکھے گئے</h2>
-                <div class="nav front-most-viewed__tabs" id="mostViewedTabs" role="tablist" aria-label="سب سے زیادہ دیکھے گئے مواد" data-ranked-tabs>
+                <h2 id="most-viewed-heading"><i class="fa-solid fa-chart-column" aria-hidden="true"></i> Most Viewed</h2>
+                <div class="nav front-most-viewed__tabs" id="mostViewedTabs" role="tablist" aria-label="Most viewed content" data-ranked-tabs>
                     {{-- Temporarily hidden - feature retained for future use.
                     <button class="nav-link active" id="most-viewed-magazines-tab" data-bs-toggle="tab" data-bs-target="#most-viewed-magazines" type="button" role="tab" aria-controls="most-viewed-magazines" aria-selected="true">شمارے</button>
                     --}}
-                    <button class="nav-link active" id="most-viewed-articles-tab" data-bs-toggle="tab" data-bs-target="#most-viewed-articles" type="button" role="tab" aria-controls="most-viewed-articles" aria-selected="true">مضامین</button>
+                    <button class="nav-link active" id="most-viewed-articles-tab" data-bs-toggle="tab" data-bs-target="#most-viewed-articles" type="button" role="tab" aria-controls="most-viewed-articles" aria-selected="true">Articles</button>
                 </div>
             </div>
 
@@ -464,7 +484,7 @@
                 <div class="tab-pane fade show active" id="most-viewed-magazines" role="tabpanel" aria-labelledby="most-viewed-magazines-tab" tabindex="0">
                     @if ($topViewedMagazines->isNotEmpty())
                         <div class="front-most-viewed__carousel" data-ranked-carousel>
-                            <button class="front-most-viewed__control front-most-viewed__control--previous" type="button" data-ranked-previous aria-label="پچھلا شمارہ"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+                            <button class="front-most-viewed__control front-most-viewed__control--previous" type="button" data-ranked-previous aria-label="Previous item"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
                             <div class="front-most-viewed__track" data-ranked-track>
                                 @foreach ($topViewedMagazines as $magazine)
                                     <article class="front-most-viewed-card" data-ranked-item>
@@ -488,10 +508,10 @@
                                     </article>
                                 @endforeach
                             </div>
-                            <button class="front-most-viewed__control front-most-viewed__control--next" type="button" data-ranked-next aria-label="اگلا شمارہ"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+                            <button class="front-most-viewed__control front-most-viewed__control--next" type="button" data-ranked-next aria-label="Next item"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
                         </div>
                     @else
-                        <p class="front-most-viewed__empty">فی الحال کوئی ڈیٹا دستیاب نہیں</p>
+                        <p class="front-most-viewed__empty">No data available at the moment.</p>
                     @endif
                 </div>
                 --}}
@@ -499,7 +519,7 @@
                 <div class="tab-pane fade show active" id="most-viewed-articles" role="tabpanel" aria-labelledby="most-viewed-articles-tab" tabindex="0">
                     @if ($topViewedArticles->isNotEmpty())
                         <div class="front-most-viewed__carousel" data-ranked-carousel>
-                            <button class="front-most-viewed__control front-most-viewed__control--previous" type="button" data-ranked-previous aria-label="پچھلا مضمون"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+                            <button class="front-most-viewed__control front-most-viewed__control--previous" type="button" data-ranked-previous aria-label="Previous item"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
                             <div class="front-most-viewed__track" data-ranked-track>
                                 @foreach ($topViewedArticles as $article)
                                     <article class="front-most-viewed-card" data-ranked-item>
@@ -523,10 +543,10 @@
                                     </article>
                                 @endforeach
                             </div>
-                            <button class="front-most-viewed__control front-most-viewed__control--next" type="button" data-ranked-next aria-label="اگلا مضمون"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+                            <button class="front-most-viewed__control front-most-viewed__control--next" type="button" data-ranked-next aria-label="Next item"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
                         </div>
                     @else
-                        <p class="front-most-viewed__empty">فی الحال کوئی ڈیٹا دستیاب نہیں</p>
+                        <p class="front-most-viewed__empty">No data available at the moment.</p>
                     @endif
                 </div>
             </div>
@@ -572,27 +592,23 @@
                 --}}
 
                 <div class="col-12">
-                    <aside class="front-newsletter"
-                        @if ($newsletterHeading?->main_title) aria-labelledby="newsletter-heading" @endif>
+                    <aside class="front-newsletter" aria-labelledby="newsletter-heading">
                         <div class="front-newsletter__content">
-                            @if ($newsletterHeading?->main_title || $newsletterHeading?->short_detail)
-                                <div class="{{ $headingPositionClass($newsletterHeading) }}">
-                                    @if ($newsletterHeading?->main_title)
-                                        <h2 id="newsletter-heading">{{ $newsletterHeading->main_title }}</h2>
-                                    @endif
-                                    @if ($newsletterHeading?->short_detail)
-                                        <p>{{ $newsletterHeading->short_detail }}</p>
-                                    @endif
-                                </div>
-                            @endif
+                            <div class="front-newsletter__intro">
+                                <span class="front-newsletter__eyebrow"><i class="fa-regular fa-envelope"
+                                        aria-hidden="true"></i> Newsletter</span>
+                                <h2 id="newsletter-heading">Stay in the loop</h2>
+                                <p>Get the latest articles, courses, and updates delivered straight to your inbox.</p>
+                            </div>
                             <form class="front-newsletter__form" method="post" action="{{ route('front.newsletter.subscribe') }}" data-newsletter-form>
                                 @csrf
-                                <label class="visually-hidden" for="front-newsletter-email">ای میل ایڈریس</label>
+                                <label class="visually-hidden" for="front-newsletter-email">Email address</label>
                                 <input class="form-control front-ui" id="front-newsletter-email" type="email"
-                                    name="email" maxlength="255" required autocomplete="email" placeholder="ای میل درج کریں">
+                                    name="email" maxlength="255" required autocomplete="email" placeholder="Enter your email address">
                                 <div class="front-newsletter__feedback alert d-none mb-0 py-2 px-3" data-newsletter-feedback role="status" aria-live="polite"></div>
-                                <button class="front-newsletter__button front-ui" type="submit">سبسکرائب کریں <i
-                                        class="fa-regular fa-envelope" aria-hidden="true"></i></button>
+                                <button class="front-newsletter__button front-ui" type="submit">Subscribe <i
+                                        class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+                                <small class="front-newsletter__note">No spam. Unsubscribe anytime.</small>
                             </form>
                         </div>
                         <i class="fa-regular fa-envelope-open front-newsletter__visual" aria-hidden="true"></i>
@@ -605,12 +621,12 @@
     <section class="front-most-viewed front-most-searched front-home-section-spacing" aria-labelledby="most-searched-heading" data-ranked-content>
         <div class="container-fluid front-most-viewed__container">
             <div class="front-most-viewed__header">
-                <h2 id="most-searched-heading"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> سب سے زیادہ تلاش کیے گئے</h2>
-                <div class="nav front-most-viewed__tabs" id="mostSearchedTabs" role="tablist" aria-label="سب سے زیادہ تلاش کیے گئے مواد" data-ranked-tabs>
+                <h2 id="most-searched-heading"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> Most Searched</h2>
+                <div class="nav front-most-viewed__tabs" id="mostSearchedTabs" role="tablist" aria-label="Most searched content" data-ranked-tabs>
                     {{-- Temporarily hidden - feature retained for future use.
                     <button class="nav-link active" id="most-searched-magazines-tab" data-bs-toggle="tab" data-bs-target="#most-searched-magazines" type="button" role="tab" aria-controls="most-searched-magazines" aria-selected="true">شمارے</button>
                     --}}
-                    <button class="nav-link active" id="most-searched-articles-tab" data-bs-toggle="tab" data-bs-target="#most-searched-articles" type="button" role="tab" aria-controls="most-searched-articles" aria-selected="true">مضامین</button>
+                    <button class="nav-link active" id="most-searched-articles-tab" data-bs-toggle="tab" data-bs-target="#most-searched-articles" type="button" role="tab" aria-controls="most-searched-articles" aria-selected="true">Articles</button>
                 </div>
             </div>
 
@@ -619,7 +635,7 @@
                 <div class="tab-pane fade show active" id="most-searched-magazines" role="tabpanel" aria-labelledby="most-searched-magazines-tab" tabindex="0">
                     @if ($topSearchedMagazines->isNotEmpty())
                         <div class="front-most-viewed__carousel" data-ranked-carousel>
-                            <button class="front-most-viewed__control front-most-viewed__control--previous" type="button" data-ranked-previous aria-label="پچھلا شمارہ"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+                            <button class="front-most-viewed__control front-most-viewed__control--previous" type="button" data-ranked-previous aria-label="Previous item"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
                             <div class="front-most-viewed__track" data-ranked-track>
                                 @foreach ($topSearchedMagazines as $magazine)
                                     <article class="front-most-viewed-card" data-ranked-item>
@@ -643,10 +659,10 @@
                                     </article>
                                 @endforeach
                             </div>
-                            <button class="front-most-viewed__control front-most-viewed__control--next" type="button" data-ranked-next aria-label="اگلا شمارہ"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+                            <button class="front-most-viewed__control front-most-viewed__control--next" type="button" data-ranked-next aria-label="Next item"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
                         </div>
                     @else
-                        <p class="front-most-viewed__empty">فی الحال کوئی ڈیٹا دستیاب نہیں</p>
+                        <p class="front-most-viewed__empty">No data available at the moment.</p>
                     @endif
                 </div>
                 --}}
@@ -654,7 +670,7 @@
                 <div class="tab-pane fade show active" id="most-searched-articles" role="tabpanel" aria-labelledby="most-searched-articles-tab" tabindex="0">
                     @if ($topSearchedArticles->isNotEmpty())
                         <div class="front-most-viewed__carousel" data-ranked-carousel>
-                            <button class="front-most-viewed__control front-most-viewed__control--previous" type="button" data-ranked-previous aria-label="پچھلا مضمون"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+                            <button class="front-most-viewed__control front-most-viewed__control--previous" type="button" data-ranked-previous aria-label="Previous item"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
                             <div class="front-most-viewed__track" data-ranked-track>
                                 @foreach ($topSearchedArticles as $article)
                                     <article class="front-most-viewed-card" data-ranked-item>
@@ -678,10 +694,10 @@
                                     </article>
                                 @endforeach
                             </div>
-                            <button class="front-most-viewed__control front-most-viewed__control--next" type="button" data-ranked-next aria-label="اگلا مضمون"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+                            <button class="front-most-viewed__control front-most-viewed__control--next" type="button" data-ranked-next aria-label="Next item"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
                         </div>
                     @else
-                        <p class="front-most-viewed__empty">فی الحال کوئی ڈیٹا دستیاب نہیں</p>
+                        <p class="front-most-viewed__empty">No data available at the moment.</p>
                     @endif
                 </div>
             </div>

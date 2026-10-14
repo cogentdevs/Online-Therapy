@@ -1,23 +1,23 @@
 @extends('layouts.frontLayout.front-design')
 
-@section('title', 'پاس ورڈ تبدیل کریں')
-@section('meta_description', 'اپنے ڈیجیٹل میگزین اکاؤنٹ کا پاس ورڈ تبدیل کریں')
+@section('title', 'Change Password')
+@section('meta_description', 'Change your Thrive account password.')
 
 @section('content')
     <div class="front-account-page">
         <div class="container-fluid front-account-container">
-            <nav class="front-taza-breadcrumb front-ui" aria-label="بریڈ کرمب">
-                <a href="{{ route('frontend.home') }}"><i class="fa-solid fa-house" aria-hidden="true"></i> صفحہ اول</a>
+            <nav class="front-taza-breadcrumb front-ui" aria-label="Breadcrumb">
+                <a href="{{ route('frontend.home') }}"><i class="fa-solid fa-house" aria-hidden="true"></i> Home</a>
                 <span aria-hidden="true">/</span>
-                <a href="{{ route('front.account') }}">میرا اکاؤنٹ</a>
+                <a href="{{ route('front.account') }}">My Account</a>
                 <span aria-hidden="true">/</span>
-                <span aria-current="page">پاس ورڈ تبدیل کریں</span>
+                <span aria-current="page">Change Password</span>
             </nav>
 
             <header class="front-account-heading">
-                <h1>پاس ورڈ تبدیل کریں</h1>
+                <h1>Change Password</h1>
                 <span aria-hidden="true"></span>
-                <p>اپنے اکاؤنٹ کی حفاظت کے لیے ایک مضبوط اور منفرد پاس ورڈ منتخب کریں۔</p>
+                <p>Choose a strong, unique password to protect your account.</p>
             </header>
 
             <div class="row g-4 align-items-start front-account-layout">
@@ -28,8 +28,8 @@
                 <div class="col-12 col-lg-9">
                     <section class="front-account-card front-account-password-card">
                         <header>
-                            <h2>پاس ورڈ تبدیل کریں</h2>
-                            <p>موجودہ پاس ورڈ کی تصدیق کے بعد کم از کم 8 حروف کا نیا پاس ورڈ درج کریں۔</p>
+                            <h2>Change Password</h2>
+                            <p>After confirming your current password, enter a new password with at least 8 characters.</p>
                         </header>
 
                         @if (session('success'))
@@ -50,9 +50,9 @@
                             action="{{ route('front.account.change-password.update') }}" data-front-change-password-form>
                             @csrf
                             @foreach ([
-                                ['current_password', 'موجودہ پاس ورڈ', 'current-password'],
-                                ['password', 'نیا پاس ورڈ', 'new-password'],
-                                ['password_confirmation', 'نئے پاس ورڈ کی تصدیق', 'new-password'],
+                                ['current_password', 'Current Password', 'current-password'],
+                                ['password', 'New Password', 'new-password'],
+                                ['password_confirmation', 'Confirm New Password', 'new-password'],
                             ] as [$name, $label, $autocomplete])
                                 <div class="front-auth-field">
                                     <label for="account-{{ $name }}">{{ $label }}</label>
@@ -62,8 +62,8 @@
                                         <i class="fa-solid fa-lock front-auth-field__icon" aria-hidden="true"></i>
                                         <button class="front-auth-password-toggle" type="button" data-front-password-toggle
                                             aria-controls="account-{{ $name }}" aria-pressed="false"
-                                            aria-label="پاس ورڈ دکھائیں" data-show-label="پاس ورڈ دکھائیں"
-                                            data-hide-label="پاس ورڈ چھپائیں">
+                                            aria-label="Show Password" data-show-label="Show Password"
+                                            data-hide-label="Hide Password">
                                             <i class="fa-regular fa-eye" aria-hidden="true"></i>
                                         </button>
                                     </div>
@@ -71,7 +71,7 @@
                             @endforeach
 
                             <button class="front-auth-submit" type="submit" disabled>
-                                پاس ورڈ تبدیل کریں <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                                Change Password <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
                             </button>
                         </form>
                     </section>

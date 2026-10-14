@@ -4,11 +4,11 @@
 @section('meta_description', $article->short_description)
 
 @section('content')
-    <div class="front-mazmoon-detail">
+    <div class="front-mazmoon-detail front-mazmoon-detail--ltr">
         <div class="container-fluid front-mazmoon-detail__container">
-            <nav class="front-taza-breadcrumb front-ui" aria-label="بریڈ کرمب">
-                <a href="{{ route('frontend.home') }}"><i class="fa-solid fa-house" aria-hidden="true"></i> صفحہ اول</a>
-                <span aria-hidden="true">/</span><a href="{{ route('mazameen') }}">مضامین</a>
+            <nav class="front-taza-breadcrumb front-ui" aria-label="Breadcrumb">
+                <a href="{{ route('frontend.home') }}"><i class="fa-solid fa-house" aria-hidden="true"></i> Home</a>
+                <span aria-hidden="true">/</span><a href="{{ route('mazameen') }}">Articles</a>
                 <span aria-hidden="true">/</span><span aria-current="page">{{ $article->title }}</span>
             </nav>
 
@@ -17,26 +17,14 @@
                     <div class="front-sabqa-sidebar">
                         @if ($article->authors->isNotEmpty())
                             <section class="front-taza-sidebar-card" aria-labelledby="mazmoon-authors-heading">
-                                <h2 id="mazmoon-authors-heading">مضمون نگار</h2>
+                                <h2 id="mazmoon-authors-heading">Authors</h2>
                                 <div class="front-sabqa-authors">
                                     @foreach ($article->authors as $author)
-                                        @php
-                                            $authorUrl = $author->getKey() && filled($author->name)
-                                                ? route('front.mazmoon-nigaar.detail', ['id' => $author->id, 'slug' => $author->name])
-                                                : null;
-                                        @endphp
-                                        @if ($authorUrl)
-                                            <a class="front-sabqa-author" href="{{ $authorUrl }}">
-                                        @else
-                                            <div class="front-sabqa-author">
-                                        @endif
+                                        {{-- Temporarily hidden - feature retained for future use. --}}
+                                        <div class="front-sabqa-author">
                                             @if ($author->picture)<img src="{{ asset($author->picture) }}" alt="{{ $author->name }}">@endif
                                             <span>{{ $author->name }}</span>
-                                        @if ($authorUrl)
-                                            </a>
-                                        @else
-                                            </div>
-                                        @endif
+                                        </div>
                                     @endforeach
                                 </div>
                             </section>
@@ -44,7 +32,7 @@
 
                         @if ($article->categories->isNotEmpty())
                             <section class="front-taza-sidebar-card" aria-labelledby="mazmoon-categories-heading">
-                                <h2 id="mazmoon-categories-heading">موضوعات</h2>
+                                <h2 id="mazmoon-categories-heading">Categories</h2>
                                 <ul class="front-sabqa-filter-list">
                                     @foreach ($article->categories as $category)
                                         <li>
@@ -63,7 +51,7 @@
 
                         @if ($article->tags->isNotEmpty())
                             <section class="front-taza-sidebar-card" aria-labelledby="mazmoon-tags-heading">
-                                <h2 id="mazmoon-tags-heading">ٹیگز</h2>
+                                <h2 id="mazmoon-tags-heading">Tags</h2>
                                 <div class="front-sabqa-tags">
                                     @foreach ($article->tags as $tag)
                                         @if ($tag->getKey() && filled($tag->name))
@@ -79,7 +67,7 @@
 
                         @if ($article->relatedArticles->isNotEmpty())
                             <section class="front-taza-sidebar-card" aria-labelledby="mazmoon-related-heading">
-                                <h2 id="mazmoon-related-heading">متعلقہ مضامین</h2>
+                                <h2 id="mazmoon-related-heading">Related Articles</h2>
                                 <div class="front-mazmoon-related">
                                     @foreach ($article->relatedArticles as $relatedArticle)
                                         <article class="front-mazmoon-related__card">
@@ -104,7 +92,7 @@
                             <div class="front-mazmoon-detail__meta front-ui">
                                 @if ($article->authors->isNotEmpty())<span><i class="fa-solid fa-user" aria-hidden="true"></i> {{ $article->authors->pluck('name')->filter()->implode(', ') }}</span>@endif
                                 @if ($article->publish_date)<time datetime="{{ $article->publish_date->toDateString() }}"><i class="fa-regular fa-calendar" aria-hidden="true"></i> {{ $article->publish_date->format('d M Y') }}</time>@endif
-                                @if ($article->issue_number)<span>شمارہ نمبر: {{ $article->issue_number }}</span>@endif
+                                @if ($article->issue_number)<span>Issue No.: {{ $article->issue_number }}</span>@endif
                                 @if ($article->show_visit_counter)
                                     <span class="d-inline-flex align-items-center gap-1 text-muted small"
                                         data-article-visit-count="{{ $article->site_visits_count ?? 0 }}">
@@ -122,13 +110,13 @@
                                         data-store-url="{{ route('front.article-bookmarks.store', $article) }}"
                                         data-destroy-url="{{ route('front.article-bookmarks.destroy', $article) }}">
                                         <i class="{{ $isBookmarked ? 'fa-solid' : 'fa-regular' }} fa-bookmark" aria-hidden="true"></i>
-                                        <span data-article-bookmark-label>{{ $isBookmarked ? 'بک مارک سے ہٹائیں' : 'بک مارک کریں' }}</span>
+                                        <span data-article-bookmark-label>{{ $isBookmarked ? 'Remove from Bookmarks' : 'Add to Bookmarks' }}</span>
                                     </button>
                                 @else
                                     <button class="front-article-bookmark" type="button" data-bs-toggle="modal"
                                         data-bs-target="#subscription-login-modal">
                                         <i class="fa-regular fa-bookmark" aria-hidden="true"></i>
-                                        <span>بک مارک کریں</span>
+                                        <span>Add to Bookmarks</span>
                                     </button>
                                 @endauth
                             </div>

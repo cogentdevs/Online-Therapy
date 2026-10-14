@@ -15,7 +15,7 @@
 .front-advertise__heading-line { background: $front-primary; display: block; height: 3px; margin: 2rem auto 1rem; width: 50px; }
 .front-advertise__heading p { color: $front-muted; line-height: 1.9; margin: 0; }
 .front-advertise__layout { margin-inline: auto; max-width: 1180px; }
-.front-advertise__card { background: $front-surface; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow-sm; padding: clamp(1.2rem, 2.2vw, 2rem); }
+.front-advertise__card { background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow-sm; padding: clamp(1.2rem, 2.2vw, 2rem); }
 .front-advertise__form-card > h2,
 .front-advertise__sidebar h2 { color: $front-primary-hover; font-size: clamp(1.35rem, 2vw, 1.75rem); margin: 0 0 1rem; }
 .front-advertise__intro { border-bottom: 1px solid $front-border; color: $front-muted; margin: 0 0 1.5rem; padding-bottom: 1rem; }

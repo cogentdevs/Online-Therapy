@@ -4,6 +4,7 @@ use App\Http\Controllers\AdClickController;
 use App\Http\Controllers\Admin\AboutController;
 use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminPasswordResetController;
 use App\Http\Controllers\Admin\AdsController;
 use App\Http\Controllers\Admin\AdvertisingRequestController as AdminAdvertisingRequestController;
 use App\Http\Controllers\Admin\ArticleController;
@@ -13,8 +14,8 @@ use App\Http\Controllers\Admin\AuthorSettingController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ConsultancyController;
-use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\FaqCategoryController;
 use App\Http\Controllers\Admin\FAQController;
@@ -203,6 +204,19 @@ Route::get('/admin', [AdminController::class, 'showLogin'])
 Route::post('/admin/login', [AdminController::class, 'login'])
     ->middleware('throttle:5,1')
     ->name('admin.login.submit');
+
+Route::get('/admin/forgot-password', [AdminPasswordResetController::class, 'create'])
+    ->middleware('guest:web')
+    ->name('admin.password.request');
+Route::post('/admin/forgot-password', [AdminPasswordResetController::class, 'store'])
+    ->middleware('guest:web')
+    ->name('admin.password.email');
+Route::get('/admin/reset-password/{token}', [AdminPasswordResetController::class, 'edit'])
+    ->middleware('guest:web')
+    ->name('admin.password.reset');
+Route::post('/admin/reset-password', [AdminPasswordResetController::class, 'update'])
+    ->middleware('guest:web')
+    ->name('admin.password.update');
 
 Route::prefix('admin')
     ->name('admin.')
@@ -644,6 +658,8 @@ Route::prefix('admin')
         Route::delete('/consultancy/delete/{id}', [ConsultancyController::class, 'destroy'])->whereNumber('id')->middleware('permission:consultancies.delete')->name('consultancy.destroy');
 
         Route::get('/course', [CourseController::class, 'index'])->middleware('permission:courses.view')->name('course.index');
+        Route::get('/course/homepage-layout-settings', [CourseController::class, 'homepageLayoutSettings'])->middleware('permission:courses.edit')->name('course.homepage-layout-settings');
+        Route::put('/course/homepage-layout-settings', [CourseController::class, 'updateHomepageLayoutSettings'])->middleware('permission:courses.edit')->name('course.homepage-layout-settings.update');
         Route::get('/course/add', [CourseController::class, 'create'])->middleware('permission:courses.create')->name('course.create');
         Route::post('/course/store', [CourseController::class, 'store'])->middleware('permission:courses.create')->name('course.store');
         Route::get('/course/detail/{id}', [CourseController::class, 'show'])->whereNumber('id')->middleware('permission:courses.view')->name('course.show');

@@ -6,7 +6,7 @@ document.querySelectorAll('[data-newsletter-form]').forEach((form) => {
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
         button.disabled = true;
-        feedback.textContent = 'براہ کرم انتظار کریں…';
+        feedback.textContent = 'Please wait…';
         feedback.classList.remove('d-none', 'alert-danger', 'alert-success');
         feedback.classList.add('alert-info');
 
@@ -28,7 +28,7 @@ document.querySelectorAll('[data-newsletter-form]').forEach((form) => {
             feedback.classList.add('alert-success');
             email.value = '';
         } catch (error) {
-            feedback.textContent = error instanceof Error ? error.message : 'سبسکرپشن محفوظ نہیں ہو سکی، دوبارہ کوشش کریں۔';
+            feedback.textContent = error instanceof Error ? error.message : 'Unable to subscribe right now. Please try again.';
             feedback.classList.remove('alert-info', 'alert-success');
             feedback.classList.add('alert-danger');
         } finally {

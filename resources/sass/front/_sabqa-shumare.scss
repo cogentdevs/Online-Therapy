@@ -25,7 +25,7 @@
 .front-sabqa-tags a { border: 1px solid $front-border; border-radius: 999px; color: $front-text; font-size: .75rem; padding: .3rem .7rem; }
 .front-sabqa-tags a.active,
 .front-sabqa-tags a:hover { border-color: $front-primary; color: $front-primary; }
-.front-sabqa-card { background: $front-surface; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow-sm; direction: ltr; display: grid; grid-template-columns: 145px minmax(0, 1fr); height: 100%; overflow: hidden; }
+.front-sabqa-card { background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow-sm; direction: ltr; display: grid; grid-template-columns: 145px minmax(0, 1fr); height: 100%; overflow: hidden; }
 .front-sabqa-card__cover { align-items: center; background: transparent; display: flex; justify-content: center; min-height: 215px; padding: .65rem; }
 .front-sabqa-card__cover img { border-radius: $front-radius-sm; height: auto; max-height: 195px; max-width: 125px; object-fit: contain; width: auto; }
 .front-sabqa-card__content { align-self: stretch; direction: rtl; display: flex; flex-direction: column; padding: 1rem; text-align: right; }
@@ -35,7 +35,7 @@
 .front-sabqa-card__authors { font-size: .82rem; margin: 0 0 .4rem; }
 .front-sabqa-card__description { color: $front-muted; display: -webkit-box; line-clamp: 2; line-height: 1.85; margin: 0 0 .7rem; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
 .front-sabqa-card .front-taza-button { align-self: flex-start; margin-top: auto; padding-inline: calc(.75rem + 5px); }
-.front-sabqa-empty { background: $front-surface; border: 1px solid $front-border; border-radius: $front-radius; padding: 2rem; text-align: center; }
+.front-sabqa-empty { background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius; padding: 2rem; text-align: center; }
 .front-sabqa-pagination { direction: ltr; margin-top: 1.5rem; }
 .front-sabqa-pagination .pagination { justify-content: center; margin-bottom: 0; }
 .front-sabqa-pagination .page-item.active .page-link { background-color: $front-accent; border-color: $front-accent; color: $front-white; }

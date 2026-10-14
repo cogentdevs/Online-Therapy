@@ -95,7 +95,7 @@ class UserController extends Controller
 
         return to_route('front.password.request')->with(
             'success',
-            'اگر یہ ای میل کسی اہل اکاؤنٹ سے منسلک ہے تو پاس ورڈ ری سیٹ لنک بھیج دیا گیا ہے۔'
+            'If this email belongs to an eligible account, a password reset link has been sent.'
         );
     }
 
@@ -120,7 +120,7 @@ class UserController extends Controller
         $user = User::query()->where('email', $credentials['email'])->first();
 
         if ($user?->hasRole('user', 'web') !== true) {
-            return back()->withErrors(['email' => 'یہ پاس ورڈ ری سیٹ لنک درست نہیں ہے یا ایکسپائر ہو چکا ہے۔']);
+            return back()->withErrors(['email' => 'This password reset link is invalid or has expired.']);
         }
 
         $status = Password::broker('users')->reset(
@@ -136,12 +136,12 @@ class UserController extends Controller
         );
 
         if ($status !== Password::PasswordReset) {
-            return back()->withErrors(['email' => 'یہ پاس ورڈ ری سیٹ لنک درست نہیں ہے یا ایکسپائر ہو چکا ہے۔']);
+            return back()->withErrors(['email' => 'This password reset link is invalid or has expired.']);
         }
 
         return to_route('front.login')->with(
             'success',
-            'آپ کا پاس ورڈ کامیابی سے تبدیل ہو گیا ہے۔ اب آپ اپنے نئے پاس ورڈ کے ساتھ لاگ ان کر سکتے ہیں۔'
+            'Your password has been changed successfully. You can now sign in with your new password.'
         );
     }
 
@@ -315,7 +315,7 @@ class UserController extends Controller
             $this->deleteFrontendProfileImage($oldFilename);
         }
 
-        return to_route('front.account.profile')->with('success', 'آپ کا پروفائل کامیابی سے اپ ڈیٹ ہو گیا ہے۔');
+        return to_route('front.account.profile')->with('success', 'Your profile has been updated successfully.');
     }
 
     public function changePassword(): View
@@ -337,14 +337,14 @@ class UserController extends Controller
     public function sendTwoFactorOtp(SendTwoFactorOtpRequest $request): RedirectResponse
     {
         if ($request->validated('method') !== 'email') {
-            return back()->withErrors(['method' => 'فون کے ذریعے تصدیق فی الحال دستیاب نہیں ہے۔']);
+            return back()->withErrors(['method' => 'Phone verification is not available at the moment.']);
         }
 
         $user = $request->user('web');
         $rateLimitKey = 'front-2fa-enable:'.$user->getKey();
         if (RateLimiter::tooManyAttempts($rateLimitKey, 1)) {
             return back()->withErrors([
-                'method' => 'نیا کوڈ حاصل کرنے کے لیے '.RateLimiter::availableIn($rateLimitKey).' سیکنڈ انتظار کریں۔',
+                'method' => 'Please wait '.RateLimiter::availableIn($rateLimitKey).' seconds before requesting a new code.',
             ]);
         }
 
@@ -372,7 +372,7 @@ class UserController extends Controller
         Mail::to($user)->send(new TwoFactorOtpMailToUser($user, $otp));
 
         return to_route('front.account.two-factor-authentication.verify')
-            ->with('success', 'تصدیقی کوڈ آپ کی ای میل پر بھیج دیا گیا ہے۔');
+            ->with('success', 'A verification code has been sent to your email.');
     }
 
     public function verifyTwoFactorAuthentication(Request $request): RedirectResponse|View
@@ -380,7 +380,7 @@ class UserController extends Controller
         $challenge = $this->activeEnableTwoFactorChallenge($request);
         if ($challenge === null) {
             return to_route('front.account.two-factor-authentication')
-                ->withErrors(['otp' => 'کوئی فعال تصدیقی درخواست موجود نہیں ہے۔']);
+                ->withErrors(['otp' => 'There is no active verification request.']);
         }
 
         return view('frontend.user-account.two-factor-verify', [
@@ -426,13 +426,13 @@ class UserController extends Controller
 
         if ($result === 'enabled') {
             return to_route('front.account.two-factor-authentication')
-                ->with('success', 'دو مرحلہ توثیق کامیابی سے فعال ہو گئی ہے۔');
+                ->with('success', 'Two-factor authentication has been enabled successfully.');
         }
 
         $message = match ($result) {
-            'attempts' => 'تصدیقی کوششوں کی حد مکمل ہو چکی ہے۔ نیا کوڈ حاصل کریں۔',
-            'expired' => 'تصدیقی کوڈ ایکسپائر ہو چکا ہے۔ نیا کوڈ حاصل کریں۔',
-            default => 'تصدیقی کوڈ درست نہیں ہے۔',
+            'attempts' => 'The verification attempt limit has been reached. Request a new code.',
+            'expired' => 'The verification code has expired. Request a new code.',
+            default => 'The verification code is invalid.',
         };
 
         return back()->withErrors(['otp' => $message]);
@@ -443,10 +443,10 @@ class UserController extends Controller
         $user = $request->user('web');
         $setting = $user->twoFactorSetting;
         if (! $setting?->is_enabled) {
-            return back()->withErrors(['current_password' => 'دو مرحلہ توثیق پہلے ہی غیر فعال ہے۔']);
+            return back()->withErrors(['current_password' => 'Two-factor authentication is already disabled.']);
         }
         if ($setting->method !== 'email') {
-            return back()->withErrors(['current_password' => 'موجودہ تصدیقی طریقہ فی الحال دستیاب نہیں ہے۔']);
+            return back()->withErrors(['current_password' => 'The current verification method is not available.']);
         }
         if ($response = $this->accountTwoFactorCooldownResponse($user, 'disable')) {
             return $response;
@@ -455,7 +455,7 @@ class UserController extends Controller
         $this->issueAccountTwoFactorChallenge($user, 'disable', 'email');
 
         return to_route('front.account.two-factor-authentication.disable.challenge')
-            ->with('success', 'تصدیقی کوڈ آپ کی ای میل پر بھیج دیا گیا ہے۔');
+            ->with('success', 'A verification code has been sent to your email.');
     }
 
     public function disableTwoFactorVerification(Request $request): RedirectResponse|View
@@ -484,14 +484,14 @@ class UserController extends Controller
         $user = $request->user('web');
         $setting = $user->twoFactorSetting;
         if (! $setting?->is_enabled || $setting->method !== 'email' || ! $this->hasActiveAccountChallenge($user, 'disable', 'email')) {
-            return to_route('front.account.two-factor-authentication')->withErrors(['otp' => 'تصدیقی درخواست درست نہیں ہے۔']);
+            return to_route('front.account.two-factor-authentication')->withErrors(['otp' => 'The verification request is invalid.']);
         }
         if ($response = $this->accountTwoFactorCooldownResponse($user, 'disable')) {
             return $response;
         }
         $this->issueAccountTwoFactorChallenge($user, 'disable', 'email');
 
-        return back()->with('success', 'نیا تصدیقی کوڈ آپ کی ای میل پر بھیج دیا گیا ہے۔');
+        return back()->with('success', 'A new verification code has been sent to your email.');
     }
 
     public function sendChangeTwoFactorMethodOtp(ChangeTwoFactorMethodRequest $request): RedirectResponse
@@ -500,13 +500,13 @@ class UserController extends Controller
         $setting = $user->twoFactorSetting;
         $method = $request->validated('method');
         if (! $setting?->is_enabled) {
-            return back()->withErrors(['method' => 'دو مرحلہ توثیق فعال نہیں ہے۔']);
+            return back()->withErrors(['method' => 'Two-factor authentication is not enabled.']);
         }
         if ($method === $setting->method) {
-            return back()->withErrors(['method' => 'منتخب طریقہ پہلے ہی فعال ہے۔']);
+            return back()->withErrors(['method' => 'The selected method is already active.']);
         }
         if ($method !== 'email') {
-            return back()->withErrors(['method' => 'فون کے ذریعے تصدیق فی الحال دستیاب نہیں ہے۔']);
+            return back()->withErrors(['method' => 'Phone verification is not available at the moment.']);
         }
         if ($response = $this->accountTwoFactorCooldownResponse($user, 'change_method')) {
             return $response;
@@ -514,7 +514,7 @@ class UserController extends Controller
         $this->issueAccountTwoFactorChallenge($user, 'change_method', $method);
 
         return to_route('front.account.two-factor-authentication.change-method.challenge')
-            ->with('success', 'نئے طریقے کی تصدیق کے لیے کوڈ بھیج دیا گیا ہے۔');
+            ->with('success', 'A code has been sent to verify the new method.');
     }
 
     public function changeTwoFactorMethodVerification(Request $request): RedirectResponse|View
@@ -543,14 +543,14 @@ class UserController extends Controller
         $user = $request->user('web');
         $setting = $user->twoFactorSetting;
         if (! $setting?->is_enabled || $setting->method === 'email' || ! $this->hasActiveAccountChallenge($user, 'change_method', 'email')) {
-            return to_route('front.account.two-factor-authentication')->withErrors(['otp' => 'تصدیقی درخواست درست نہیں ہے۔']);
+            return to_route('front.account.two-factor-authentication')->withErrors(['otp' => 'The verification request is invalid.']);
         }
         if ($response = $this->accountTwoFactorCooldownResponse($user, 'change_method')) {
             return $response;
         }
         $this->issueAccountTwoFactorChallenge($user, 'change_method', 'email');
 
-        return back()->with('success', 'نیا تصدیقی کوڈ آپ کی ای میل پر بھیج دیا گیا ہے۔');
+        return back()->with('success', 'A new verification code has been sent to your email.');
     }
 
     public function updateAccountPassword(ChangePasswordRequest $request): RedirectResponse
@@ -565,7 +565,7 @@ class UserController extends Controller
         });
 
         return to_route('front.account.change-password')
-            ->with('success', 'آپ کا پاس ورڈ کامیابی سے تبدیل ہو گیا ہے۔');
+            ->with('success', 'Your password has been changed successfully.');
     }
 
     public function authenticate(LoginUserRequest $request): JsonResponse|RedirectResponse
@@ -576,7 +576,7 @@ class UserController extends Controller
 
         if ($setting?->is_enabled) {
             if ($setting->method !== 'email') {
-                $message = 'اس اکاؤنٹ کا تصدیقی طریقہ فی الحال دستیاب نہیں ہے۔';
+                $message = 'This account verification method is not available.';
 
                 return $request->expectsJson()
                     ? response()->json(['message' => $message, 'errors' => ['email' => [$message]]], 422)
@@ -661,11 +661,11 @@ class UserController extends Controller
         if ($result !== 'verified') {
             if ($result !== 'invalid') {
                 return $this->cancelPendingLogin($request, $result === 'expired'
-                    ? 'تصدیقی کوڈ ایکسپائر یا استعمال ہو چکا ہے۔ دوبارہ لاگ ان کریں۔'
-                    : 'تصدیقی کوششوں کی حد مکمل ہو چکی ہے۔ دوبارہ لاگ ان کریں۔');
+                    ? 'The verification code has expired or been used. Please sign in again.'
+                    : 'The verification attempt limit has been reached. Please sign in again.');
             }
 
-            return back()->withErrors(['otp' => 'تصدیقی کوڈ درست نہیں ہے۔']);
+            return back()->withErrors(['otp' => 'The verification code is invalid.']);
         }
 
         $pending = $request->session()->get(self::PENDING_LOGIN_SESSION_KEY);
@@ -687,13 +687,13 @@ class UserController extends Controller
         $rateLimitKey = 'front-2fa-login:'.$user->getKey();
         if (RateLimiter::tooManyAttempts($rateLimitKey, 1)) {
             return back()->withErrors([
-                'otp' => 'نیا کوڈ حاصل کرنے کے لیے '.RateLimiter::availableIn($rateLimitKey).' سیکنڈ انتظار کریں۔',
+                'otp' => 'Please wait '.RateLimiter::availableIn($rateLimitKey).' seconds before requesting a new code.',
             ]);
         }
 
         $this->issueLoginTwoFactorChallenge($user);
 
-        return back()->with('success', 'نیا تصدیقی کوڈ آپ کی ای میل پر بھیج دیا گیا ہے۔');
+        return back()->with('success', 'A new verification code has been sent to your email.');
     }
 
     public function logout(Request $request): RedirectResponse
@@ -737,7 +737,7 @@ class UserController extends Controller
             Mail::to($user)->send(new AccountActivationLinkMailToUser($user, $activationUrl));
         });
 
-        return to_route('front.register')->with('success', 'آپ کی رجسٹریشن مکمل ہو گئی ہے۔ اکاؤنٹ فعال کرنے کے لیے اپنی ای میل چیک کریں۔');
+        return to_route('front.register')->with('success', 'Your registration is complete. Check your email to activate your account.');
     }
 
     public function activation(Request $request): Response
@@ -787,7 +787,7 @@ class UserController extends Controller
         }
 
         return to_route('front.login')
-            ->with('success', 'آپ کا اکاؤنٹ کامیابی سے ایکٹیویٹ ہو گیا ہے۔ اب آپ اپنے ای میل اور پاس ورڈ کے ذریعے لاگ ان کر سکتے ہیں۔')
+            ->with('success', 'Your account has been activated successfully. You can now sign in with your email and password.')
             ->header('Referrer-Policy', 'no-referrer');
     }
 
@@ -901,7 +901,7 @@ class UserController extends Controller
             ->where('purpose', $purpose)->where('channel', $channel)->whereNull('consumed_at')
             ->latest('id')->first();
         if ($challenge === null) {
-            return to_route('front.account.two-factor-authentication')->withErrors(['otp' => 'کوئی فعال تصدیقی درخواست موجود نہیں ہے۔']);
+            return to_route('front.account.two-factor-authentication')->withErrors(['otp' => 'There is no active verification request.']);
         }
 
         $routePrefix = 'front.account.two-factor-authentication.'.str_replace('_', '-', $purpose);
@@ -918,17 +918,17 @@ class UserController extends Controller
     {
         if ($result === 'verified') {
             $message = $purpose === 'disable'
-                ? 'دو مرحلہ توثیق کامیابی سے غیر فعال کر دی گئی ہے۔'
-                : 'دو مرحلہ توثیق کا طریقہ کامیابی سے تبدیل ہو گیا ہے۔';
+                ? 'Two-factor authentication has been disabled successfully.'
+                : 'The two-factor authentication method has been changed successfully.';
 
             return to_route('front.account.two-factor-authentication')->with('success', $message);
         }
 
         $message = match ($result) {
-            'attempts' => 'تصدیقی کوششوں کی حد مکمل ہو چکی ہے۔ نیا کوڈ حاصل کریں۔',
-            'expired' => 'تصدیقی کوڈ ایکسپائر یا استعمال ہو چکا ہے۔',
-            'state' => 'دو مرحلہ توثیق کی موجودہ حالت تبدیل ہو چکی ہے۔',
-            default => 'تصدیقی کوڈ درست نہیں ہے۔',
+            'attempts' => 'The verification attempt limit has been reached. Request a new code.',
+            'expired' => 'The verification code has expired or has already been used.',
+            'state' => 'The two-factor authentication state has changed.',
+            default => 'The verification code is invalid.',
         };
 
         return back()->withErrors(['otp' => $message]);
@@ -941,7 +941,7 @@ class UserController extends Controller
             return null;
         }
 
-        return back()->withErrors(['otp' => 'نیا کوڈ حاصل کرنے کے لیے '.RateLimiter::availableIn($key).' سیکنڈ انتظار کریں۔']);
+        return back()->withErrors(['otp' => 'Please wait '.RateLimiter::availableIn($key).' seconds before requesting a new code.']);
     }
 
     private function hasActiveAccountChallenge(User $user, string $purpose, string $channel): bool
@@ -968,7 +968,7 @@ class UserController extends Controller
                 : null;
     }
 
-    private function cancelPendingLogin(Request $request, string $message = 'آپ کا تصدیقی سیشن درست نہیں ہے۔ دوبارہ لاگ ان کریں۔'): RedirectResponse
+    private function cancelPendingLogin(Request $request, string $message = 'Your verification session is invalid. Please sign in again.'): RedirectResponse
     {
         $request->session()->forget(self::PENDING_LOGIN_SESSION_KEY);
 

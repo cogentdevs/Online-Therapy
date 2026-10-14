@@ -31,7 +31,7 @@
 .subscription-type-tabs .nav-link { background: rgba($front-surface, .65); padding-inline: 1.5rem; white-space: normal; }
 .subscription-plan-groups,
 .subscription-membership-grid { margin-top: 1.5rem; }
-.subscription-card { background: $front-surface; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow-sm; display: flex; flex-direction: column; height: 100%; min-height: 370px; padding: 2rem 1.35rem 1.2rem; text-align: center; }
+.subscription-card { background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow-sm; display: flex; flex-direction: column; height: 100%; min-height: 370px; padding: 2rem 1.35rem 1.2rem; text-align: center; }
 .subscription-card__icon { align-items: center; background: $front-primary-soft; border-radius: 50%; color: $front-primary; display: inline-flex; font-size: 1.75rem; height: 76px; justify-content: center; margin: 0 auto 1.2rem; width: 76px; }
 .subscription-card h2 { font-size: 1.45rem; font-weight: 800; margin-bottom: .75rem; }
 .subscription-card__price { color: $front-primary-hover; font: 800 clamp(1.65rem, 3vw, 2rem)/1.2 sans-serif; margin-top: .65rem; }
@@ -72,7 +72,7 @@
 .subscription-membership-module-row__status { font-size: 1.1rem; text-align: center; }
 .subscription-membership-module-row__label { font-weight: 700; }
 .subscription-membership-card .subscription-card__action { margin-top: auto; }
-.subscription-empty { background: $front-surface; border: 1px solid $front-border; border-radius: $front-radius; color: $front-muted; margin-top: 1.5rem; padding: 3rem 1rem; text-align: center; }
+.subscription-empty { background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius; color: $front-muted; margin-top: 1.5rem; padding: 3rem 1rem; text-align: center; }
 .subscription-empty i { color: $front-primary; font-size: 2rem; margin-bottom: .75rem; }
 .subscription-empty p { margin: 0; }
 .subscription-login-modal .modal-content { border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow; overflow: hidden; }
@@ -91,7 +91,7 @@
 .subscription-checkout-page__content { margin-inline: auto; max-width: 1120px; }
 .subscription-checkout-page__alert { margin: 0 auto 1rem; max-width: 1120px; }
 .subscription-checkout-product,
-.subscription-checkout-summary { background: $front-surface; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow-sm; padding: clamp(1.25rem, 3vw, 2rem); }
+.subscription-checkout-summary { background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow-sm; padding: clamp(1.25rem, 3vw, 2rem); }
 .subscription-checkout-product { display: flex; flex-direction: column; text-align: center; }
 .subscription-checkout-product__kind { align-self: center; background: $front-primary-soft; border-radius: 999px; color: $front-primary-hover; font-weight: 800; padding: .3rem .9rem; }
 .subscription-checkout-product__icon { align-items: center; background: $front-primary-soft; border-radius: 50%; color: $front-primary; display: flex; font-size: 1.65rem; height: 70px; justify-content: center; margin: 1rem auto; width: 70px; }

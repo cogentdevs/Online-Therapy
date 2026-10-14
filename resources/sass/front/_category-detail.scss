@@ -5,7 +5,7 @@
 .front-category-detail__container { max-width: none; padding-inline: clamp(.65rem, 1.5vw, 1.5rem); width: 100%; }
 .front-category-detail__layout { direction: ltr; }
 .front-category-detail__layout > * { direction: rtl; }
-.front-category-sidebar { background: $front-surface; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow-sm; overflow: hidden; }
+.front-category-sidebar { background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow-sm; overflow: hidden; }
 .front-category-sidebar h2 { align-items: center; display: flex; font-size: 1.25rem; gap: .65rem; margin: 0; padding: 1rem; }
 .front-category-sidebar h2 i { color: $front-primary; font-size: 1rem; }
 .front-category-sidebar__item { align-items: center; border-top: 1px solid $front-border; display: grid; gap: .7rem; grid-template-columns: 38px minmax(0, 1fr) 14px; min-height: 58px; padding: .55rem .8rem; }
@@ -40,7 +40,7 @@
 .front-category-year { border-top: 2px solid rgba($front-primary, .7); padding-block: 1rem 1.5rem; }
 .front-category-year > h2 { font-family: var(--front-font-ui); font-size: 1.55rem; font-weight: 700; margin: 0 0 1rem; text-align: left; }
 .front-category-magazine-card,
-.front-category-article-card { background: $front-surface; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow-sm; height: 100%; overflow: hidden; transition: box-shadow $front-transition, transform $front-transition; }
+.front-category-article-card { background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow-sm; height: 100%; overflow: hidden; transition: box-shadow $front-transition, transform $front-transition; }
 .front-category-magazine-card:hover,
 .front-category-article-card:hover { box-shadow: $front-shadow; transform: translateY(-3px); }
 .front-category-magazine-card__cover { align-items: center; display: flex; height: 230px; justify-content: center; padding: .75rem; }
@@ -60,7 +60,7 @@
 .front-category-article-card__image img { height: 100%; object-fit: cover; width: 100%; }
 .front-category-article-card__image i { font-size: 2rem; }
 .front-category-article-card__body p { color: $front-muted; display: -webkit-box; line-height: 1.8; margin-bottom: .8rem; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
-.front-category-empty { background: $front-surface; border: 1px solid $front-border; border-radius: $front-radius; padding: 2rem; text-align: center; }
+.front-category-empty { background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius; padding: 2rem; text-align: center; }
 .front-category-pagination { direction: ltr; margin-top: .5rem; }
 .front-category-pagination .pagination { justify-content: center; margin-bottom: 0; }
 .front-category-pagination .page-item.active .page-link { background-color: $front-accent; border-color: $front-accent; color: $front-white; }

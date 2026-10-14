@@ -10,9 +10,9 @@
 .front-footer__grid { margin-inline: 0; }
 .front-footer__column { border-inline-start: 1px solid $front-white-divider; padding-inline: clamp(1rem, 2vw, 2rem); }
 .front-footer__column:first-child { border-inline-start: 0; }
-.front-footer__brand { margin-bottom: 1rem; }
+.front-footer__brand { display: flex; flex-direction: column; gap: .65rem; margin-bottom: 1rem; }
 .front-footer__brand .front-logo__mark { background: $front-primary; }
-.front-footer__brand .front-logo__image--footer { max-height: 100px; max-width: 270px; }
+.front-footer__brand .front-logo__image--footer { max-height: 135px; max-width: 320px; }
 .front-footer__about { color: $front-white-muted; line-height: 2.1; margin: 0 0 1rem; max-width: 30rem; }
 .front-footer__title { font-size: 1.1rem; font-weight: 700; margin-bottom: .9rem; }
 .front-footer__links { list-style: none; margin: 0; padding: 0; }

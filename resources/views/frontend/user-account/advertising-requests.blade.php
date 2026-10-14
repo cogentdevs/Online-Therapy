@@ -1,20 +1,20 @@
 @extends('layouts.frontLayout.front-design')
 
-@section('title', 'میری تشہیری درخواستیں')
-@section('meta_description', 'اپنی تشہیری درخواستوں اور ان کی موجودہ حالت دیکھیں')
+@section('title', 'My Advertising Requests')
+@section('meta_description', 'View your advertising requests and their current status.')
 
 @section('content')
     <div class="front-account-page">
         <div class="container-fluid front-account-container">
-            <nav class="front-taza-breadcrumb front-ui" aria-label="بریڈ کرمب">
-                <a href="{{ route('frontend.home') }}"><i class="fa-solid fa-house" aria-hidden="true"></i> صفحہ اول</a>
-                <span aria-hidden="true">/</span><a href="{{ route('front.account') }}">میرا اکاؤنٹ</a>
-                <span aria-hidden="true">/</span><span aria-current="page">میری تشہیری درخواستیں</span>
+            <nav class="front-taza-breadcrumb front-ui" aria-label="Breadcrumb">
+                <a href="{{ route('frontend.home') }}"><i class="fa-solid fa-house" aria-hidden="true"></i> Home</a>
+                <span aria-hidden="true">/</span><a href="{{ route('front.account') }}">My Account</a>
+                <span aria-hidden="true">/</span><span aria-current="page">My Advertising Requests</span>
             </nav>
 
             <header class="front-account-heading">
-                <h1>میری تشہیری درخواستیں</h1><span aria-hidden="true"></span>
-                <p>اپنی درخواستوں کی موجودہ حالت اور تفصیل دیکھیں۔</p>
+                <h1>My Advertising Requests</h1><span aria-hidden="true"></span>
+                <p>View the current status and details of your requests.</p>
             </header>
 
             <div class="row g-4 align-items-start front-account-layout">
@@ -22,7 +22,7 @@
                 <div class="col-12 col-lg-9">
                     <section class="front-account-card front-ad-request-card">
                         <header class="user-subscriptions-section-header">
-                            <div><h2>تمام درخواستیں</h2><p>تازہ ترین درخواست پہلے دکھائی گئی ہے۔</p></div>
+                            <div><h2>All Requests</h2><p>The newest request is shown first.</p></div>
                         </header>
 
                         @if ($adRequests->isNotEmpty())
@@ -35,13 +35,13 @@
                                 >
                                     <thead>
                                         <tr>
-                                            <th>درخواست نمبر</th>
-                                            <th>حالت</th>
-                                            <th>تشہیری مدت</th>
-                                            <th>درخواست کی تاریخ</th>
-                                            <th>کل مدت</th>
-                                            <th>مقامات</th>
-                                            <th>تفصیل</th>
+                                            <th>Request No.</th>
+                                            <th>Status</th>
+                                            <th>Advertising Period</th>
+                                            <th>Request Date</th>
+                                            <th>Total Duration</th>
+                                            <th>Placements</th>
+                                            <th>Details</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -55,11 +55,11 @@
                                                 <td data-order="{{ $adRequest->created_at?->timestamp }}">
                                                     <time datetime="{{ $adRequest->created_at?->toDateString() }}" dir="ltr">{{ $adRequest->created_at?->format('d M Y') }}</time>
                                                 </td>
-                                                <td data-order="{{ $adRequest->durationDays() }}">{{ $adRequest->durationDays() }} دن</td>
+                                                <td data-order="{{ $adRequest->durationDays() }}">{{ $adRequest->durationDays() }} days</td>
                                                 <td data-order="{{ $adRequest->placements_count }}">{{ $adRequest->placements_count }}</td>
                                                 <td>
                                                     <a class="front-account-outline-action" href="{{ route('front.account.advertising-requests.show', $adRequest) }}">
-                                                        تفصیل دیکھیں <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                                                        View Details <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
                                                     </a>
                                                 </td>
                                             </tr>
@@ -70,8 +70,8 @@
                         @else
                             <div class="front-account-empty-state">
                                 <i class="fa-solid fa-bullhorn" aria-hidden="true"></i>
-                                <p>آپ نے ابھی تک کوئی تشہیری درخواست جمع نہیں کرائی۔</p>
-                                <a class="front-account-outline-action" href="{{ route('front.advertise') }}">تشہیر کے لیے درخواست دیں</a>
+                                <p>You have not submitted any advertising requests yet.</p>
+                                <a class="front-account-outline-action" href="{{ route('front.advertise') }}">Request Advertising</a>
                             </div>
                         @endif
 

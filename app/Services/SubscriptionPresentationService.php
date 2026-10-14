@@ -58,22 +58,22 @@ class SubscriptionPresentationService
     private function productTypeLabel(?string $productFor): string
     {
         return match (Str::lower(trim((string) $productFor))) {
-            'plan' => 'منصوبہ',
-            'membership' => 'رکنیت',
-            default => $productFor ?: 'سبسکرپشن',
+            'plan' => 'Plan',
+            'membership' => 'Membership',
+            default => $productFor ?: 'Subscription',
         };
     }
 
     private function statusLabel(string $status): string
     {
         return match ($status) {
-            'active' => 'فعال',
-            'expired' => 'میعاد ختم',
-            'future' => 'طے شدہ',
-            'pending' => 'ادائیگی تصدیق کے لیے زیرِ التوا',
-            'rejected' => 'ادائیگی مسترد',
-            'inactive' => 'غیر فعال',
-            'cancelled', 'canceled' => 'منسوخ',
+            'active' => 'Active',
+            'expired' => 'Expired',
+            'future' => 'Scheduled',
+            'pending' => 'Pending payment verification',
+            'rejected' => 'Payment rejected',
+            'inactive' => 'Inactive',
+            'cancelled', 'canceled' => 'Cancelled',
             default => $status,
         };
     }
@@ -91,10 +91,10 @@ class SubscriptionPresentationService
     private function paymentStatusLabel(UserSubscription $subscription): string
     {
         return match ($this->paymentStatus($subscription)) {
-            'pending' => 'تصدیق زیرِ التوا',
-            'approved' => 'منظور شدہ',
-            'rejected' => 'مسترد',
-            default => 'سابقہ ادائیگی',
+            'pending' => 'Pending verification',
+            'approved' => 'Approved',
+            'rejected' => 'Rejected',
+            default => 'Legacy payment',
         };
     }
 
@@ -104,17 +104,17 @@ class SubscriptionPresentationService
             'easypaisa' => 'Easypaisa',
             'jazzcash' => 'JazzCash',
             'card' => 'Master / Visa Card',
-            'bank_transfer' => 'بینک ٹرانسفر',
-            default => $paymentMethod ?: 'درج نہیں',
+            'bank_transfer' => 'Bank Transfer',
+            default => $paymentMethod ?: 'Not listed',
         };
     }
 
     private function moduleLabel(SubscriptionType $type): string
     {
         return match (Str::lower(trim((string) $type->name))) {
-            'magazine', 'magazines' => 'ہفتہ وار میگزین',
-            'article', 'articles' => 'مضامین',
-            'audio' => 'آڈیو',
+            'magazine', 'magazines' => 'Weekly Magazine',
+            'article', 'articles' => 'Articles',
+            'audio' => 'Audio',
             default => $type->name,
         };
     }

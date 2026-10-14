@@ -2,10 +2,8 @@
 @use 'variables' as *;
 
 .front-auth-page {
-    background:
-        radial-gradient(circle at 7% 38%, rgba($front-primary, .08) 0 115px, transparent 116px),
-        radial-gradient(circle at 94% 72%, rgba($front-primary, .07) 0 150px, transparent 151px),
-        linear-gradient(135deg, $front-primary-soft, $front-surface 46%, $front-primary-soft);
+    background-color: $front-surface;
+    background-image: none;
     min-height: 620px;
     padding-block: 1.25rem 2.5rem;
 }
@@ -13,7 +11,7 @@
 .front-auth-page__container { max-width: 1320px; }
 
 .front-auth-card {
-    background: $front-surface;
+    background: $front-card-background;
     border: 1px solid $front-border;
     border-radius: $front-radius;
     box-shadow: $front-shadow;
@@ -33,7 +31,7 @@
 
 .front-auth-card__aside {
     align-items: center;
-    background: linear-gradient(145deg, $front-primary-soft, $front-surface);
+    background: $front-card-background;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -47,7 +45,7 @@
 .front-auth-card__aside::after {
     background: rgba($front-primary, .07);
     border-radius: 50%;
-    content: '';
+    content: none;
     position: absolute;
 }
 

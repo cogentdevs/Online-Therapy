@@ -6,8 +6,11 @@
 .front-taza-breadcrumb { align-items: center; color: $front-muted; display: flex; font-size: .82rem; gap: .65rem; margin-bottom: 1.25rem; }
 .front-taza-breadcrumb a { color: $front-primary; }
 .front-taza-layout { direction: rtl; }
-.front-taza-content,
-.front-taza-sidebar-card { background: $front-surface; }
+.front-taza-content { background: $front-surface; }
+.front-taza-magazine,
+.front-taza-article-card,
+.front-taza-compact-card,
+.front-taza-sidebar-card { background: $front-card-background; }
 .front-taza-section-title,
 .front-taza-sidebar-card > h2 { color: $front-primary; font-size: 1.35rem; font-weight: 700; margin: 0 0 .85rem; }
 .front-taza-section-title { border-bottom: 2px solid $front-primary; padding-bottom: .55rem; }

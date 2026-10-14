@@ -15,6 +15,10 @@ use App\Models\Category;
 use App\Models\Consultancy;
 use App\Models\Contact;
 use App\Models\Course;
+use App\Models\CourseDetailItem;
+use App\Models\CourseFaq;
+use App\Models\CourseLesson;
+use App\Models\CourseSection;
 use App\Models\Currency;
 use App\Models\Faq;
 use App\Models\FaqCategory;
@@ -148,6 +152,7 @@ class AdminActivityObserver
             Contact::class => 'contacts',
             Consultancy::class => 'consultancies',
             Course::class => 'courses',
+            CourseDetailItem::class, CourseSection::class, CourseLesson::class, CourseFaq::class => 'courses',
             SubscriptionProduct::class => $model->product_for === SubscriptionProduct::FOR_MEMBERSHIP
                 ? 'memberships'
                 : 'subscription_plans',

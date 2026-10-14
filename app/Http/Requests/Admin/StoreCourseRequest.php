@@ -28,11 +28,19 @@ class StoreCourseRequest extends FormRequest
             'title' => ['required', 'string', 'max:255'],
             'button_label' => ['required', 'string', 'max:100'],
             'image' => ['required', 'image', 'mimes:png,jpg,jpeg,webp', 'max:5120'],
-            'short_description' => ['nullable', 'string'], 'description' => ['required', 'string'],
+            'short_description' => ['nullable', 'string'], 'description' => ['nullable', 'string'],
             'duration_type' => ['required', 'string', Rule::in(array_keys(Course::DURATION_TYPES))],
             'duration_value' => ['required', 'integer', 'min:1'], 'isActive' => ['required', 'boolean'], 'isFeatured' => ['required', 'boolean'],
             'related_course_ids' => ['nullable', 'array'],
             'related_course_ids.*' => ['integer', 'distinct', Rule::exists((new Course)->getTable(), 'id')],
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $description = (string) $this->input('description', '');
+        $plainDescription = trim(str_replace("\u{00A0}", ' ', html_entity_decode(strip_tags($description), ENT_QUOTES | ENT_HTML5, 'UTF-8')));
+
+        $this->merge(['description' => $plainDescription === '' ? '' : $description]);
     }
 }

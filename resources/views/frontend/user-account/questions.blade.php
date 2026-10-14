@@ -1,20 +1,20 @@
 @extends('layouts.frontLayout.front-design')
 
-@section('title', 'میرے سوالات')
-@section('meta_description', 'اپنے جمع کرائے گئے سوالات اور ان کی موجودہ حالت دیکھیں')
+@section('title', 'My Questions')
+@section('meta_description', 'View your submitted questions and their current status.')
 
 @section('content')
     <div class="front-account-page">
         <div class="container-fluid front-account-container">
-            <nav class="front-taza-breadcrumb front-ui" aria-label="بریڈ کرمب">
-                <a href="{{ route('frontend.home') }}"><i class="fa-solid fa-house" aria-hidden="true"></i> صفحہ اول</a>
-                <span aria-hidden="true">/</span><a href="{{ route('front.account') }}">میرا اکاؤنٹ</a>
-                <span aria-hidden="true">/</span><span aria-current="page">میرے سوالات</span>
+            <nav class="front-taza-breadcrumb front-ui" aria-label="Breadcrumb">
+                <a href="{{ route('frontend.home') }}"><i class="fa-solid fa-house" aria-hidden="true"></i> Home</a>
+                <span aria-hidden="true">/</span><a href="{{ route('front.account') }}">My Account</a>
+                <span aria-hidden="true">/</span><span aria-current="page">My Questions</span>
             </nav>
 
             <header class="front-account-heading">
-                <h1>میرے سوالات</h1><span aria-hidden="true"></span>
-                <p>اپنے سوالات، ان کی موجودہ حالت اور موصول ہونے والے جوابات دیکھیں۔</p>
+                <h1>My Questions</h1><span aria-hidden="true"></span>
+                <p>View your questions, their current status, and any responses.</p>
             </header>
 
             <div class="row g-4 align-items-start front-account-layout">
@@ -22,8 +22,8 @@
                 <div class="col-12 col-lg-9">
                     <section class="front-account-card front-ad-request-card">
                         <header class="user-subscriptions-section-header">
-                            <div><h2>تمام سوالات</h2><p>تازہ ترین سوال پہلے دکھایا گیا ہے۔</p></div>
-                            <a class="front-account-outline-action" href="{{ route('front.ask-question') }}">نیا سوال پوچھیں</a>
+                            <div><h2>All Questions</h2><p>The newest question is shown first.</p></div>
+                            <a class="front-account-outline-action" href="{{ route('front.ask-question') }}">Ask a New Question</a>
                         </header>
 
                         @if ($questions->isNotEmpty())
@@ -36,11 +36,11 @@
                                 >
                                     <thead>
                                         <tr>
-                                            <th>سوال نمبر</th>
-                                            <th>موضوع</th>
-                                            <th>حالت</th>
-                                            <th>تاریخ</th>
-                                            <th>تفصیل</th>
+                                            <th>Question No.</th>
+                                            <th>Subject</th>
+                                            <th>Status</th>
+                                            <th>Date</th>
+                                            <th>Details</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -54,7 +54,7 @@
                                                 </td>
                                                 <td>
                                                     <a class="front-account-outline-action" href="{{ route('front.account.questions.show', $question) }}">
-                                                        تفصیل دیکھیں <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                                                        View Details <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
                                                     </a>
                                                 </td>
                                             </tr>
@@ -65,8 +65,8 @@
                         @else
                             <div class="front-account-empty-state">
                                 <i class="fa-regular fa-circle-question" aria-hidden="true"></i>
-                                <p>آپ نے ابھی تک کوئی سوال نہیں پوچھا۔</p>
-                                <a class="front-account-outline-action" href="{{ route('front.ask-question') }}">اپنا پہلا سوال پوچھیں</a>
+                                <p>You have not asked a question yet.</p>
+                                <a class="front-account-outline-action" href="{{ route('front.ask-question') }}">Ask Your First Question</a>
                             </div>
                         @endif
 

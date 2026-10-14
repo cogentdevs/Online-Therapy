@@ -29,9 +29,9 @@ function ownedCourse(User $admin, array $attributes = []): Course
 }
 
 test('Course CRUD creates fixed English drafts and publishes valid active Courses', function (): void {
-    $this->actingAs($this->admin)->post(route('admin.course.store'), coursePayload())->assertRedirect(route('admin.course.index'));
+    $this->actingAs($this->admin)->post(route('admin.course.store'), coursePayload(['isFeatured' => '1']))->assertRedirect(route('admin.course.index'));
     $course = Course::query()->sole();
-    expect($course->language)->toBe('en')->and($course->status)->toBe(Course::STATUS_DRAFT)->and($course->button_label)->toBe('Start Learning');
+    expect($course->language)->toBe('en')->and($course->status)->toBe(Course::STATUS_DRAFT)->and($course->button_label)->toBe('Start Learning')->and($course->isFeatured)->toBeTrue();
     expect(ActivityLog::query()->where('module', 'courses')->where('action', 'created')->where('subject_id', $course->id)->exists())->toBeTrue();
     $this->post(route('admin.course.publish', $course->id))->assertSessionHas('status', 'Course published successfully.');
     expect($course->refresh()->status)->toBe(Course::STATUS_PUBLISHED)->and($course->published_at)->not->toBeNull();
@@ -46,6 +46,32 @@ test('Course relationships are directional and self relations are rejected', fun
     $this->post(route('admin.course.update', $course->id), coursePayload(['image' => null, 'related_course_ids' => [$course->id]]))->assertSessionHasErrors('related_course_ids.0');
 });
 
+test('Course create and update allow an empty long description', function (): void {
+    $course = ownedCourse($this->admin);
+
+    $this->actingAs($this->admin)
+        ->post(route('admin.course.store'), coursePayload(['description' => '<p>&nbsp;</p>']))
+        ->assertRedirect(route('admin.course.index'));
+
+    $newCourse = Course::query()->where('title', 'React Native Course')->sole();
+    expect($newCourse->description)->toBe('');
+    $this->post(route('admin.course.publish', $newCourse->id))->assertSessionHas('status', 'Course published successfully.');
+
+    $this->post(route('admin.course.update', $course->id), coursePayload(['image' => null, 'description' => '<p><br></p>']))
+        ->assertRedirect(route('admin.course.index'));
+
+    expect($course->refresh()->description)->toBe('');
+});
+
+test('Course create keeps image and duration validation', function (): void {
+    $this->actingAs($this->admin)
+        ->post(route('admin.course.store'), coursePayload(['image' => null]))
+        ->assertSessionHasErrors('image');
+
+    $this->post(route('admin.course.store'), coursePayload(['duration_type' => '', 'duration_value' => 0]))
+        ->assertSessionHasErrors(['duration_type', 'duration_value']);
+});
+
 test('Course listing renders for an authorized Admin', function (): void {
     $course = ownedCourse($this->admin, ['title' => 'Listed Course']);
 
@@ -54,4 +80,19 @@ test('Course listing renders for an authorized Admin', function (): void {
         ->assertSuccessful()
         ->assertViewIs('admin.course.view-course')
         ->assertSee($course->title);
+});
+
+test('Course add and edit forms display image upload guidance', function (): void {
+    $course = ownedCourse($this->admin);
+
+    $this->actingAs($this->admin)
+        ->get(route('admin.course.create'))
+        ->assertSuccessful()
+        ->assertSee('Recommended Image Size: 1200 × 750 px (16:10 ratio). Maximum File Size: 5 MB. Allowed Formats: JPG, JPEG, PNG, WEBP.')
+        ->assertDontSee('Tip: Small logos/icons');
+
+    $this->get(route('admin.course.edit', $course->id))
+        ->assertSuccessful()
+        ->assertSee('Recommended Image Size: 1200 × 750 px (16:10 ratio). Maximum File Size: 5 MB. Allowed Formats: JPG, JPEG, PNG, WEBP.')
+        ->assertDontSee('Tip: Small logos/icons');
 });

@@ -142,7 +142,9 @@
     .front-latest-item img { height: 86px; width: 102px; }
     .front-editorial-main__image { height: 270px; }
     .front-weekly-card__cover { height: auto; max-height: 430px; }
-    .front-newsletter__content { max-width: 100%; }
+    .front-newsletter__content { grid-template-columns: 1fr; }
+    .front-newsletter__form { grid-template-columns: 1fr; }
+    .front-newsletter__button { width: 100%; }
     .front-newsletter__visual { opacity: .25; }
     .front-logo__image {
         max-width: 200px;

@@ -12,7 +12,7 @@
 .front-authors-search button { background: $front-accent; border: 1px solid $front-accent; border-radius: $front-radius 0 0 $front-radius; color: $front-white; min-width: 52px; transition: background-color $front-transition, border-color $front-transition; }
 .front-authors-search button:hover { background: $front-accent-hover; border-color: $front-accent-hover; }
 .front-authors-grid { align-items: stretch; }
-.front-author-card { align-items: stretch; background: $front-surface; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow-sm; display: flex; flex-direction: row-reverse; gap: .85rem; height: 100%; min-height: 205px; overflow: hidden; padding: .7rem; position: relative; text-align: right; transition: box-shadow $front-transition, transform $front-transition; }
+.front-author-card { align-items: stretch; background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow-sm; display: flex; flex-direction: row-reverse; gap: .85rem; height: 100%; min-height: 205px; overflow: hidden; padding: .7rem; position: relative; text-align: right; transition: box-shadow $front-transition, transform $front-transition; }
 .front-author-card::before { background: rgba($front-primary, .08); border-radius: 50%; content: ''; height: 190px; inset: -22px auto auto -38px; position: absolute; width: 190px; }
 .front-author-card::after { background: rgba($front-accent, .07); border-radius: 50%; content: ''; height: 76px; inset: -20px auto auto 42%; position: absolute; width: 76px; }
 .front-author-card:hover { box-shadow: $front-shadow; transform: translateY(-3px); }
@@ -35,7 +35,7 @@
 .front-authors-pagination .page-item.active .page-link { background-color: $front-accent; border-color: $front-accent; color: $front-white; }
 .front-authors-pagination .page-item.active .page-link:hover,
 .front-authors-pagination .page-item.active .page-link:focus { background-color: $front-accent-hover; border-color: $front-accent-hover; }
-.front-authors-empty { background: $front-surface; border: 1px solid $front-border; border-radius: $front-radius; padding: 2rem; text-align: center; }
+.front-authors-empty { background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius; padding: 2rem; text-align: center; }
 
 @media (max-width: 575.98px) {
     .front-authors-page { padding-block: 1rem 2rem; }

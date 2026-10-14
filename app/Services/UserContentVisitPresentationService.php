@@ -16,15 +16,15 @@ class UserContentVisitPresentationService
             $visitable = $visit->visitable;
 
             $visit->setAttribute('frontend_module_label', match (true) {
-                $visitable instanceof Article => 'مضمون',
-                $visitable instanceof Magazine => 'شمارہ',
-                default => 'مواد',
+                $visitable instanceof Article => 'Article',
+                $visitable instanceof Magazine => 'Issue',
+                default => 'Content',
             });
             $visit->setAttribute(
                 'frontend_title',
                 $visitable instanceof Article || $visitable instanceof Magazine
-                    ? ($visitable->title ?: 'بلا عنوان')
-                    : 'مواد دستیاب نہیں ہے'
+                    ? ($visitable->title ?: 'Untitled')
+                    : 'Content unavailable'
             );
             $visit->setAttribute('frontend_url', match (true) {
                 $visitable instanceof Article => route('mazmoon-detail', [

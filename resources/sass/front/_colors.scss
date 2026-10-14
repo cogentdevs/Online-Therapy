@@ -37,44 +37,122 @@
 // Thrive with Naila - Frontend Brand Theme
 // ========================================
 
-// Main Brand Green
-$front-primary: #183B39;
+
+// =======================================================
+// // Main Brand Green
+// $front-primary: #183B39;
+// $front-primary-hover: #12302E;
+// $front-primary-soft: #E8EFEB;
+
+// // Accent - Soft Lime Green
+// $front-accent: #12302E;
+// $front-accent-hover: #343a24;
+// $front-accent-active: #A5BA67;
+// $front-accent-soft: #F2F5E8;
+// $front-accent-border: #D7E2B5;
+
+// // Dark Colors
+// $front-dark: #183B39;
+// $front-dark-soft: #234947;
+
+// // Text Colors
+// $front-text: #183B39;
+// $front-muted: #667A74;
+
+// // Background / Surface
+// $front-light: #F5F2E7;
+// $front-surface: #EBE7D7;
+// $front-border: #D8D2BE;
+
+// // White / Cream
+// $front-white: #FFFFFF;
+// $front-card-background: #FFFFFF;
+
+// // Optional Premium Accent
+// $front-gold: #C9D998;
+
+// // Overlays
+// $front-overlay: rgba($front-dark, .72);
+// $front-overlay-light: rgba($front-dark, .18);
+
+// // Shadows
+// $front-shadow-sm: 0 .3rem 1.2rem rgba($front-primary, .08);
+// $front-shadow: 0 .8rem 2.4rem rgba($front-primary, .12);
+
+// // Surface Overlays
+// $front-surface-overlay: rgba($front-surface, .93);
+
+// $front-white-overlay: rgba($front-white, .88);
+// $front-white-strong-muted: rgba($front-white, .72);
+// $front-white-muted: rgba($front-white, .65);
+// $front-white-soft: rgba($front-white, .55);
+
+// $front-white-border: rgba($front-white, .24);
+// $front-white-divider: rgba($front-white, .12);
+
+// $front-dark-shadow: rgba($front-dark, .45);
+
+//======================================================================
+
+
+
+// ==========================================
+// FRONTEND THEME - FOREST GREEN & SOFT CREAM
+// ==========================================
+
+// Primary - Forest Green
+$front-primary: #173C3A;
 $front-primary-hover: #12302E;
 $front-primary-soft: #E8EFEB;
 
-// Accent - Soft Lime Green
-$front-accent: #12302E;
-$front-accent-hover: #343a24;
-$front-accent-active: #A5BA67;
+// Accent - Olive Green
+$front-accent: #465940;
+$front-accent-hover: #364833;
+$front-accent-active: #CFE58A;
 $front-accent-soft: #F2F5E8;
 $front-accent-border: #D7E2B5;
 
 // Dark Colors
-$front-dark: #183B39;
+$front-dark: #173C3A;
 $front-dark-soft: #234947;
 
 // Text Colors
-$front-text: #183B39;
+$front-text: #173C3A;
 $front-muted: #667A74;
 
 // Background / Surface
-$front-light: #F5F2E7;
-$front-surface: #EBE7D7;
-$front-border: #D8D2BE;
+$front-light: #F2EDDC;
+$front-surface: #FFFFFF;
+$front-border: #E3E0D5;
 
-// White / Cream
+// White / Cards
 $front-white: #FFFFFF;
+$front-card-background: #FFFFFF;
 
-// Optional Premium Accent
-$front-gold: #C9D998;
+// Premium Accent - Fresh Sage
+$front-gold: #CFE58A;
+
+// Secondary Accent - Warm Stone
+$front-stone: #BDBFAE;
+
+// Button Colors
+$front-btn-bg: #173C3A;
+$front-btn-hover: #465940;
+$front-btn-text: #FFFFFF;
+$front-btn-border: #173C3A;
+
+// Light Button
+$front-btn-light-bg: #E8EFEB;
+$front-btn-light-hover: #D7E2B5;
+$front-btn-light-text: #173C3A;
 
 // Overlays
 $front-overlay: rgba($front-dark, .72);
 $front-overlay-light: rgba($front-dark, .18);
 
 // Shadows
-$front-shadow-sm: 0 .3rem 1.2rem rgba($front-primary, .08);
-$front-shadow: 0 .8rem 2.4rem rgba($front-primary, .12);
+$front-shadow-sm: 0 .3rem 1.2rem rgba($front-primary, .06);
+$front-shadow: 0 .8rem 2.4rem rgba($front-primary, .10);
 
 // Surface Overlays
 $front-surface-overlay: rgba($front-surface, .93);
@@ -87,4 +165,4 @@ $front-white-soft: rgba($front-white, .55);
 $front-white-border: rgba($front-white, .24);
 $front-white-divider: rgba($front-white, .12);
 
-$front-dark-shadow: rgba($front-dark, .45);
+$front-dark-shadow: rgba($front-dark, .35);

@@ -136,16 +136,8 @@
                                 <h2>مضمون نگار</h2>
                                 <div class="front-taza-authors">
                                     @foreach ($authors as $author)
-                                        @php
-                                            $authorUrl = $author->getKey() && filled($author->name)
-                                                ? route('front.mazmoon-nigaar.detail', ['id' => $author->id, 'slug' => $author->name])
-                                                : null;
-                                        @endphp
-                                        @if ($authorUrl)
-                                            <a class="front-taza-author" href="{{ $authorUrl }}">
-                                        @else
-                                            <div class="front-taza-author">
-                                        @endif
+                                        {{-- Temporarily hidden - feature retained for future use. --}}
+                                        <div class="front-taza-author">
                                             @if ($author->picture)
                                                 <img src="{{ asset($author->picture) }}"
                                                     alt="{{ $author->name ?: 'Author' }}" width="48" height="48">
@@ -153,11 +145,7 @@
                                             @if ($author->name)
                                                 <span>{{ $author->name }}</span>
                                             @endif
-                                        @if ($authorUrl)
-                                            </a>
-                                        @else
-                                            </div>
-                                        @endif
+                                        </div>
                                     @endforeach
                                 </div>
                             </section>

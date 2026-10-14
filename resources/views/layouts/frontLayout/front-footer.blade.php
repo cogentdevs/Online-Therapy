@@ -12,36 +12,36 @@
                             <span class="front-logo__mark">DM</span>
                         @endif
                     </a>
+                    <div class="front-socials front-ui" aria-label="Social media links">
+                        @if ($generalSetting?->facebook)
+                            <a href="{{ $generalSetting->facebook }}" target="_blank" rel="noopener noreferrer"
+                                aria-label="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+                        @endif
+                        @if ($generalSetting?->x)
+                            <a href="{{ $generalSetting->x }}" target="_blank" rel="noopener noreferrer"
+                                aria-label="X"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
+                        @endif
+                        @if ($generalSetting?->instagram)
+                            <a href="{{ $generalSetting->instagram }}" target="_blank" rel="noopener noreferrer"
+                                aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+                        @endif
+                        @if ($generalSetting?->youtube)
+                            <a href="{{ $generalSetting->youtube }}" target="_blank" rel="noopener noreferrer"
+                                aria-label="YouTube"><i class="fa-brands fa-youtube" aria-hidden="true"></i></a>
+                        @endif
+                        @if ($generalSetting?->linkedin)
+                            <a href="{{ $generalSetting->linkedin }}" target="_blank" rel="noopener noreferrer"
+                                aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+                        @endif
+                        @if ($generalSetting?->tiktok)
+                            <a href="{{ $generalSetting->tiktok }}" target="_blank" rel="noopener noreferrer"
+                                aria-label="TikTok"><i class="fa-brands fa-tiktok" aria-hidden="true"></i></a>
+                        @endif
+                    </div>
                 </div>
                 @if ($generalSetting?->footer_text)
                     <p class="front-footer__about">{{ $generalSetting->footer_text }}</p>
                 @endif
-                <div class="front-socials front-ui" aria-label="Social media links">
-                    @if ($generalSetting?->facebook)
-                        <a href="{{ $generalSetting->facebook }}" target="_blank" rel="noopener noreferrer"
-                            aria-label="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
-                    @endif
-                    @if ($generalSetting?->x)
-                        <a href="{{ $generalSetting->x }}" target="_blank" rel="noopener noreferrer"
-                            aria-label="X"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
-                    @endif
-                    @if ($generalSetting?->instagram)
-                        <a href="{{ $generalSetting->instagram }}" target="_blank" rel="noopener noreferrer"
-                            aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
-                    @endif
-                    @if ($generalSetting?->youtube)
-                        <a href="{{ $generalSetting->youtube }}" target="_blank" rel="noopener noreferrer"
-                            aria-label="YouTube"><i class="fa-brands fa-youtube" aria-hidden="true"></i></a>
-                    @endif
-                    @if ($generalSetting?->linkedin)
-                        <a href="{{ $generalSetting->linkedin }}" target="_blank" rel="noopener noreferrer"
-                            aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
-                    @endif
-                    @if ($generalSetting?->tiktok)
-                        <a href="{{ $generalSetting->tiktok }}" target="_blank" rel="noopener noreferrer"
-                            aria-label="TikTok"><i class="fa-brands fa-tiktok" aria-hidden="true"></i></a>
-                    @endif
-                </div>
             </div>
 
             <div class="col-6 col-md-4 front-footer__column">
