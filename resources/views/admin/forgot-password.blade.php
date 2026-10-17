@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Forgot Password | {{ $generalSetting?->app_name ?? 'Digital Magazine' }}</title>
-    <link rel="icon" type="image/png" href="{{ asset('images/backend-images/logo/Thrive-with-Naila-Wellness-Emblem-removebg-preview.png') }}?v=20261014">
+    <x-site-favicon :settings="$generalSetting ?? null" />
 
     @vite(['resources/sass/admin/login.scss', 'resources/js/admin/login.js'])
 </head>

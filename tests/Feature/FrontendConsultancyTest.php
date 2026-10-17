@@ -2,6 +2,7 @@
 
 use App\Models\Consultancy;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 
 uses(RefreshDatabase::class);
 
@@ -79,4 +80,20 @@ test('listing renders an empty state when no Consultancy is publicly available',
     $this->get(route('front.consultancies.index'))
         ->assertSuccessful()
         ->assertSee('No consultancies are currently available.');
+});
+
+test('Consultancy pages do not run homepage-only Who I Help queries', function (): void {
+    $consultancy = publicConsultancy();
+    $queries = [];
+
+    DB::listen(static function ($query) use (&$queries): void {
+        $queries[] = $query->sql;
+    });
+
+    $this->get(route('front.consultancies.index'))->assertSuccessful();
+    $this->get(route('front.consultancies.show', $consultancy))->assertSuccessful();
+
+    expect(collect($queries)->contains(
+        static fn (string $sql): bool => str_contains(strtolower($sql), 'who_i_help_sections'),
+    ))->toBeFalse();
 });

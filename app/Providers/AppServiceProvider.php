@@ -24,6 +24,7 @@ use App\Models\Faq;
 use App\Models\FaqCategory;
 use App\Models\GeneralSetting;
 use App\Models\HomeCard;
+use App\Models\HomeHeroSection;
 use App\Models\HomeSection;
 use App\Models\InfoPage;
 use App\Models\Language;
@@ -39,8 +40,14 @@ use App\Models\SubscriptionProduct;
 use App\Models\Tags;
 use App\Models\TazaShumara;
 use App\Models\TazaShumaraArticle;
+use App\Models\ThriveFrameworkSection;
+use App\Models\ThriveFrameworkStage;
 use App\Models\User;
 use App\Models\Video;
+use App\Models\WhoIHelpItem;
+use App\Models\WhoIHelpSection;
+use App\Models\WorkTogetherCard;
+use App\Models\WorkTogetherSection;
 use App\Observers\AdminActivityObserver;
 use App\Services\Authorization\AdminUserPermissionService;
 use App\Services\FrontendSharedDataService;
@@ -115,6 +122,7 @@ class AppServiceProvider extends ServiceProvider
             AdRequestPlacement::class,
             AskQuestion::class,
             HomeCard::class,
+            HomeHeroSection::class,
             HomeSection::class,
             InfoPage::class,
             GeneralSetting::class,
@@ -146,6 +154,12 @@ class AppServiceProvider extends ServiceProvider
             TazaShumara::class,
             TazaShumaraArticle::class,
             Video::class,
+            WhoIHelpSection::class,
+            WhoIHelpItem::class,
+            ThriveFrameworkSection::class,
+            ThriveFrameworkStage::class,
+            WorkTogetherSection::class,
+            WorkTogetherCard::class,
         ];
     }
 

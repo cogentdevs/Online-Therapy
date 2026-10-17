@@ -2,7 +2,7 @@
 @use 'variables' as *;
 
 .front-account-page {
-    background: radial-gradient(circle at 3% 52%, rgba($front-primary, .08) 0 130px, transparent 131px), linear-gradient(135deg, $front-primary-soft, $front-surface 50%, $front-primary-soft);
+    background: $front-light;
     min-height: 650px;
     padding-block: 1.25rem 2.5rem;
 }

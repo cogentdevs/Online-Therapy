@@ -157,5 +157,5 @@
 @endsection
 
 @push('scripts')
-    {!! app('captcha')->renderJs('ur') !!}
+    {!! app('captcha')->renderJs('en') !!}
 @endpush

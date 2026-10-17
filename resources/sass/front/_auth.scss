@@ -2,7 +2,7 @@
 @use 'variables' as *;
 
 .front-auth-page {
-    background-color: $front-surface;
+    background-color: $front-light;
     background-image: none;
     min-height: 620px;
     padding-block: 1.25rem 2.5rem;
@@ -175,3 +175,17 @@
     .front-auth-options { align-items: flex-start; flex-direction: column; gap: .75rem; }
     .front-auth-recaptcha { width: 100%; }
 }
+// Registration is an English/LTR page; this remains scoped so the existing
+// login and account-activation layouts preserve their current behaviour.
+.front-auth-page--register .front-taza-breadcrumb,
+.front-auth-page--register .front-auth-card__aside,
+.front-auth-page--register .front-auth-card__content,
+.front-auth-page--register .front-auth-form { direction: ltr; text-align: left; }
+.front-auth-page--register .front-taza-breadcrumb { justify-content: flex-start; }
+.front-auth-page--register .front-auth-card__aside { align-items: flex-start; }
+.front-auth-page--register .front-auth-card__aside > p { line-height: 1.7; }
+.front-auth-page--register .front-auth-benefits { text-align: left; }
+.front-auth-page--register .front-auth-control input { padding-left: 2.8rem; padding-right: .9rem; text-align: left; }
+.front-auth-page--register .front-auth-control--password input { padding-right: 2.8rem; }
+.front-auth-page--register .front-auth-field__icon { left: 1rem; right: auto; }
+.front-auth-page--register .front-auth-password-toggle { left: auto; right: .8rem; }

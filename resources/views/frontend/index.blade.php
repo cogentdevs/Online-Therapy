@@ -839,4 +839,8 @@
             </div>
         </section>
     @endif
+    @include('frontend.partials.home-hero', ['homeHero' => $homeHero ?? null])
+    @include('frontend.partials.who-i-help')
+    @include('frontend.partials.thrive-framework', ['thriveFramework' => $thriveFramework ?? null])
+    @include('frontend.partials.work-together', ['workTogether' => $workTogether ?? null])
 @endsection

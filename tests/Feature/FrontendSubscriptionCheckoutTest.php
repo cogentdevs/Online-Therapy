@@ -58,7 +58,14 @@ test('guest card carries the real product intent target and login modal', functi
         ->assertSee('data-product-id="'.$this->product->id.'"', false)
         ->assertSee('data-intent-url="'.route('front.subscriptions.intent', $this->product).'"', false)
         ->assertSee('data-subscription-login-modal', false)
-        ->assertSee('action="'.route('front.login.store').'"', false);
+        ->assertSee('action="'.route('front.login.store').'"', false)
+        ->assertSee('Log In')
+        ->assertSee('Email Address')
+        ->assertSee('Enter your email address')
+        ->assertSee('Remember Me')
+        ->assertSee('Forgot Password?')
+        ->assertSee('Register Now')
+        ->assertSee('dir="ltr"', false);
 });
 
 test('checkout requires login and active frontend product', function () {
@@ -70,7 +77,12 @@ test('checkout requires login and active frontend product', function () {
         ->assertViewIs('frontend.subscription-checkout')
         ->assertSee('Monthly Plan')
         ->assertSee('PKR 500', false)
-        ->assertSee('ہفتہ وار میگزین')
+        ->assertSee('Magazine')
+        ->assertSee('Checkout')
+        ->assertSee('Order Summary')
+        ->assertSee('Duration: 1 Month')
+        ->assertSee('Included Features')
+        ->assertSee('Select a Payment Account')
         ->assertSee('name="payment_account_id"', false)
         ->assertSee('Meezan Bank')
         ->assertSee('00123456789')
@@ -79,7 +91,10 @@ test('checkout requires login and active frontend product', function () {
         ->assertSee('enctype="multipart/form-data"', false)
         ->assertSee('data-checkout-action disabled', false)
         ->assertSee('action="'.route('front.subscriptions.checkout.store', $this->product).'"', false)
-        ->assertSee('کوپن کوڈ درج کریں');
+        ->assertSee('Enter coupon code')
+        ->assertSee('Upload Payment Slip')
+        ->assertSee('Allowed formats: JPG, JPEG, PNG, WEBP and PDF. Maximum size: 5 MB.')
+        ->assertSee('Submit Subscription');
 
     $this->product->update(['isActive' => false]);
     $this->get($checkoutUrl)->assertNotFound();

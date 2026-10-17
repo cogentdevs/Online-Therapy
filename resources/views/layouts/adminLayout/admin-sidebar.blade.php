@@ -248,7 +248,7 @@
 
             {{-- Monetization temporarily hidden - feature retained for future use --}}
 
-            @php($websiteManagementActive = request()->routeIs('admin.slider.*', 'admin.banner.*', 'admin.home-headings.*', 'admin.home-article.*', 'admin.taza-shumara.*', 'admin.home-cards.*', 'admin.home-sections.*', 'admin.services.*', 'admin.about.*', 'admin.info-pages.*', 'admin.faq-categories.*', 'admin.faq.*', 'admin.languages.*'))
+            @php($websiteManagementActive = request()->routeIs('admin.slider.*', 'admin.banner.*', 'admin.home-headings.*', 'admin.who-i-help.*', 'admin.home-hero.*', 'admin.thrive-framework.*', 'admin.work-together.*', 'admin.home-article.*', 'admin.taza-shumara.*', 'admin.home-cards.*', 'admin.home-sections.*', 'admin.services.*', 'admin.about.*', 'admin.info-pages.*', 'admin.faq-categories.*', 'admin.faq.*', 'admin.languages.*'))
             <li class="admin-nav-group">
                 <a class="admin-nav-group-toggle {{ $websiteManagementActive ? '' : 'collapsed' }}"
                     data-bs-toggle="collapse" href="#websiteManagementMenu" role="button"
@@ -278,6 +278,22 @@
                         @can('home-headings.view')
                         <li><a class="{{ request()->routeIs('admin.home-headings.*') ? 'active' : '' }}"
                                 href="{{ route('admin.home-headings.index') }}">Home Headings</a></li>
+                        @endcan
+                        @can('who-i-help.view')
+                        <li><a class="{{ request()->routeIs('admin.who-i-help.*') ? 'active' : '' }}"
+                                href="{{ route('admin.who-i-help.index') }}">Who I Help</a></li>
+                        @endcan
+                        @can('home-hero.view')
+                        <li><a class="{{ request()->routeIs('admin.home-hero.*') ? 'active' : '' }}"
+                                href="{{ route('admin.home-hero.index') }}">Home Hero</a></li>
+                        @endcan
+                        @can('thrive-framework.view')
+                        <li><a class="{{ request()->routeIs('admin.thrive-framework.*') ? 'active' : '' }}"
+                                href="{{ route('admin.thrive-framework.index') }}">THRIVE Framework</a></li>
+                        @endcan
+                        @can('work-together.view')
+                        <li><a class="{{ request()->routeIs('admin.work-together.*') ? 'active' : '' }}"
+                                href="{{ route('admin.work-together.index') }}">How We Can Work Together</a></li>
                         @endcan
                         @can('home-article.view')
                         <li><a class="{{ request()->routeIs('admin.home-article.*') ? 'active' : '' }}"

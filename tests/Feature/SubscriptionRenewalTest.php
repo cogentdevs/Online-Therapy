@@ -125,7 +125,7 @@ test('same active product outside window is disabled and blocked by checkout get
 
     $this->actingAs($this->user)->get(route('front.subscriptions'))
         ->assertOk()
-        ->assertSee('فعال سبسکرپشن')
+        ->assertSee('Active Subscription')
         ->assertSee('disabled', false);
     $this->get(route('front.subscriptions.checkout', $product))
         ->assertRedirect(route('front.subscriptions'));
@@ -176,7 +176,7 @@ test('one future same-product renewal blocks checkout and a third purchase', fun
     ownedRenewalSubscription($this->user, $product, today()->addDays(4), today()->addMonth()->addDays(4));
 
     $this->actingAs($this->user)->get(route('front.subscriptions'))
-        ->assertSee('تجدید ہو چکی ہے');
+        ->assertSee('Renewal Scheduled');
     $this->get(route('front.subscriptions.checkout', $product))
         ->assertRedirect(route('front.subscriptions'));
     $this->post(route('front.subscriptions.checkout.store', $product), renewalPaymentPayload($this->paymentAccount))

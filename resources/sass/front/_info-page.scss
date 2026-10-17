@@ -1,7 +1,7 @@
 @use 'colors' as *;
 @use 'variables' as *;
 
-.front-info-page { background: linear-gradient(135deg, $front-primary-soft, $front-surface 52%, $front-primary-soft); padding-block: 1.25rem 4rem; }
+.front-info-page { background: $front-light; padding-block: 1.25rem 4rem; }
 .front-info-page__container { max-width: $front-content-width; }
 .front-info-page__header { margin: 2rem auto; text-align: center; }
 .front-info-page__header > span { color: $front-primary; font-weight: 700; }

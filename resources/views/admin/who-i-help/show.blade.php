@@ -1,0 +1,12 @@
+@extends('layouts.adminLayout.admin-design')
+@section('title', 'Who I Help Details')
+@section('content')
+<div class="container-fluid">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+        <div><h2 class="mb-1">Who I Help Details</h2><nav aria-label="breadcrumb"><ol class="breadcrumb mb-0"><li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li><li class="breadcrumb-item"><a href="{{ route('admin.who-i-help.index') }}">Who I Help</a></li><li class="breadcrumb-item active">Details</li></ol></nav></div>
+        <div class="d-flex gap-2"><a class="btn btn-outline-secondary" href="{{ route('admin.who-i-help.index') }}">Back to Listing</a>@can('who-i-help.edit')<a class="btn btn-primary admin-primary-button" href="{{ route('admin.who-i-help.edit', $section->id) }}"><i class="fa-solid fa-pen-to-square me-2"></i>Edit</a>@endcan</div>
+    </div>
+    <section class="card admin-settings-card mb-4"><div class="card-header"><h3>Section Information</h3></div><div class="card-body"><dl class="row mb-0"><dt class="col-md-3">Small Heading</dt><dd class="col-md-9">{{ $section->eyebrow }}</dd><dt class="col-md-3">Main Heading</dt><dd class="col-md-9">{{ $section->heading }}</dd><dt class="col-md-3">Description</dt><dd class="col-md-9">{{ $section->description ?: '—' }}</dd><dt class="col-md-3">Bottom Message</dt><dd class="col-md-9">{{ $section->bottom_message ?: '—' }}</dd><dt class="col-md-3">Status</dt><dd class="col-md-9"><span class="badge {{ $section->is_active ? 'text-bg-success' : 'text-bg-secondary' }}">{{ $section->is_active ? 'Active' : 'Inactive' }}</span></dd><dt class="col-md-3">Created At</dt><dd class="col-md-9">{{ $section->created_at?->format('d M Y, h:i A') ?? '—' }}</dd><dt class="col-md-3">Updated At</dt><dd class="col-md-9">{{ $section->updated_at?->format('d M Y, h:i A') ?? '—' }}</dd></dl></div></section>
+    <section class="card admin-settings-card"><div class="card-header"><h3>Help Cards</h3></div><div class="card-body">@forelse($section->items as $item)<div class="border rounded p-3 mb-3"><div class="d-flex justify-content-between gap-3"><span>{{ $item->title }}</span><span class="badge {{ $item->is_active ? 'text-bg-success' : 'text-bg-secondary' }}">{{ $item->is_active ? 'Active' : 'Inactive' }}</span></div></div>@empty<p class="text-muted mb-0">No Help Cards have been saved.</p>@endforelse</div></section>
+</div>
+@endsection

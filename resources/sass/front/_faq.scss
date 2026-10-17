@@ -1,7 +1,7 @@
 @use 'colors' as *;
 
 .faq-page {
-    background: linear-gradient(135deg, $front-primary-soft, $front-surface 52%, $front-primary-soft);
+    background: $front-light;
     color: $front-text;
     overflow: hidden;
     padding-block: 1.25rem 3.5rem;

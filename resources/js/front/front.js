@@ -11,6 +11,7 @@ import './pdf-viewer';
 import './advertise';
 import './ask-question';
 import './newsletter';
+import './home-hero';
 // Image loading is deliberately component-scoped: a card's text and actions
 // remain available while only its visual media is waiting for the browser.
 const frontImageSkeletons = (() => {

@@ -1,7 +1,7 @@
 @use 'colors' as *;
 @use 'variables' as *;
 
-.newsletter-unsubscribe-page { background: linear-gradient(180deg, $front-primary-soft, $front-surface); min-height: 620px; padding-bottom: clamp(3rem, 6vw, 5rem); }
+.newsletter-unsubscribe-page { background: $front-light; min-height: 620px; padding-bottom: clamp(3rem, 6vw, 5rem); }
 .newsletter-unsubscribe-page__container { max-width: $front-content-width; }
 .newsletter-unsubscribe-card { background: $front-card-background; border: 1px solid $front-border; border-radius: $front-radius; box-shadow: $front-shadow; margin: clamp(2rem, 5vw, 4rem) auto 0; max-width: 700px; padding: clamp(1.35rem, 4vw, 2.5rem); }
 .newsletter-unsubscribe-card__icon { align-items: center; background: $front-primary-soft; border-radius: 50%; color: $front-primary; display: flex; font-size: 1.6rem; height: 68px; justify-content: center; margin: 0 auto 1rem; width: 68px; }

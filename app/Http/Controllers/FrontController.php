@@ -18,6 +18,7 @@ use App\Models\FaqCategory;
 use App\Models\GeneralSetting;
 use App\Models\HomeCard;
 use App\Models\HomeCardTitlePosition;
+use App\Models\HomeHeroSection;
 use App\Models\HomePageSectionHeading;
 use App\Models\InfoPage;
 use App\Models\Magazine;
@@ -29,9 +30,14 @@ use App\Models\SubscriptionProduct;
 use App\Models\SubscriptionType;
 use App\Models\Tags;
 use App\Models\TazaShumara;
+use App\Models\ThriveFrameworkSection;
+use App\Models\ThriveFrameworkStage;
 use App\Models\User;
 use App\Models\UserSubscription;
 use App\Models\Video;
+use App\Models\WhoIHelpSection;
+use App\Models\WorkTogetherCard;
+use App\Models\WorkTogetherSection;
 use App\Services\PaidContentLoginIntentService;
 use App\Services\SiteVisitService;
 use App\Services\Storage\MediaStorageService;
@@ -47,6 +53,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -98,6 +105,7 @@ class FrontController extends Controller
             ])->orderBy('price')->orderBy('id')->get();
 
         $plans->concat($memberships)->each($this->prepareSubscriptionProduct(...));
+        $plans->concat($memberships)->each($this->prepareSubscriptionPagePresentation(...));
         $this->prepareSubscriptionPurchaseStates($plans->concat($memberships));
 
         $planGroups = $plans
@@ -191,9 +199,10 @@ class FrontController extends Controller
         ]);
         $this->prepareSubscriptionProduct($subscriptionProduct);
         $subscriptionProduct->subscriptionTypes->each($this->prepareMembershipType(...));
+        $this->prepareSubscriptionCheckoutPresentation($subscriptionProduct);
         $subscriptionProduct->setAttribute('frontend_product_for', match ($subscriptionProduct->product_for) {
-            SubscriptionProduct::FOR_PLAN => 'منصوبہ',
-            SubscriptionProduct::FOR_MEMBERSHIP => 'رکنیت',
+            SubscriptionProduct::FOR_PLAN => 'Ù…Ù†ØµÙˆØ¨Û',
+            SubscriptionProduct::FOR_MEMBERSHIP => 'Ø±Ú©Ù†ÛŒØª',
             default => (string) $subscriptionProduct->product_for,
         });
         $paymentAccounts = PaymentAccount::query()
@@ -227,13 +236,13 @@ class FrontController extends Controller
             report($exception);
 
             return back()->withErrors([
-                'subscription' => 'ادائیگی کی رسید جمع نہیں ہو سکی۔ براہ کرم دوبارہ کوشش کریں۔',
+                'subscription' => 'Payment slip could not be submitted. Please try again.',
             ]);
         }
 
         return to_route('front.account.subscriptions')->with(
             'success',
-            'آپ کی ادائیگی کی رسید کامیابی سے جمع ہو گئی ہے اور ایڈمن کی تصدیق کی منتظر ہے۔',
+            'Your payment slip has been submitted and is pending admin verification.',
         );
     }
 
@@ -258,10 +267,11 @@ class FrontController extends Controller
         $subscriptionProduct->setAttribute('frontend_currency', $userSubscription->currency?->code ?: $userSubscription->currency?->symbol);
         $subscriptionProduct->setAttribute('frontend_duration', trim($userSubscription->duration_value_snapshot.' '.$userSubscription->duration_unit_snapshot));
         $subscriptionProduct->setAttribute('frontend_product_for', match ($userSubscription->product_for) {
-            SubscriptionProduct::FOR_PLAN => 'منصوبہ',
-            SubscriptionProduct::FOR_MEMBERSHIP => 'رکنیت',
+            SubscriptionProduct::FOR_PLAN => 'Ù…Ù†ØµÙˆØ¨Û',
+            SubscriptionProduct::FOR_MEMBERSHIP => 'Ø±Ú©Ù†ÛŒØª',
             default => (string) $userSubscription->product_for,
         });
+        $this->prepareSubscriptionCheckoutPresentation($subscriptionProduct, $userSubscription->duration_value_snapshot, $userSubscription->duration_unit_snapshot, $userSubscription->product_name);
         $paymentAccounts = PaymentAccount::query()
             ->where('is_active', true)
             ->orderBy('bank_name')
@@ -722,6 +732,7 @@ class FrontController extends Controller
 
     public function contact(Request $request): View
     {
+
         $this->siteVisitService->record($request);
 
         return view('frontend.contact');
@@ -774,7 +785,7 @@ class FrontController extends Controller
 
         return to_route('front.contact')->with(
             'success',
-            'آپ کا پیغام کامیابی سے موصول ہو گیا ہے۔ ہم جلد آپ سے رابطہ کریں گے۔',
+            'Ø¢Ù¾ Ú©Ø§ Ù¾ÛŒØºØ§Ù… Ú©Ø§Ù…ÛŒØ§Ø¨ÛŒ Ø³Û’ Ù…ÙˆØµÙˆÙ„ ÛÙˆ Ú¯ÛŒØ§ ÛÛ’Û” ÛÙ… Ø¬Ù„Ø¯ Ø¢Ù¾ Ø³Û’ Ø±Ø§Ø¨Ø·Û Ú©Ø±ÛŒÚº Ú¯Û’Û”',
         );
     }
 
@@ -1025,7 +1036,7 @@ class FrontController extends Controller
         if ($deniedResponse = $this->paidContentDeniedResponse(
             $article,
             SubscriptionContentAccessService::MODULE_ARTICLES,
-            'اس مضمون تک رسائی کے لیے فعال سبسکرپشن درکار ہے۔',
+            'Ø§Ø³ Ù…Ø¶Ù…ÙˆÙ† ØªÚ© Ø±Ø³Ø§Ø¦ÛŒ Ú©Û’ Ù„ÛŒÛ’ ÙØ¹Ø§Ù„ Ø³Ø¨Ø³Ú©Ø±Ù¾Ø´Ù† Ø¯Ø±Ú©Ø§Ø± ÛÛ’Û”',
             $request,
         )) {
             return $deniedResponse;
@@ -1080,7 +1091,7 @@ class FrontController extends Controller
         if ($deniedResponse = $this->paidContentDeniedResponse(
             $magazine,
             SubscriptionContentAccessService::MODULE_MAGAZINES,
-            'اس شمارے تک رسائی کے لیے فعال سبسکرپشن درکار ہے۔',
+            'Ø§Ø³ Ø´Ù…Ø§Ø±Û’ ØªÚ© Ø±Ø³Ø§Ø¦ÛŒ Ú©Û’ Ù„ÛŒÛ’ ÙØ¹Ø§Ù„ Ø³Ø¨Ø³Ú©Ø±Ù¾Ø´Ù† Ø¯Ø±Ú©Ø§Ø± ÛÛ’Û”',
             $request,
         )) {
             return $deniedResponse;
@@ -1129,7 +1140,7 @@ class FrontController extends Controller
         if ($deniedResponse = $this->paidContentDeniedResponse(
             $magazine,
             SubscriptionContentAccessService::MODULE_MAGAZINES,
-            'اس شمارے تک رسائی کے لیے فعال سبسکرپشن درکار ہے۔',
+            'Ø§Ø³ Ø´Ù…Ø§Ø±Û’ ØªÚ© Ø±Ø³Ø§Ø¦ÛŒ Ú©Û’ Ù„ÛŒÛ’ ÙØ¹Ø§Ù„ Ø³Ø¨Ø³Ú©Ø±Ù¾Ø´Ù† Ø¯Ø±Ú©Ø§Ø± ÛÛ’Û”',
             $request,
         )) {
             return $deniedResponse;
@@ -1195,7 +1206,7 @@ class FrontController extends Controller
         if ($deniedResponse = $this->paidContentDeniedResponse(
             $magazine,
             SubscriptionContentAccessService::MODULE_MAGAZINES,
-            'اس شمارے تک رسائی کے لیے فعال سبسکرپشن درکار ہے۔',
+            'Ø§Ø³ Ø´Ù…Ø§Ø±Û’ ØªÚ© Ø±Ø³Ø§Ø¦ÛŒ Ú©Û’ Ù„ÛŒÛ’ ÙØ¹Ø§Ù„ Ø³Ø¨Ø³Ú©Ø±Ù¾Ø´Ù† Ø¯Ø±Ú©Ø§Ø± ÛÛ’Û”',
             $request,
         )) {
             return $deniedResponse;
@@ -1268,6 +1279,31 @@ class FrontController extends Controller
     public function index(Request $request): View
     {
         $currentLanguage = config('content_language.code');
+
+        $homeHero = Schema::hasTable((new HomeHeroSection)->getTable())
+            ? HomeHeroSection::query()
+                ->where('language', $currentLanguage)
+                ->where('is_active', true)
+                ->first()
+            : null;
+
+        $thriveFramework = Schema::hasTable((new ThriveFrameworkSection)->getTable())
+            && Schema::hasTable((new ThriveFrameworkStage)->getTable())
+                ? ThriveFrameworkSection::query()
+                    ->where('language', $currentLanguage)
+                    ->where('is_active', true)
+                    ->with(['stages' => fn ($query) => $query->where('is_active', true)])
+                    ->first()
+                : null;
+
+        $workTogether = Schema::hasTable((new WorkTogetherSection)->getTable())
+            && Schema::hasTable((new WorkTogetherCard)->getTable())
+                ? WorkTogetherSection::query()
+                    ->where('language', $currentLanguage)
+                    ->where('is_active', true)
+                    ->with(['cards' => fn ($query) => $query->where('is_active', true)])
+                    ->first()
+                : null;
 
         $belowSliderCards = HomeCard::query()
             ->where('is_active', true)
@@ -1501,9 +1537,33 @@ class FrontController extends Controller
             ? $position
             : 'right';
 
+        $whoIHelpSection = WhoIHelpSection::query()
+            ->where('language', $currentLanguage)
+            ->where('is_active', true)
+            ->with(['items' => fn ($query) => $query
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->orderBy('id')
+                ->select(['id', 'section_id', 'title', 'sort_order', 'is_active'])])
+            ->first(['id', 'language', 'eyebrow', 'heading', 'description', 'bottom_message', 'is_active']);
+
+        if ($whoIHelpSection) {
+            $whoIHelpSection->setRelation(
+                'items',
+                $whoIHelpSection->items->filter(fn ($item): bool => filled($item->title))->values(),
+            );
+        }
+
+        if ($whoIHelpSection?->items->isEmpty()) {
+            $whoIHelpSection = null;
+        }
+
         $this->siteVisitService->record($request);
 
         return view('frontend.index', [
+            'homeHero' => $homeHero,
+            'thriveFramework' => $thriveFramework,
+            'workTogether' => $workTogether,
             'aboveFooterTitlePosition' => $resolveTitlePosition($homeCardTitlePositions->get('above footer')),
             'aboveFooterCards' => $aboveFooterCards,
             'belowSliderTitlePosition' => $resolveTitlePosition($homeCardTitlePositions->get('below slider')),
@@ -1517,6 +1577,7 @@ class FrontController extends Controller
             'latestArticles' => $latestArticles,
             'sideBySideBanner' => $sideBySideBanner,
             'tazaShumara' => $tazaShumara,
+            'whoIHelpSection' => $whoIHelpSection,
             'topViewedArticles' => $topViewedArticles,
             'topViewedMagazines' => $topViewedMagazines,
             'topSearchedArticles' => $topSearchedArticles,
@@ -1559,10 +1620,10 @@ class FrontController extends Controller
     private function prepareSubscriptionProduct(SubscriptionProduct $product): void
     {
         $durationUnit = match ($product->duration_unit) {
-            'day', 'days' => 'دن',
-            'week', 'weeks' => 'ہفتہ',
-            'month', 'months' => 'ماہ',
-            'year', 'years' => 'سال',
+            'day', 'days' => 'Ø¯Ù†',
+            'week', 'weeks' => 'ÛÙØªÛ',
+            'month', 'months' => 'Ù…Ø§Û',
+            'year', 'years' => 'Ø³Ø§Ù„',
             default => (string) $product->duration_unit,
         };
 
@@ -1580,20 +1641,83 @@ class FrontController extends Controller
         $product->setAttribute('frontend_has_discount', $hasDiscount);
         $product->setAttribute('frontend_discounted_price', $this->formatSubscriptionPrice($product->effectivePrice()));
         $product->setAttribute('frontend_discount_label', match ($product->discount_type) {
-            'percentage' => $this->formatSubscriptionPrice(min($discountValue, 100)).'% رعایت',
-            'fixed' => $product->frontend_currency.' '.$this->formatSubscriptionPrice(min($discountValue, $price)).' رعایت',
+            'percentage' => $this->formatSubscriptionPrice(min($discountValue, 100)).'% Ø±Ø¹Ø§ÛŒØª',
+            'fixed' => $product->frontend_currency.' '.$this->formatSubscriptionPrice(min($discountValue, $price)).' Ø±Ø¹Ø§ÛŒØª',
             default => null,
         });
         $product->setAttribute('frontend_duration', trim($product->duration_value.' '.$durationUnit));
         $product->setAttribute('frontend_description', filled($product->duration_value) && filled($product->duration_unit)
-            ? trim($product->duration_value.' '.$durationUnit.' کے لیے مکمل رسائی')
+            ? trim($product->duration_value.' '.$durationUnit.' Ú©Û’ Ù„ÛŒÛ’ Ù…Ú©Ù…Ù„ Ø±Ø³Ø§Ø¦ÛŒ')
             : null);
         $product->setAttribute('frontend_membership_name', $product->getAttribute('name_ur')
             ?: $product->getAttribute('name_en')
             ?: $product->name);
         $product->setAttribute('frontend_membership_description', filled($product->duration_value) && filled($product->duration_unit)
-            ? trim($product->duration_value.' '.$durationUnit.' کے لیے منتخب ماڈیولز تک رسائی')
-            : 'منتخب ماڈیولز تک رسائی');
+            ? trim($product->duration_value.' '.$durationUnit.' Ú©Û’ Ù„ÛŒÛ’ Ù…Ù†ØªØ®Ø¨ Ù…Ø§ÚˆÛŒÙˆÙ„Ø² ØªÚ© Ø±Ø³Ø§Ø¦ÛŒ')
+            : 'Ù…Ù†ØªØ®Ø¨ Ù…Ø§ÚˆÛŒÙˆÙ„Ø² ØªÚ© Ø±Ø³Ø§Ø¦ÛŒ');
+    }
+
+    private function prepareSubscriptionCheckoutPresentation(
+        SubscriptionProduct $product,
+        mixed $durationValue = null,
+        mixed $durationUnit = null,
+        ?string $productName = null,
+    ): void {
+        $duration = $this->formatSubscriptionPageDuration(
+            $durationValue ?? $product->duration_value,
+            $durationUnit ?? $product->duration_unit,
+        );
+        $currency = $product->currency?->code ?: $product->currency?->symbol;
+        $price = (float) $product->price;
+        $discountValue = (float) $product->discount_value;
+
+        $product->setAttribute('subscription_checkout_kind', match ($product->product_for) {
+            SubscriptionProduct::FOR_PLAN => 'Plan',
+            SubscriptionProduct::FOR_MEMBERSHIP => 'Membership',
+            default => (string) $product->product_for,
+        });
+        $product->setAttribute('subscription_checkout_name', $productName ?? $product->name);
+        $product->setAttribute('subscription_checkout_duration', $duration);
+        $product->setAttribute('subscription_checkout_discount_label', match ($product->discount_type) {
+            'percentage' => $this->formatSubscriptionPrice(min($discountValue, 100)).'% Discount',
+            'fixed' => $currency.' '.$this->formatSubscriptionPrice(min($discountValue, $price)).' Discount',
+            default => null,
+        });
+    }
+
+    private function prepareSubscriptionPagePresentation(SubscriptionProduct $product): void
+    {
+        $duration = $this->formatSubscriptionPageDuration($product->duration_value, $product->duration_unit);
+        $product->setAttribute('subscription_page_duration', $duration);
+        $product->setAttribute('subscription_page_description', $duration !== null ? $duration.' of full access' : null);
+        $product->setAttribute(
+            'subscription_page_membership_description',
+            $duration !== null ? 'Access to selected modules for '.$duration : 'Access to selected modules',
+        );
+        $product->setAttribute('subscription_page_discount_label', match ($product->discount_type) {
+            'percentage' => $this->formatSubscriptionPrice(min((float) $product->discount_value, 100)).'% Discount',
+            'fixed' => ($product->currency?->code ?: $product->currency?->symbol).' '.$this->formatSubscriptionPrice(min((float) $product->discount_value, (float) $product->price)).' Discount',
+            default => null,
+        });
+    }
+
+    private function formatSubscriptionPageDuration(mixed $value, mixed $unit): ?string
+    {
+        if (! filled($value) || ! filled($unit)) {
+            return null;
+        }
+
+        $value = (int) $value;
+        $normalizedUnit = Str::lower(trim((string) $unit));
+        $label = match ($normalizedUnit) {
+            'day', 'days' => $value === 1 ? 'Day' : 'Days',
+            'week', 'weeks' => $value === 1 ? 'Week' : 'Weeks',
+            'month', 'months' => $value === 1 ? 'Month' : 'Months',
+            'year', 'years' => $value === 1 ? 'Year' : 'Years',
+            default => (string) $unit,
+        };
+
+        return trim($value.' '.$label);
     }
 
     /** @param Collection<int, SubscriptionProduct> $products */
@@ -1614,23 +1738,23 @@ class FrontController extends Controller
             $product->setAttribute('frontend_purchase_state', $state);
             $product->setAttribute('frontend_purchase_allowed', $this->subscriptionPurchaseStateAllowsCheckout($state));
             $product->setAttribute('frontend_purchase_label', match ($state) {
-                SubscriptionRenewalService::STATE_RENEWAL_AVAILABLE => 'تجدید کریں',
-                SubscriptionRenewalService::STATE_ACTIVE_LOCKED => 'فعال سبسکرپشن',
-                SubscriptionRenewalService::STATE_RENEWAL_ALREADY_SCHEDULED => 'تجدید ہو چکی ہے',
-                SubscriptionRenewalService::STATE_PAYMENT_PENDING => 'ادائیگی زیرِ جائزہ',
-                default => 'ابھی سبسکرائب کریں',
+                SubscriptionRenewalService::STATE_RENEWAL_AVAILABLE => 'Renew Now',
+                SubscriptionRenewalService::STATE_ACTIVE_LOCKED => 'Active Subscription',
+                SubscriptionRenewalService::STATE_RENEWAL_ALREADY_SCHEDULED => 'Renewal Scheduled',
+                SubscriptionRenewalService::STATE_PAYMENT_PENDING => 'Payment Under Review',
+                default => 'Subscribe Now',
             });
             $product->setAttribute('frontend_purchase_hint', match ($state) {
                 SubscriptionRenewalService::STATE_ACTIVE_LOCKED => $purchaseState['renewal_window_days'] > 0
-                    ? "تجدید {$purchaseState['renewal_window_days']} دن باقی ہونے پر دستیاب ہوگی"
-                    : 'قبل از وقت تجدید فی الحال دستیاب نہیں ہے',
+                    ? 'Renewal becomes available when '.$purchaseState['renewal_window_days'].' '.($purchaseState['renewal_window_days'] === 1 ? 'day' : 'days').' remain.'
+                    : 'Early renewal is not available at the moment.',
                 SubscriptionRenewalService::STATE_RENEWAL_AVAILABLE => $purchaseState['current_subscription']->end_date !== null
-                    ? 'اختتام: '.$purchaseState['current_subscription']->end_date->format('d M Y')
+                    ? 'Ends: '.$purchaseState['current_subscription']->end_date->format('d M Y')
                     : null,
                 SubscriptionRenewalService::STATE_RENEWAL_ALREADY_SCHEDULED => $purchaseState['future_subscription']->start_date !== null
-                    ? 'نئی مدت کا آغاز: '.$purchaseState['future_subscription']->start_date->format('d M Y')
+                    ? 'New term begins: '.$purchaseState['future_subscription']->start_date->format('d M Y')
                     : null,
-                SubscriptionRenewalService::STATE_PAYMENT_PENDING => 'آپ کی ادائیگی کی درخواست پہلے ہی زیرِ جائزہ ہے',
+                SubscriptionRenewalService::STATE_PAYMENT_PENDING => 'Your payment request is already under review.',
                 default => null,
             });
         });
@@ -1647,10 +1771,10 @@ class FrontController extends Controller
     private function subscriptionPurchaseStateWarning(string $state): string
     {
         return $state === SubscriptionRenewalService::STATE_RENEWAL_ALREADY_SCHEDULED
-            ? 'اس سبسکرپشن کی تجدید پہلے ہی ہو چکی ہے۔'
+            ? 'Ø§Ø³ Ø³Ø¨Ø³Ú©Ø±Ù¾Ø´Ù† Ú©ÛŒ ØªØ¬Ø¯ÛŒØ¯ Ù¾ÛÙ„Û’ ÛÛŒ ÛÙˆ Ú†Ú©ÛŒ ÛÛ’Û”'
             : ($state === SubscriptionRenewalService::STATE_PAYMENT_PENDING
                 ? 'Your payment request is already pending verification.'
-                : 'یہ سبسکرپشن ابھی فعال ہے، تجدید مقررہ مدت میں دستیاب ہوگی۔');
+                : 'ÛŒÛ Ø³Ø¨Ø³Ú©Ø±Ù¾Ø´Ù† Ø§Ø¨Ú¾ÛŒ ÙØ¹Ø§Ù„ ÛÛ’ØŒ ØªØ¬Ø¯ÛŒØ¯ Ù…Ù‚Ø±Ø±Û Ù…Ø¯Øª Ù…ÛŒÚº Ø¯Ø³ØªÛŒØ§Ø¨ ÛÙˆÚ¯ÛŒÛ”');
     }
 
     private function isAvailableSubscriptionProduct(SubscriptionProduct $subscriptionProduct): bool
@@ -1664,9 +1788,9 @@ class FrontController extends Controller
     private function frontendSubscriptionTypeLabel(SubscriptionType $type): string
     {
         return match (Str::lower(trim((string) $type->name))) {
-            'magazine', 'magazines' => 'شمارہ منصوبہ',
-            'article', 'articles' => 'مضمون منصوبہ',
-            'audio' => 'آڈیو منصوبہ',
+            'magazine', 'magazines' => 'Magazine Plan',
+            'article', 'articles' => 'Article Plan',
+            'audio' => 'Audio Plan',
             default => (string) $type->name,
         };
     }
@@ -1679,9 +1803,9 @@ class FrontController extends Controller
     private function prepareMembershipType(SubscriptionType $type): void
     {
         [$label, $icon] = match (Str::lower(trim((string) $type->name))) {
-            'magazine', 'magazines' => ['ہفتہ وار میگزین', 'fa-book-open'],
-            'article', 'articles' => ['مضامین', 'fa-file-lines'],
-            'audio' => ['آڈیو', 'fa-headphones'],
+            'magazine', 'magazines' => ['ÛÙØªÛ ÙˆØ§Ø± Ù…ÛŒÚ¯Ø²ÛŒÙ†', 'fa-book-open'],
+            'article', 'articles' => ['Ù…Ø¶Ø§Ù…ÛŒÙ†', 'fa-file-lines'],
+            'audio' => ['Ø¢ÚˆÛŒÙˆ', 'fa-headphones'],
             default => [(string) $type->name, 'fa-puzzle-piece'],
         };
 

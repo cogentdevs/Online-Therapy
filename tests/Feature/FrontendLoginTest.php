@@ -92,7 +92,7 @@ test('inactive user is rejected only after a correct password', function () {
     $this->frontendUser->update(['is_active' => false]);
     $this->from(route('front.login'))->post(route('front.login.store'), $this->credentials)
         ->assertRedirect(route('front.login'))
-        ->assertSessionHasErrors(['email' => 'آپ کا اکاؤنٹ ابھی ایکٹیویٹ نہیں ہوا۔ براہ کرم اپنے ای میل میں موجود ایکٹیویشن لنک استعمال کریں۔']);
+        ->assertSessionHasErrors(['email' => 'Your account has not been activated yet. Please use the activation link in your email.']);
     $this->assertGuest('web');
 });
 
@@ -110,7 +110,7 @@ test('incorrect credentials and non frontend accounts have the same safe error',
     }
     $this->from(route('front.login'))->post(route('front.login.store'), $credentials)
         ->assertRedirect(route('front.login'))
-        ->assertSessionHasErrors(['email' => 'ای میل یا پاس ورڈ درست نہیں ہے۔'])
+        ->assertSessionHasErrors(['email' => 'Invalid email or password.'])
         ->assertSessionHasInput('email', $credentials['email'])
         ->assertSessionMissing('_old_input.password');
     $this->assertGuest('web');
@@ -175,7 +175,7 @@ test('login throttles five failures and becomes available after a minute', funct
         $this->post(route('front.login.store'), $wrong)->assertSessionHasErrors('email');
     }
     $this->post(route('front.login.store'), $this->credentials)->assertSessionHasErrors('email');
-    expect(session('errors')->first('email'))->toContain('بہت زیادہ کوششیں');
+    expect(session('errors')->first('email'))->toContain('Too many attempts. Please try again in');
     $this->assertGuest('web');
     $this->travel(61)->seconds();
     $this->post(route('front.login.store'), $this->credentials)->assertRedirect(route('front.account'));

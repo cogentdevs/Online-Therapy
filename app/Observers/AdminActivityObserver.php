@@ -24,6 +24,7 @@ use App\Models\Faq;
 use App\Models\FaqCategory;
 use App\Models\GeneralSetting;
 use App\Models\HomeCard;
+use App\Models\HomeHeroSection;
 use App\Models\HomeSection;
 use App\Models\InfoPage;
 use App\Models\Magazine;
@@ -38,7 +39,13 @@ use App\Models\SubscriptionProduct;
 use App\Models\Tags;
 use App\Models\TazaShumara;
 use App\Models\TazaShumaraArticle;
+use App\Models\ThriveFrameworkSection;
+use App\Models\ThriveFrameworkStage;
 use App\Models\Video;
+use App\Models\WhoIHelpItem;
+use App\Models\WhoIHelpSection;
+use App\Models\WorkTogetherCard;
+use App\Models\WorkTogetherSection;
 use App\Services\ActivityLogService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -132,6 +139,7 @@ class AdminActivityObserver
             AdRequest::class, AdRequestPlacement::class => 'ad_requests',
             AskQuestion::class => 'ask_questions',
             HomeCard::class => 'home_cards',
+            HomeHeroSection::class => 'home_hero',
             HomeSection::class => 'home_sections',
             InfoPage::class => 'info_pages',
             GeneralSetting::class => 'general_settings',
@@ -162,6 +170,9 @@ class AdminActivityObserver
             TazaShumara::class => 'taza_shumara',
             TazaShumaraArticle::class => 'taza_shumara_articles',
             Video::class => 'videos',
+            WhoIHelpSection::class, WhoIHelpItem::class => 'who_i_help',
+            ThriveFrameworkSection::class, ThriveFrameworkStage::class => 'thrive_framework',
+            WorkTogetherSection::class, WorkTogetherCard::class => 'work_together',
             default => Str::snake(class_basename($model)),
         };
     }

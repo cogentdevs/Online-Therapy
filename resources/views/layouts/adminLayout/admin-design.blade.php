@@ -7,7 +7,7 @@
 
     <title>@yield('title', $generalSetting?->app_name ?? 'Digital Magazine') | {{$generalSetting?->app_name}}</title>
 
-    <link rel="icon" type="image/png" href="{{ asset('images/backend-images/logo/Thrive-with-Naila-Wellness-Emblem-removebg-preview.png') }}?v=20261014">
+    <x-site-favicon :settings="$generalSetting ?? null" />
 
     @vite(['resources/sass/admin/admin.scss', 'resources/js/admin/admin.js'])
     @stack('styles')

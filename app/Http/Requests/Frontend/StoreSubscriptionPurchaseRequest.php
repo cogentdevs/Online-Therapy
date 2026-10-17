@@ -43,14 +43,14 @@ class StoreSubscriptionPurchaseRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'payment_account_id.required' => 'براہ کرم ادائیگی کا اکاؤنٹ منتخب کریں۔',
-            'payment_account_id.exists' => 'منتخب کردہ ادائیگی اکاؤنٹ دستیاب نہیں ہے۔',
-            'payment_slip.required' => 'براہ کرم ادائیگی کی رسید اپ لوڈ کریں۔',
-            'payment_slip.file' => 'ادائیگی کی رسید درست فائل ہونی چاہیے۔',
-            'payment_slip.mimes' => 'رسید JPG، JPEG، PNG، WEBP یا PDF فارمیٹ میں ہونی چاہیے۔',
-            'payment_slip.mimetypes' => 'رسید کی فائل کا فارمیٹ درست نہیں ہے۔',
-            'payment_slip.max' => 'رسید کی فائل 5 ایم بی سے زیادہ نہیں ہونی چاہیے۔',
-            'transaction_id.max' => 'ٹرانزیکشن یا حوالہ نمبر 100 حروف سے زیادہ نہیں ہو سکتا۔',
+            'payment_account_id.required' => 'Please select a payment account.',
+            'payment_account_id.exists' => 'The selected payment account is not available.',
+            'payment_slip.required' => 'Please upload your payment slip.',
+            'payment_slip.file' => 'The payment slip must be a valid file.',
+            'payment_slip.mimes' => 'The payment slip must be a JPG, JPEG, PNG, WEBP, or PDF file.',
+            'payment_slip.mimetypes' => 'The payment slip file type is invalid.',
+            'payment_slip.max' => 'The payment slip must not be larger than 5 MB.',
+            'transaction_id.max' => 'The transaction or reference number may not be greater than 100 characters.',
         ];
     }
 

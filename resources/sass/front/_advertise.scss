@@ -2,7 +2,7 @@
 @use 'variables' as *;
 
 .front-advertise {
-    background: linear-gradient(180deg, $front-surface 0, $front-primary-soft 100%);
+    background: $front-light;
     padding-bottom: 3rem;
 }
 

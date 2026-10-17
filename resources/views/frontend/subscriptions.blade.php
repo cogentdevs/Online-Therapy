@@ -1,21 +1,21 @@
 @extends('layouts.frontLayout.front-design')
 
-@section('title', 'Subscribe')
-@section('meta_description', 'Choose a Digital Magazine plan or membership that suits your needs')
+@section('title', 'Subscriptions')
+@section('meta_description', 'Choose a subscription plan or membership that suits your needs')
 
 @section('content')
-    <main class="subscription-page">
+    <main class="subscription-page" dir="ltr">
         <div class="container-fluid subscription-page__container">
-            <nav class="front-taza-breadcrumb front-ui" aria-label="بریڈ کرمب">
-                <a href="{{ route('frontend.home') }}"><i class="fa-solid fa-house" aria-hidden="true"></i> صفحہ اول</a>
+            <nav class="front-taza-breadcrumb front-ui" aria-label="Breadcrumb">
+                <a href="{{ route('frontend.home') }}"><i class="fa-solid fa-house" aria-hidden="true"></i> Home</a>
                 <span aria-hidden="true">/</span>
-                <span aria-current="page">سبسکرائب کریں</span>
+                <span aria-current="page">Subscriptions</span>
             </nav>
 
             <header class="subscription-page__heading">
-                <h1>سبسکرائب کریں</h1>
+                <h1>Subscriptions</h1>
                 <span aria-hidden="true"></span>
-                <p>اپنی دلچسپی کے مطابق منصوبہ یا رکنیت منتخب کریں اور معیاری مواد تک بلا تعطل رسائی حاصل کریں۔</p>
+                <p>Choose a subscription plan or membership that suits your needs and unlock access to premium content.</p>
             </header>
 
             @if (session('warning'))
@@ -29,14 +29,14 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="plans-tab" data-bs-toggle="tab" data-bs-target="#subscription-plans"
                         type="button" role="tab" aria-controls="subscription-plans" aria-selected="true">
-                        <i class="fa-regular fa-clipboard" aria-hidden="true"></i> منصوبے <small>(Plans)</small>
+                        <i class="fa-regular fa-clipboard" aria-hidden="true"></i> Plans
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="memberships-tab" data-bs-toggle="tab"
                         data-bs-target="#subscription-memberships" type="button" role="tab"
                         aria-controls="subscription-memberships" aria-selected="false">
-                        <i class="fa-solid fa-users" aria-hidden="true"></i> رکنیت <small>(Memberships)</small>
+                        <i class="fa-solid fa-users" aria-hidden="true"></i> Memberships
                     </button>
                 </li>
             </ul>
@@ -54,7 +54,7 @@
                                             data-bs-target="#plan-type-{{ $group['type']->id }}" type="button"
                                             role="tab" aria-controls="plan-type-{{ $group['type']->id }}"
                                             aria-selected="{{ $loop->first ? 'true' : 'false' }}">
-                                            {{ $group['label'] }}
+                                            <span dir="auto">{{ $group['label'] }}</span>
                                         </button>
                                     </li>
                                 @endforeach
@@ -70,10 +70,10 @@
                                         @foreach ($group['plans'] as $plan)
                                             <div class="col-12 col-md-6 col-xl-4">
                                                 <article class="subscription-card subscription-plan-card">
-                                                    <h2>{{ $plan->name }}</h2>
-                                                    @if ($plan->frontend_description)
+                                                    <h2 dir="auto">{{ $plan->name }}</h2>
+                                                    @if ($plan->subscription_page_description)
                                                         <p class="subscription-plan-card__description">
-                                                            {{ $plan->frontend_description }}</p>
+                                                            {{ $plan->subscription_page_description }}</p>
                                                     @endif
                                                     <div class="subscription-card__icon"><i
                                                             class="fa-regular fa-calendar-check" aria-hidden="true"></i>
@@ -81,12 +81,12 @@
                                                     @if ($plan->frontend_has_discount)
                                                         <div class="subscription-card__discount">
                                                             <span
-                                                                class="subscription-card__discount-badge">{{ $plan->frontend_discount_label }}</span>
+                                                                class="subscription-card__discount-badge">{{ $plan->subscription_page_discount_label }}</span>
                                                             <del dir="ltr">{{ $plan->frontend_currency }} {{ $plan->frontend_price }}</del>
                                                         </div>
                                                     @endif
                                                     <div class="subscription-card__price" dir="ltr">{{ $plan->frontend_currency }} {{ $plan->frontend_has_discount ? $plan->frontend_discounted_price : $plan->frontend_price }}</div>
-                                                    <p class="subscription-card__duration">مدت: {{ $plan->frontend_duration }}</p>
+                                                    <p class="subscription-card__duration">Duration: {{ $plan->subscription_page_duration }}</p>
                                                     @if ($plan->videos->isNotEmpty())
                                                         <section class="subscription-plan-card__videos" aria-label="Included Videos">
                                                             <h3>Included Videos</h3>
@@ -94,7 +94,7 @@
                                                                 @foreach ($plan->videos as $video)
                                                                     <li>
                                                                         <i class="fa-solid fa-check" aria-hidden="true"></i>
-                                                                        <span>{{ $video->title }}</span>
+                                                                        <span dir="auto">{{ $video->title }}</span>
                                                                     </li>
                                                                 @endforeach
                                                             </ul>
@@ -104,7 +104,7 @@
                                                     @auth('web')
                                                         @if ($plan->frontend_purchase_allowed)
                                                             <a class="subscription-card__action" href="{{ route('front.subscriptions.checkout', $plan) }}">
-                                                                {{ $plan->frontend_purchase_label }} <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                                                                {{ $plan->frontend_purchase_label }} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                                                             </a>
                                                         @else
                                                             <button class="subscription-card__action" type="button" disabled aria-disabled="true">
@@ -117,7 +117,7 @@
                                                     @else
                                                         <button class="subscription-card__action" type="button" data-subscription-guest-cta
                                                             data-product-id="{{ $plan->getKey() }}" data-intent-url="{{ route('front.subscriptions.intent', $plan) }}">
-                                                            ابھی سبسکرائب کریں <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                                                            Subscribe Now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                                                         </button>
                                                     @endauth
                                                 </article>
@@ -129,7 +129,7 @@
                         </div>
                     @else
                         <div class="subscription-empty"><i class="fa-regular fa-clipboard" aria-hidden="true"></i>
-                            <p>فی الحال کوئی فعال منصوبہ موجود نہیں ہے۔</p>
+                            <p>No subscription plans are available.</p>
                         </div>
                     @endif
                 </section>
@@ -143,22 +143,24 @@
                                     <article class="subscription-card subscription-membership-card">
                                         <div class="subscription-card__icon subscription-membership-icon"><i
                                                 class="fa-solid fa-crown" aria-hidden="true"></i></div>
-                                        <h2>{{ $membership->frontend_membership_name }}</h2>
-                                        <p class="subscription-membership-card__description">
-                                            {{ $membership->frontend_membership_description }}</p>
+                                        <h2 dir="auto">{{ $membership->name }}</h2>
+                                        @if ($membership->subscription_page_membership_description)
+                                            <p class="subscription-membership-card__description">
+                                                {{ $membership->subscription_page_membership_description }}</p>
+                                        @endif
                                         @if ($membership->frontend_has_discount)
                                             <div class="subscription-card__discount">
                                                 <span
-                                                    class="subscription-card__discount-badge">{{ $membership->frontend_discount_label }}</span>
+                                                    class="subscription-card__discount-badge">{{ $membership->subscription_page_discount_label }}</span>
                                                 <del dir="ltr">{{ $membership->frontend_currency }} {{ $membership->frontend_price }}</del>
                                             </div>
                                         @endif
                                         <div class="subscription-card__price" dir="ltr">{{ $membership->frontend_currency }} {{ $membership->frontend_has_discount ? $membership->frontend_discounted_price : $membership->frontend_price }}</div>
-                                        <p class="subscription-card__duration">{{ $membership->frontend_duration }} کی مدت</p>
+                                        <p class="subscription-card__duration">Duration: {{ $membership->subscription_page_duration }}</p>
 
                                         @if ($membershipTypes->isNotEmpty())
                                             <div class="subscription-membership-card__divider"></div>
-                                            <h3>شامل ماڈیولز</h3>
+                                            <h3>Included Modules</h3>
                                             <ul
                                                 class="subscription-membership-card__features subscription-membership-modules">
                                                 @foreach ($membershipTypes as $type)
@@ -167,8 +169,7 @@
                                                         class="subscription-membership-module-row {{ $isIncluded ? 'is-included' : 'is-excluded' }}">
                                                         <i class="subscription-membership-module-row__status fa-solid {{ $isIncluded ? 'fa-circle-check' : 'fa-circle-xmark' }}"
                                                             aria-hidden="true"></i>
-                                                        <span
-                                                            class="subscription-membership-module-row__label">{{ $type->frontend_membership_label }}</span>
+                                                        <span class="subscription-membership-module-row__label" dir="auto">{{ $type->name }}</span>
                                                         <i class="subscription-membership-module-row__icon fa-solid {{ $type->frontend_membership_icon }}"
                                                             aria-hidden="true"></i>
                                                     </li>
@@ -179,7 +180,7 @@
                                         @auth('web')
                                             @if ($membership->frontend_purchase_allowed)
                                                 <a class="subscription-card__action" href="{{ route('front.subscriptions.checkout', $membership) }}">
-                                                    {{ $membership->frontend_purchase_label }} <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                                                    {{ $membership->frontend_purchase_label }} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                                                 </a>
                                             @else
                                                 <button class="subscription-card__action" type="button" disabled aria-disabled="true">
@@ -192,7 +193,7 @@
                                         @else
                                             <button class="subscription-card__action" type="button" data-subscription-guest-cta
                                                 data-product-id="{{ $membership->getKey() }}" data-intent-url="{{ route('front.subscriptions.intent', $membership) }}">
-                                                ابھی سبسکرائب کریں <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                                                Subscribe Now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                                             </button>
                                         @endauth
                                     </article>
@@ -201,7 +202,7 @@
                         </div>
                     @else
                         <div class="subscription-empty"><i class="fa-solid fa-users" aria-hidden="true"></i>
-                            <p>فی الحال کوئی فعال رکنیت موجود نہیں ہے۔</p>
+                            <p>No memberships are available.</p>
                         </div>
                     @endif
                 </section>

@@ -47,7 +47,8 @@
 }
 
 .admin-current-image {
-    max-width: 18rem;
+    max-width: min(18rem, 100%);
+    height: auto;
     max-height: 10rem;
     border: 1px solid $admin-border;
     border-radius: 0.55rem;

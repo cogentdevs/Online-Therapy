@@ -1,0 +1,108 @@
+@use 'colors' as *;
+
+// Shared frontend action palette. Semantic controls (danger, icon-only and disabled)
+// retain their own component styling.
+body.front-body {
+    .btn-primary,
+    .front-taza-button,
+    .front-slider-content__button,
+    .front-editorial-main__button,
+    .front-weekly-card__button,
+    .front-home-login-card__button,
+    .front-home-promo__button,
+    .front-auth-submit,
+    .front-contact__submit,
+    .front-advertise__submit,
+    .front-ask-question__submit,
+    .faq-primary-button,
+    .newsletter-unsubscribe-card__home,
+    .subscription-card__action,
+    .subscription-checkout-summary__action,
+    .front-account-image-picker {
+        background: $front-primary;
+        border-color: $front-primary;
+        color: $front-button-text;
+    }
+
+    .btn-primary:hover,
+    .btn-primary:focus-visible,
+    .front-taza-button:hover,
+    .front-taza-button:focus-visible,
+    .front-slider-content__button:hover,
+    .front-slider-content__button:focus-visible,
+    .front-editorial-main__button:hover,
+    .front-editorial-main__button:focus-visible,
+    .front-weekly-card__button:hover,
+    .front-weekly-card__button:focus-visible,
+    .front-home-login-card__button:hover,
+    .front-home-login-card__button:focus-visible,
+    .front-home-promo__button:hover,
+    .front-home-promo__button:focus-visible,
+    .front-auth-submit:hover,
+    .front-auth-submit:focus-visible,
+    .front-contact__submit:hover,
+    .front-contact__submit:focus-visible,
+    .front-advertise__submit:hover,
+    .front-advertise__submit:focus-visible,
+    .front-ask-question__submit:hover,
+    .front-ask-question__submit:focus-visible,
+    .faq-primary-button:hover,
+    .faq-primary-button:focus-visible,
+    .newsletter-unsubscribe-card__home:hover,
+    .newsletter-unsubscribe-card__home:focus-visible,
+    .subscription-card__action:hover,
+    .subscription-card__action:focus-visible,
+    .subscription-checkout-summary__action:hover,
+    .subscription-checkout-summary__action:focus-visible,
+    .front-account-image-picker:hover,
+    .front-account-image-picker:focus-visible {
+        background: $front-primary-hover;
+        border-color: $front-primary-hover;
+        color: $front-button-text;
+    }
+
+    .btn-primary:active,
+    .front-taza-button:active,
+    .front-slider-content__button:active,
+    .front-editorial-main__button:active,
+    .front-weekly-card__button:active,
+    .front-home-login-card__button:active,
+    .front-home-promo__button:active,
+    .front-auth-submit:active,
+    .front-contact__submit:active,
+    .front-advertise__submit:active,
+    .front-ask-question__submit:active,
+    .faq-primary-button:active,
+    .newsletter-unsubscribe-card__home:active,
+    .subscription-card__action:active,
+    .subscription-checkout-summary__action:active,
+    .front-account-image-picker:active {
+        background: $front-primary-hover;
+        border-color: $front-primary-hover;
+        color: $front-button-text;
+    }
+
+    .btn-primary:disabled,
+    .subscription-card__action:disabled,
+    .subscription-checkout-summary__action:disabled,
+    .front-auth-submit:disabled,
+    .front-contact__submit:disabled,
+    .front-newsletter__button:disabled {
+        background: $front-primary;
+        border-color: $front-primary;
+        color: $front-button-text;
+        cursor: not-allowed;
+        opacity: .48;
+    }
+    .btn-outline-primary {
+        border-color: $front-primary;
+        color: $front-primary;
+    }
+
+    .btn-outline-primary:hover,
+    .btn-outline-primary:focus-visible {
+        background: $front-primary;
+        border-color: $front-primary;
+        color: $front-button-text;
+    }
+}

@@ -12,17 +12,12 @@ use Illuminate\Validation\ValidationException;
 
 class LoginUserRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
      * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
@@ -39,11 +34,11 @@ class LoginUserRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.required' => 'براہ کرم اپنی ای میل درج کریں۔',
-            'email.email' => 'براہ کرم درست ای میل درج کریں۔',
-            'password.required' => 'براہ کرم اپنا پاس ورڈ درج کریں۔',
-            'password.string' => 'پاس ورڈ درست نہیں ہے۔',
-            'remember.boolean' => 'مجھے یاد رکھیں کا انتخاب درست نہیں ہے۔',
+            'email.required' => 'Email address is required.',
+            'email.email' => 'Please enter a valid email address.',
+            'password.required' => 'Password is required.',
+            'password.string' => 'Password must be valid text.',
+            'remember.boolean' => 'The Remember Me selection is invalid.',
         ];
     }
 
@@ -52,7 +47,7 @@ class LoginUserRequest extends FormRequest
         $key = $this->throttleKey();
         if (RateLimiter::tooManyAttempts($key, 5)) {
             throw ValidationException::withMessages([
-                'email' => 'بہت زیادہ کوششیں ہو چکی ہیں۔ براہ کرم '.RateLimiter::availableIn($key).' سیکنڈ بعد دوبارہ کوشش کریں۔',
+                'email' => 'Too many attempts. Please try again in '.RateLimiter::availableIn($key).' seconds.',
             ]);
         }
 
@@ -67,8 +62,8 @@ class LoginUserRequest extends FormRequest
         if (! $isFrontendUser || $inactive) {
             throw ValidationException::withMessages([
                 'email' => $inactive
-                    ? 'آپ کا اکاؤنٹ ابھی ایکٹیویٹ نہیں ہوا۔ براہ کرم اپنے ای میل میں موجود ایکٹیویشن لنک استعمال کریں۔'
-                    : 'ای میل یا پاس ورڈ درست نہیں ہے۔',
+                    ? 'Your account has not been activated yet. Please use the activation link in your email.'
+                    : 'Invalid email or password.',
             ]);
         }
 

@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\FAQController;
 use App\Http\Controllers\Admin\GeneralSettingController;
 use App\Http\Controllers\Admin\HomeArticleController;
 use App\Http\Controllers\Admin\HomeCardController;
+use App\Http\Controllers\Admin\HomeHeroController;
 use App\Http\Controllers\Admin\HomePageSectionHeadingController;
 use App\Http\Controllers\Admin\HomeSectionController;
 use App\Http\Controllers\Admin\InfoPageController;
@@ -39,9 +40,12 @@ use App\Http\Controllers\Admin\SubscriptionNotificationSettingController;
 use App\Http\Controllers\Admin\SubscriptionPlanController;
 use App\Http\Controllers\Admin\TagsController;
 use App\Http\Controllers\Admin\TazaShumaraController;
+use App\Http\Controllers\Admin\ThriveFrameworkController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\UserSubscriptionController;
 use App\Http\Controllers\Admin\VideoController;
+use App\Http\Controllers\Admin\WhoIHelpController;
+use App\Http\Controllers\Admin\WorkTogetherController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\Frontend\AccountAdvertisingRequestController;
 use App\Http\Controllers\Frontend\AccountAskQuestionController;
@@ -410,6 +414,64 @@ Route::prefix('admin')
         Route::put('/home-headings', [HomePageSectionHeadingController::class, 'update'])
             ->middleware('permission:home-headings.edit')
             ->name('home-headings.update');
+
+        // Who I Help routes
+        Route::get('/who-i-help', [WhoIHelpController::class, 'index'])
+            ->middleware('permission:who-i-help.view')
+            ->name('who-i-help.index');
+        Route::get('/who-i-help/create', [WhoIHelpController::class, 'create'])
+            ->middleware('permission:who-i-help.create')
+            ->name('who-i-help.create');
+        Route::post('/who-i-help', [WhoIHelpController::class, 'store'])
+            ->middleware('permission:who-i-help.create')
+            ->name('who-i-help.store');
+        Route::get('/who-i-help/{id}', [WhoIHelpController::class, 'show'])
+            ->whereNumber('id')
+            ->middleware('permission:who-i-help.view')
+            ->name('who-i-help.show');
+        Route::get('/who-i-help/{id}/edit', [WhoIHelpController::class, 'edit'])
+            ->whereNumber('id')
+            ->middleware('permission:who-i-help.edit')
+            ->name('who-i-help.edit');
+        Route::put('/who-i-help/{id}', [WhoIHelpController::class, 'update'])
+            ->whereNumber('id')
+            ->middleware('permission:who-i-help.edit')
+            ->name('who-i-help.update');
+        Route::delete('/who-i-help/{id}', [WhoIHelpController::class, 'destroy'])
+            ->whereNumber('id')
+            ->middleware('permission:who-i-help.delete')
+            ->name('who-i-help.destroy');
+
+        // Home Hero routes
+        Route::get('/home-hero', [HomeHeroController::class, 'index'])->middleware('permission:home-hero.view')->name('home-hero.index');
+        Route::get('/home-hero/create', [HomeHeroController::class, 'create'])->middleware('permission:home-hero.create')->name('home-hero.create');
+        Route::post('/home-hero', [HomeHeroController::class, 'store'])->middleware('permission:home-hero.create')->name('home-hero.store');
+        Route::get('/home-hero/{id}', [HomeHeroController::class, 'show'])->whereNumber('id')->middleware('permission:home-hero.view')->name('home-hero.show');
+        Route::get('/home-hero/{id}/edit', [HomeHeroController::class, 'edit'])->whereNumber('id')->middleware('permission:home-hero.edit')->name('home-hero.edit');
+        Route::put('/home-hero/{id}', [HomeHeroController::class, 'update'])->whereNumber('id')->middleware('permission:home-hero.edit')->name('home-hero.update');
+        Route::delete('/home-hero/{id}', [HomeHeroController::class, 'destroy'])->whereNumber('id')->middleware('permission:home-hero.delete')->name('home-hero.destroy');
+
+        // How We Can Work Together routes
+        Route::get('/work-together', [WorkTogetherController::class, 'index'])->middleware('permission:work-together.view')->name('work-together.index');
+        Route::get('/work-together/create', [WorkTogetherController::class, 'create'])->middleware('permission:work-together.create')->name('work-together.create');
+        Route::post('/work-together', [WorkTogetherController::class, 'store'])->middleware('permission:work-together.create')->name('work-together.store');
+        Route::get('/work-together/homepage-layout-settings', [WorkTogetherController::class, 'homepageLayoutSettings'])->middleware('permission:work-together.view')->name('work-together.homepage-layout-settings');
+        Route::put('/work-together/homepage-layout-settings', [WorkTogetherController::class, 'updateHomepageLayoutSettings'])->middleware('permission:work-together.edit')->name('work-together.homepage-layout-settings.update');
+        Route::get('/work-together/{id}', [WorkTogetherController::class, 'show'])->whereNumber('id')->middleware('permission:work-together.view')->name('work-together.show');
+        Route::get('/work-together/{id}/edit', [WorkTogetherController::class, 'edit'])->whereNumber('id')->middleware('permission:work-together.edit')->name('work-together.edit');
+        Route::put('/work-together/{id}', [WorkTogetherController::class, 'update'])->whereNumber('id')->middleware('permission:work-together.edit')->name('work-together.update');
+        Route::delete('/work-together/{id}', [WorkTogetherController::class, 'destroy'])->whereNumber('id')->middleware('permission:work-together.delete')->name('work-together.destroy');
+
+        // THRIVE Framework routes
+        Route::get('/thrive-framework/homepage-layout-settings', [ThriveFrameworkController::class, 'homepageLayoutSettings'])->middleware('permission:thrive-framework.edit')->name('thrive-framework.homepage-layout-settings');
+        Route::put('/thrive-framework/homepage-layout-settings', [ThriveFrameworkController::class, 'updateHomepageLayoutSettings'])->middleware('permission:thrive-framework.edit')->name('thrive-framework.homepage-layout-settings.update');
+        Route::get('/thrive-framework', [ThriveFrameworkController::class, 'index'])->middleware('permission:thrive-framework.view')->name('thrive-framework.index');
+        Route::get('/thrive-framework/create', [ThriveFrameworkController::class, 'create'])->middleware('permission:thrive-framework.create')->name('thrive-framework.create');
+        Route::post('/thrive-framework', [ThriveFrameworkController::class, 'store'])->middleware('permission:thrive-framework.create')->name('thrive-framework.store');
+        Route::get('/thrive-framework/{id}', [ThriveFrameworkController::class, 'show'])->whereNumber('id')->middleware('permission:thrive-framework.view')->name('thrive-framework.show');
+        Route::get('/thrive-framework/{id}/edit', [ThriveFrameworkController::class, 'edit'])->whereNumber('id')->middleware('permission:thrive-framework.edit')->name('thrive-framework.edit');
+        Route::put('/thrive-framework/{id}', [ThriveFrameworkController::class, 'update'])->whereNumber('id')->middleware('permission:thrive-framework.edit')->name('thrive-framework.update');
+        Route::delete('/thrive-framework/{id}', [ThriveFrameworkController::class, 'destroy'])->whereNumber('id')->middleware('permission:thrive-framework.delete')->name('thrive-framework.destroy');
 
         // home article routes
         Route::get('/home-article', [HomeArticleController::class, 'index'])

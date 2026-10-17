@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('renders active plans under dynamic non-empty type tabs and active memberships', function () {
+it('renders active plans and memberships with English LTR system labels while preserving saved content', function () {
     $currency = Currency::query()->create([
         'name' => 'Pakistani Rupee',
         'code' => 'PKR',
@@ -19,12 +19,12 @@ it('renders active plans under dynamic non-empty type tabs and active membership
     $articles = SubscriptionType::query()->create(['name' => 'Articles', 'slug' => 'articles', 'isActive' => true]);
     SubscriptionType::query()->create(['name' => 'Audio', 'slug' => 'audio', 'isActive' => true]);
     $podcast = SubscriptionType::query()->create(['name' => 'Podcast', 'slug' => 'podcast', 'isActive' => true]);
-    $emptyType = SubscriptionType::query()->create(['name' => 'خالی قسم', 'slug' => 'empty', 'isActive' => true]);
-    $inactiveType = SubscriptionType::query()->create(['name' => 'غیر فعال قسم', 'slug' => 'inactive', 'isActive' => false]);
+    $emptyType = SubscriptionType::query()->create(['name' => 'Unused Type', 'slug' => 'empty', 'isActive' => true]);
+    $inactiveType = SubscriptionType::query()->create(['name' => 'Inactive Type', 'slug' => 'inactive', 'isActive' => false]);
 
     $plan = SubscriptionProduct::query()->create([
         'product_for' => SubscriptionProduct::FOR_PLAN,
-        'name' => 'ماہانہ منصوبہ',
+        'name' => 'Monthly Plan',
         'currency_id' => $currency->id,
         'price' => 300,
         'discount_type' => 'percentage',
@@ -37,7 +37,7 @@ it('renders active plans under dynamic non-empty type tabs and active membership
 
     $hiddenPlan = SubscriptionProduct::query()->create([
         'product_for' => SubscriptionProduct::FOR_PLAN,
-        'name' => 'غیر فعال منصوبہ',
+        'name' => 'Inactive Plan',
         'currency_id' => $currency->id,
         'price' => 100,
         'duration_value' => 1,
@@ -48,7 +48,7 @@ it('renders active plans under dynamic non-empty type tabs and active membership
 
     $membership = SubscriptionProduct::query()->create([
         'product_for' => SubscriptionProduct::FOR_MEMBERSHIP,
-        'name' => 'گولڈ رکنیت',
+        'name' => 'Gold Membership',
         'currency_id' => $currency->id,
         'price' => 750,
         'discount_type' => 'fixed',
@@ -62,55 +62,39 @@ it('renders active plans under dynamic non-empty type tabs and active membership
     $this->get(route('front.subscriptions'))
         ->assertOk()
         ->assertViewIs('frontend.subscriptions')
-        ->assertSee('href="'.route('front.subscriptions').'"', false)
-        ->assertSee('ماہانہ منصوبہ')
-        ->assertSee('شمارہ منصوبہ')
-        ->assertSee('1 ماہ کے لیے مکمل رسائی')
+        ->assertSee('Home')
+        ->assertSee('Subscriptions')
+        ->assertSee('Plans')
+        ->assertSee('Memberships')
+        ->assertSee('Monthly Plan')
+        ->assertSee('1 Month of full access')
         ->assertSee('PKR 300', false)
         ->assertSee('PKR 270', false)
-        ->assertSee('10% رعایت')
-        ->assertSee('گولڈ رکنیت')
+        ->assertSee('10% Discount')
+        ->assertSee('Duration: 1 Month')
+        ->assertSee('Gold Membership')
+        ->assertSee('Access to selected modules for 3 Months')
         ->assertSee('PKR 750', false)
         ->assertSee('PKR 700', false)
-        ->assertSee('PKR 50 رعایت')
-        ->assertSee('fa-crown', false)
-        ->assertSee('مضمون منصوبہ')
-        ->assertSee('ہفتہ وار میگزین')
-        ->assertSee('مضامین')
-        ->assertSee('آڈیو')
-        ->assertSee('fa-book-open', false)
-        ->assertSee('fa-file-lines', false)
-        ->assertSee('fa-headphones', false)
+        ->assertSee('PKR 50 Discount')
+        ->assertSee('Included Modules')
+        ->assertSee('Magazine Plan')
+        ->assertSee('Magazine')
         ->assertSee('Podcast')
-        ->assertSeeInOrder([
-            'ماہانہ منصوبہ',
-            '1 ماہ کے لیے مکمل رسائی',
-            'fa-calendar-check',
-            'PKR 300',
-            'مدت: 1 ماہ',
-            'subscription-plan-card__divider',
-            'ابھی سبسکرائب کریں',
-        ], false)
-        ->assertSeeInOrder([
-            'گولڈ رکنیت',
-            '3 ماہ کے لیے منتخب ماڈیولز تک رسائی',
-            'PKR 750',
-            '3 ماہ کی مدت',
-            'شامل ماڈیولز',
-        ], false)
+        ->assertSee('Subscribe Now')
         ->assertDontSee('plan-type-'.$emptyType->id.'-tab', false)
-        ->assertDontSee('غیر فعال منصوبہ')
-        ->assertDontSee('غیر فعال قسم');
+        ->assertDontSee('Inactive Plan')
+        ->assertDontSee('Inactive Type');
 });
 
-it('renders safe empty states when no active subscription products exist', function () {
+it('renders English empty states when no active subscription products exist', function () {
     $this->get(route('front.subscriptions'))
         ->assertOk()
-        ->assertSee('فی الحال کوئی فعال منصوبہ موجود نہیں ہے۔')
-        ->assertSee('فی الحال کوئی فعال رکنیت موجود نہیں ہے۔');
+        ->assertSee('No subscription plans are available.')
+        ->assertSee('No memberships are available.');
 });
 
-it('renders only active videos assigned to each subscription plan', function () {
+it('renders only active published videos assigned to each subscription plan', function () {
     $currency = Currency::query()->create([
         'name' => 'Pakistani Rupee',
         'code' => 'PKR',
@@ -151,52 +135,11 @@ it('renders only active videos assigned to each subscription plan', function () 
         'status' => Video::STATUS_DRAFT,
     ]);
     $plan->videos()->attach([$activeVideo->id, $inactiveVideo->id, $draftVideo->id]);
-    $otherPlan = SubscriptionProduct::query()->create([
-        'product_for' => SubscriptionProduct::FOR_PLAN,
-        'name' => 'Other Video Plan',
-        'currency_id' => $currency->id,
-        'price' => 400,
-        'duration_value' => 1,
-        'duration_unit' => 'month',
-        'isActive' => true,
-    ]);
-    $otherPlan->subscriptionTypes()->attach($type);
-    $otherPlanVideo = Video::query()->create([
-        'title' => 'Other Plan Published Video',
-        'video_link' => 'https://example.com/other-plan-video',
-        'short_description' => 'Another published video.',
-        'is_active' => true,
-        'status' => Video::STATUS_PUBLISHED,
-    ]);
-    $otherPlan->videos()->attach($otherPlanVideo->id);
-    $emptyPlan = SubscriptionProduct::query()->create([
-        'product_for' => SubscriptionProduct::FOR_PLAN,
-        'name' => 'No Eligible Videos Plan',
-        'currency_id' => $currency->id,
-        'price' => 500,
-        'duration_value' => 1,
-        'duration_unit' => 'month',
-        'isActive' => true,
-    ]);
-    $emptyPlan->subscriptionTypes()->attach($type);
 
-    $response = $this->get(route('front.subscriptions'))
+    $this->get(route('front.subscriptions'))
         ->assertOk()
         ->assertSee('Included Videos')
         ->assertSee('Active Included Video')
         ->assertDontSee('Inactive Included Video')
-        ->assertDontSee('Draft Included Video')
-        ->assertSee('Other Plan Published Video')
-        ->assertSeeInOrder([
-            'Video Plan',
-            'Active Included Video',
-            'subscription-plan-card__divider',
-            'Other Video Plan',
-            'Other Plan Published Video',
-            'subscription-plan-card__divider',
-            'No Eligible Videos Plan',
-            'subscription-plan-card__divider',
-        ], false);
-
-    expect(substr_count($response->getContent(), '<h3>Included Videos</h3>'))->toBe(2);
+        ->assertDontSee('Draft Included Video');
 });

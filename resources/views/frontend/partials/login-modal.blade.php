@@ -2,15 +2,15 @@
     aria-labelledby="subscription-login-modal-title" aria-hidden="true" data-subscription-login-modal
     data-subscription-clear-intent-url="{{ route('front.subscriptions.intent.clear') }}"
     data-paid-content-clear-intent-url="{{ route('front.paid-content.intent.clear') }}"
-    data-auto-open="{{ session('show_front_login_modal') ? 'true' : 'false' }}">
+    data-auto-open="{{ session('show_front_login_modal') ? 'true' : 'false' }}" dir="ltr">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <div>
-                    <h2 class="modal-title" id="subscription-login-modal-title">لاگ اِن کریں</h2>
-                    <p>سبسکرپشن جاری رکھنے کے لیے اپنے اکاؤنٹ میں لاگ اِن کریں۔</p>
+                    <h2 class="modal-title" id="subscription-login-modal-title">Log In</h2>
+                    <p>Log in to your account to continue with your subscription.</p>
                 </div>
-                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="بند کریں"></button>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 @if (session('front_login_modal_message'))
@@ -18,26 +18,26 @@
                 @endif
                 <div class="alert alert-danger d-none" role="alert" data-subscription-login-error></div>
                 <form class="front-auth-form subscription-login-form" method="post" action="{{ route('front.login.store') }}"
-                    data-subscription-login-form>
+                    data-subscription-login-form novalidate>
                     @csrf
                     <div class="front-auth-field">
-                        <label for="subscription-login-email">ای میل</label>
+                        <label for="subscription-login-email">Email Address</label>
                         <div class="front-auth-control">
                             <input id="subscription-login-email" name="email" type="email" autocomplete="email"
-                                inputmode="email" placeholder="اپنی ای میل درج کریں" required dir="ltr">
+                                inputmode="email" placeholder="Enter your email address" required dir="ltr">
                             <i class="fa-regular fa-envelope front-auth-field__icon" aria-hidden="true"></i>
                         </div>
                         <div class="subscription-login-form__field-error" data-error-for="email"></div>
                     </div>
                     <div class="front-auth-field">
-                        <label for="subscription-login-password">پاس ورڈ</label>
+                        <label for="subscription-login-password">Password</label>
                         <div class="front-auth-control front-auth-control--password">
                             <input id="subscription-login-password" name="password" type="password"
-                                autocomplete="current-password" placeholder="اپنا پاس ورڈ درج کریں" required>
+                                autocomplete="current-password" placeholder="Enter your password" required dir="ltr">
                             <i class="fa-solid fa-lock front-auth-field__icon" aria-hidden="true"></i>
                             <button class="front-auth-password-toggle" type="button" data-front-password-toggle
-                                aria-controls="subscription-login-password" aria-pressed="false" aria-label="پاس ورڈ دکھائیں"
-                                data-show-label="پاس ورڈ دکھائیں" data-hide-label="پاس ورڈ چھپائیں">
+                                aria-controls="subscription-login-password" aria-pressed="false" aria-label="Show password"
+                                data-show-label="Show password" data-hide-label="Hide password">
                                 <i class="fa-regular fa-eye" aria-hidden="true"></i>
                             </button>
                         </div>
@@ -46,14 +46,14 @@
                     <div class="front-auth-options">
                         <label class="front-auth-remember" for="subscription-login-remember">
                             <input id="subscription-login-remember" name="remember" type="checkbox" value="1">
-                            <span>مجھے یاد رکھیں</span>
+                            <span>Remember Me</span>
                         </label>
-                        <a class="front-auth-forgot" href="{{ route('front.password.request') }}">پاس ورڈ بھول گئے؟</a>
+                        <a class="front-auth-forgot" href="{{ route('front.password.request') }}">Forgot Password?</a>
                     </div>
                     <button class="front-auth-submit" type="submit" data-subscription-login-submit>
-                        لاگ اِن کریں <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                        Log In <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                     </button>
-                    <p class="front-auth-switch">اکاؤنٹ موجود نہیں؟ <a href="{{ route('front.register') }}">رجسٹر کریں</a></p>
+                    <p class="front-auth-switch">Don't have an account? <a href="{{ route('front.register') }}">Register Now</a></p>
                 </form>
             </div>
         </div>

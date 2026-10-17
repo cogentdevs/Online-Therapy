@@ -11,7 +11,9 @@ test('frontend register page renders its prepared fields and navigation', functi
     $response = $this->get(route('front.register'));
 
     $response->assertSuccessful()
-        ->assertSee('رجسٹریشن')
+        ->assertSee('Registration')
+        ->assertSee('Create Your Account')
+        ->assertSee('aria-label="Breadcrumb"', false)
         ->assertSee('name="first_name"', false)
         ->assertSee('name="last_name"', false)
         ->assertSee('name="email"', false)
@@ -30,12 +32,12 @@ test('frontend login page renders prepared controls and cross links', function (
     $response = $this->get(route('front.login'));
 
     $response->assertSuccessful()
-        ->assertSee('لاگ ان کریں')
+        ->assertSee('Log In')
         ->assertSee('name="email"', false)
         ->assertSee('name="password"', false)
         ->assertSee('name="remember"', false)
         ->assertSee('aria-controls="login-password"', false)
-        ->assertSee('پاس ورڈ بھول گئے؟')
+        ->assertSee('Forgot password?')
         ->assertSee(route('front.register'), false);
 });
 

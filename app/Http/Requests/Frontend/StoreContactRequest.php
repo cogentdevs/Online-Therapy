@@ -36,14 +36,14 @@ class StoreContactRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'نام درج کرنا ضروری ہے۔',
-            'phone.required' => 'فون نمبر درج کرنا ضروری ہے۔',
-            'email.required' => 'ای میل درج کرنا ضروری ہے۔',
-            'email.email' => 'درست ای میل درج کریں۔',
-            'subject.required' => 'موضوع درج کرنا ضروری ہے۔',
-            'message.required' => 'پیغام درج کرنا ضروری ہے۔',
-            'g-recaptcha-response.required' => 'براہ کرم reCAPTCHA مکمل کریں۔',
-            'g-recaptcha-response.captcha' => 'reCAPTCHA کی تصدیق نہیں ہو سکی، دوبارہ کوشش کریں۔',
+            'name.required' => 'Please enter your name.',
+            'phone.required' => 'Please enter your phone number.',
+            'email.required' => 'Please enter your email address.',
+            'email.email' => 'Please enter a valid email address.',
+            'subject.required' => 'Please enter a subject.',
+            'message.required' => 'Please enter your message.',
+            'g-recaptcha-response.required' => 'Please complete the reCAPTCHA.',
+            'g-recaptcha-response.captcha' => 'reCAPTCHA verification failed. Please try again.',
         ];
     }
 }

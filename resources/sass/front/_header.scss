@@ -63,7 +63,7 @@
 // Front Header - Main Brand / Ad / Actions Row
 // ========================================
 .front-brand-row {
-    background: $front-surface;
+    background: $front-light;
     border-bottom: 1px solid $front-border;
 }
 
@@ -135,22 +135,23 @@
 }
 
 .front-subscribe {
-    background: $front-accent;
-    border: 1px solid $front-accent;
+    background: $front-primary;
+    border: 1px solid $front-primary;
     border-radius: $front-radius-sm;
-    color: $front-white;
+    color: $front-button-text;
     font-family: var(--front-font-ui);
     font-weight: 700;
     padding: .65rem 1.05rem;
     white-space: nowrap;
 }
 
-.front-subscribe:hover { background: $front-accent-hover; border-color: $front-accent-hover; color: $front-white; }
-.front-subscribe:active { background: $front-accent-active; border-color: $front-accent-active; }
+.front-subscribe:hover,
+.front-subscribe:focus-visible { background: $front-primary-hover; border-color: $front-primary-hover; color: $front-button-text; }
+.front-subscribe:active { background: $front-primary-hover; border-color: $front-primary-hover; }
 
 .front-profile-button {
     align-items: center;
-    background: $front-surface;
+    background: $front-light;
     border: 1px solid $front-border;
     border-radius: 50%;
     color: $front-dark;
@@ -186,7 +187,7 @@
 // Front Header - Main Navigation
 // ========================================
 .front-main-nav {
-    background: $front-surface;
+    background: $front-light;
     border-bottom: 3px solid $front-primary;
     box-shadow: $front-shadow-sm;
 }
@@ -205,15 +206,17 @@
     padding: .58rem 1rem !important;
 }
 
-.front-main-nav .nav-link:hover { color: $front-primary; }
+.front-main-nav .nav-link:hover,
+.front-main-nav .nav-link:focus-visible { background: $front-primary-soft; color: $front-primary; }
 
 .front-main-nav .nav-link.active {
-    background: $front-accent;
-    color: $front-white;
+    background: $front-primary-hover;
+    color: $front-button-text;
 }
 
-.front-main-nav .nav-link.active:hover { background: $front-accent-hover; color: $front-white; }
-.front-main-nav .nav-link.active:active { background: $front-accent-active; }
+.front-main-nav .nav-link.active:hover,
+.front-main-nav .nav-link.active:focus-visible { background: $front-primary-hover; color: $front-button-text; }
+.front-main-nav .nav-link.active:active { background: $front-primary-hover; }
 .front-nav-parent { align-items: center; display: flex; }
 
 .front-nav-parent-link::after {
@@ -230,6 +233,7 @@
 // Front Header - Dropdowns
 // ========================================
 .front-main-nav .dropdown-menu {
+    background: $front-surface;
     border: 1px solid $front-border;
     border-radius: $front-radius-sm;
     box-shadow: $front-shadow;
@@ -262,3 +266,6 @@ html[dir='ltr'] .front-main-nav .dropdown-menu { inset-inline-start: 0; inset-in
         display: block;
     }
 }
+
+.front-main-nav .navbar-toggler { border-color: rgba($front-primary, .55); }
+.front-main-nav .navbar-toggler-icon { filter: brightness(0) saturate(100%) invert(17%) sepia(21%) saturate(1645%) hue-rotate(128deg) brightness(92%) contrast(91%); }

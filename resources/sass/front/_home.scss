@@ -2,6 +2,183 @@
 @use 'variables' as *;
 @use 'fonts' as *;
 
+// Managed Home Hero. Legacy slider styles below remain available for reactivation.
+section.front-managed-hero {
+    background: $front-light;
+    color: $front-primary;
+    padding-block: clamp(2.5rem, 5vw, 5rem);
+    text-align: left;
+
+    .front-managed-hero__container {
+        max-inline-size: 1200px;
+        padding-inline: clamp(1.25rem, 3.5vw, 3rem);
+    }
+
+    .front-managed-hero__grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        align-items: stretch;
+        gap: clamp(2rem, 6vw, 7rem);
+        padding-inline-end: 1rem;
+    }
+
+    .front-managed-hero__grid--text-only { grid-template-columns: minmax(0, 1fr); }
+
+    .front-managed-hero__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        min-inline-size: 0;
+        padding-block: 0;
+    }
+
+    .front-managed-hero__eyebrow {
+        color: $front-primary;
+        font-family: var(--front-font-ui);
+        font-size: clamp(.7rem, .9vw, .875rem);
+        font-weight: 500;
+        letter-spacing: .14em;
+        line-height: 1.65;
+        margin: 0 0 1.75rem;
+        overflow-wrap: anywhere;
+        text-transform: uppercase;
+    }
+
+    .front-managed-hero__heading {
+        color: $front-primary;
+        font-family: $font-english-primary;
+        font-size: clamp(3rem, 5.1vw, 5rem);
+        font-weight: 400;
+        letter-spacing: -.035em;
+        line-height: 1.08;
+        margin: 0;
+        max-inline-size: 9.5ch;
+        overflow-wrap: anywhere;
+    }
+
+    .front-managed-hero__highlight { color: #465940; font-style: italic; }
+
+    .front-managed-hero__description {
+        color: $front-dark-soft;
+        font-family: var(--front-font-ui);
+        font-size: clamp(1rem, 1.35vw, 1.25rem);
+        line-height: 1.75;
+        margin: 2.25rem 0 0;
+        max-inline-size: 36rem;
+        overflow-wrap: anywhere;
+        white-space: pre-line;
+    }
+
+    .front-managed-hero__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .875rem;
+        margin-block-start: auto;
+        padding-block-start: 2.5rem;
+    }
+
+    .front-managed-hero__button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: .875rem;
+        border: 1px solid $front-primary;
+        border-radius: 999px;
+        color: $front-primary;
+        font-family: var(--front-font-ui);
+        font-size: 1rem;
+        font-weight: 600;
+        line-height: 1.45;
+        max-inline-size: 100%;
+        min-block-size: 3.5rem;
+        padding: .95rem 1.75rem;
+        text-decoration: none;
+        transition: background-color $front-transition, color $front-transition;
+
+        span { min-inline-size: 0; overflow-wrap: anywhere; }
+        i { flex-shrink: 0; font-size: .9em; }
+        &:focus-visible { outline: 3px solid $front-primary; outline-offset: 4px; }
+    }
+
+    .front-managed-hero__button--primary {
+        background: $front-primary;
+        color: $front-button-text;
+
+        &:hover, &:focus-visible { background: $front-primary-hover; color: $front-button-text; }
+    }
+
+    .front-managed-hero__button--secondary {
+        background: transparent;
+
+        &:hover, &:focus-visible { background: $front-primary-soft; color: $front-primary; }
+    }
+
+    .front-managed-hero__media {
+        position: relative;
+        isolation: isolate;
+        min-block-size: clamp(24rem, 38vw, 37.5rem);
+        min-inline-size: 0;
+
+        &::before {
+            background: $front-gold;
+            border-radius: 2.5rem;
+            content: '';
+            position: absolute;
+            inset: -1rem -1rem 1rem 1rem;
+            z-index: -1;
+        }
+    }
+
+    .front-managed-hero__frame {
+        background: $front-primary-soft;
+        border-radius: 2.5rem;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        position: absolute;
+        inset: 0;
+    }
+
+    .front-managed-hero__image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: block;
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+    .front-managed-hero__frame[data-image-fit='cover'] > img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 30%;
+    }
+
+    .front-managed-hero__image[hidden] { display: none; }
+
+    @media (max-width: 767.98px) {
+        .front-managed-hero__grid { grid-template-columns: minmax(0, 1fr); gap: 2.75rem; padding-inline-end: .75rem; }
+        .front-managed-hero__content { padding-block: 0; }
+        .front-managed-hero__eyebrow { margin-block-end: 1.25rem; }
+        .front-managed-hero__heading { font-size: clamp(2.65rem, 9vw, 4.25rem); max-inline-size: none; }
+        .front-managed-hero__description { margin-block-start: 1.5rem; }
+        .front-managed-hero__actions { margin-block-start: 0; padding-block-start: 1.75rem; }
+        .front-managed-hero__button { font-size: .9rem; padding: .85rem 1.25rem; }
+        .front-managed-hero__media { aspect-ratio: 4 / 5; min-block-size: 0; }
+        .front-managed-hero__frame, .front-managed-hero__media::before { border-radius: 2rem; }
+        .front-managed-hero__media::before { inset: -.75rem -.75rem .75rem .75rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .front-managed-hero__button, .front-managed-hero__image { transition: none; }
+    }
+}
+
 // ========================================
 // Home Hero - Slider & Selected Articles
 // ========================================
@@ -213,10 +390,10 @@
 .front-most-viewed__control { display: none; }
 .front-most-viewed__empty { border: 1px solid $front-border; border-radius: $front-radius; color: $front-muted; margin: 0; padding: 1.25rem; text-align: center; }
 
-.front-audio-newsletter { background: $front-surface; }
+.front-audio-newsletter { background: $front-light; }
 .front-audio-newsletter__container { padding-inline: clamp(.65rem, 1.5vw, 1.5rem); }
 .front-audio-area,
-.front-newsletter { height: 100%; }
+.front-newsletter { background: $front-primary; border: 1px solid $front-primary; border-radius: $front-radius-lg; box-shadow: $front-shadow-sm; color: $front-button-text; overflow: hidden; padding: clamp(1.35rem, 3vw, 2.25rem); position: relative; }
 .front-audio-area__heading { align-items: center; border-bottom: 1px solid $front-border; display: flex; justify-content: space-between; margin-bottom: .65rem; padding-bottom: .4rem; }
 .front-audio-area__heading h2 { color: $front-primary; font-size: 1.35rem; margin: 0; }
 
@@ -237,22 +414,22 @@
 // ========================================
 // Home Newsletter Subscribe
 // ========================================
-.front-newsletter { background: linear-gradient(135deg, $front-primary-hover, $front-primary); border: 1px solid rgba($front-white, .13); border-radius: $front-radius-lg; box-shadow: $front-shadow-sm; color: $front-white; overflow: hidden; padding: clamp(1.35rem, 3vw, 2.25rem); position: relative; }
+.front-newsletter { background: $front-primary; border: 1px solid $front-primary; border-radius: $front-radius-lg; box-shadow: $front-shadow-sm; color: $front-button-text; overflow: hidden; padding: clamp(1.35rem, 3vw, 2.25rem); position: relative; }
 .front-newsletter__content { align-items: center; display: grid; gap: clamp(1.25rem, 4vw, 4rem); grid-template-columns: minmax(0, 1fr) minmax(300px, .85fr); position: relative; z-index: 1; }
 .front-newsletter__intro { direction: ltr; text-align: left; }
-.front-newsletter__eyebrow { align-items: center; color: $front-white-muted; display: inline-flex; font-family: var(--front-font-ui); font-size: .76rem; font-weight: 700; gap: .45rem; letter-spacing: .08em; margin-bottom: .65rem; text-transform: uppercase; }
-.front-newsletter h2 { font-size: clamp(1.65rem, 3vw, 2.35rem); line-height: 1.2; margin-bottom: .55rem; }
-.front-newsletter p { color: $front-white-muted; font-family: var(--front-font-ui); font-size: .98rem; line-height: 1.75; margin: 0; max-width: 36rem; }
-.front-newsletter__form { align-items: center; background: rgba($front-white, .1); border: 1px solid rgba($front-white, .2); border-radius: $front-radius; display: grid; gap: .65rem; grid-template-columns: minmax(0, 1fr) auto; padding: .65rem; }
+.front-newsletter__eyebrow { align-items: center; color: $front-button-text; display: inline-flex; font-family: var(--front-font-ui); font-size: .76rem; font-weight: 700; gap: .45rem; letter-spacing: .08em; margin-bottom: .65rem; text-transform: uppercase; }
+.front-newsletter h2 { color: $front-button-text; font-size: clamp(1.65rem, 3vw, 2.35rem); line-height: 1.2; margin-bottom: .55rem; }
+.front-newsletter p { color: rgba($front-button-text, .82); font-family: var(--front-font-ui); font-size: .98rem; line-height: 1.75; margin: 0; max-width: 36rem; }
+.front-newsletter__form { align-items: center; background: $front-light; border: 1px solid $front-border; border-radius: $front-radius; display: grid; gap: .65rem; grid-template-columns: minmax(0, 1fr) auto; padding: .65rem; }
 .front-newsletter__form .form-control { border: 0; box-shadow: none; min-height: 48px; padding-inline: 1rem; }
 .front-newsletter__feedback,
 .front-newsletter__note { grid-column: 1 / -1; }
-.front-newsletter__button { align-items: center; background: $front-light; border: 1px solid rgba($front-white, .45); border-radius: $front-radius-sm; color: $front-primary; display: inline-flex; gap: .55rem; justify-content: center; min-height: 48px; padding: .65rem 1rem; transition: background-color $front-transition, border-color $front-transition, color $front-transition, transform $front-transition; white-space: nowrap; }
+.front-newsletter__button { align-items: center; background: $front-primary; border: 1px solid $front-primary; border-radius: $front-radius-sm; color: $front-button-text; display: inline-flex; gap: .55rem; justify-content: center; min-height: 48px; padding: .65rem 1rem; transition: background-color $front-transition, border-color $front-transition, color $front-transition, transform $front-transition; white-space: nowrap; }
 .front-newsletter__button:hover,
-.front-newsletter__button:focus-visible { background: $front-white; border-color: $front-white; color: $front-primary-hover; transform: translateY(-1px); }
-.front-newsletter__button:active { background: $front-primary-soft; color: $front-primary; transform: translateY(0); }
-.front-newsletter__note { color: $front-white-muted; font-family: var(--front-font-ui); font-size: .72rem; padding-inline: .25rem; }
-.front-newsletter__visual { bottom: -1.4rem; color: $front-white; font-size: 8rem; opacity: .08; position: absolute; right: 2.5rem; transform: rotate(-12deg); }
+.front-newsletter__button:focus-visible { background: $front-primary-hover; border-color: $front-primary-hover; color: $front-button-text; transform: translateY(-1px); }
+.front-newsletter__button:active { background: $front-primary-hover; color: $front-button-text; transform: translateY(0); }
+.front-newsletter__note { color: $front-muted; font-family: var(--front-font-ui); font-size: .72rem; padding-inline: .25rem; }
+.front-newsletter__visual { bottom: -1.4rem; color: $front-button-text; font-size: 8rem; opacity: .08; position: absolute; right: 2.5rem; transform: rotate(-12deg); }
 
 // ========================================
 // Home Banners + Login Section
@@ -316,3 +493,97 @@
 .front-topic-card__fallback i { font-size: 1.35rem; }
 .front-topic-card:hover { border-color: $front-dark; color: $front-dark; }
 .front-popular-topics__action { display: flex; justify-content: center; margin-top: 1.25rem; }
+
+// ========================================
+// Home Who I Help
+// ========================================
+.front-who-i-help {
+    background: #E2DFCE;
+    padding: clamp(2.5rem, 5vw, 4.5rem) 0 clamp(3rem, 6vw, 5.5rem);
+}
+
+.front-who-i-help__container {
+    max-width: 1080px;
+    padding-inline: clamp(1rem, 3vw, 2rem);
+}
+
+.front-who-i-help__intro {
+    margin: 0 auto clamp(1.5rem, 3vw, 2.35rem);
+    max-width: 780px;
+    text-align: center;
+}
+
+.front-who-i-help__eyebrow {
+    color: #465940;
+    display: block;
+    font-family: var(--front-font-ui);
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    margin-bottom: .75rem;
+    text-transform: uppercase;
+}
+
+.front-who-i-help h2 {
+    color: #173C3A;
+    font-size: clamp(2rem, 4vw, 3.3rem);
+    line-height: 1.16;
+    margin: 0;
+}
+
+.front-who-i-help__description {
+    color: #465940;
+    font-family: var(--front-font-ui);
+    font-size: clamp(1rem, 1.45vw, 1.12rem);
+    line-height: 1.8;
+    margin: 1rem auto 0;
+}
+
+.front-who-i-help__grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.front-who-i-help__card {
+    align-items: flex-start;
+    background: #F2EDDC;
+    border: 1px solid $front-border;
+    border-radius: $front-radius;
+    box-shadow: $front-shadow-sm;
+    color: #173C3A;
+    display: flex;
+    font-family: var(--front-font-ui);
+    font-size: 1rem;
+    gap: .8rem;
+    line-height: 1.65;
+    min-width: 0;
+    padding: 1.1rem 1.2rem;
+}
+
+.front-who-i-help__check {
+    color: #173C3A;
+    flex: 0 0 auto;
+    font-size: 1rem;
+    line-height: 1.65;
+    margin-top: .05rem;
+}
+
+.front-who-i-help__bottom-message {
+    color: #173C3A;
+    font-family: var(--front-font-ui);
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    font-style: italic;
+    line-height: 1.75;
+    margin: clamp(1.75rem, 4vw, 2.75rem) auto 0;
+    max-width: 760px;
+    text-align: center;
+}
+
+@media (max-width: 575.98px) {
+    .front-who-i-help__grid { grid-template-columns: minmax(0, 1fr); }
+    .front-who-i-help__card { padding: 1rem; }
+}

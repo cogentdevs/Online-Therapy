@@ -1,0 +1,159 @@
+@use 'colors' as *;
+@use 'fonts' as *;
+
+.front-work-together {
+    background: #F2EDDC;
+    color: #173C3A;
+    padding-block: clamp(2.5rem, 4vw, 4rem);
+    font-family: var(--front-font-ui);
+    overflow-wrap: anywhere;
+
+    .front-thrive-framework + & {
+        position: relative;
+
+        &::before {
+            content: '';
+            position: absolute;
+            inset-block-start: 0;
+            inset-inline: 0;
+            inline-size: 100%;
+            block-size: 1px;
+            margin-inline: auto;
+            background: rgba(#173C3A, .25);
+        }
+    }
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        gap: 2.75rem;
+        max-inline-size: 1280px;
+        padding-inline: clamp(1.25rem, 3vw, 3rem);
+    }
+
+    &__header, &__bottom {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    &__eyebrow {
+        margin: 0;
+        font-size: .8rem;
+        font-weight: 500;
+        line-height: 1.6;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+    }
+
+    &__heading {
+        margin: 0;
+        color: inherit;
+        font-family: $font-english-primary;
+        font-size: clamp(2rem, 3.6vw, 3.25rem);
+        font-weight: 400;
+        line-height: 1.2;
+    }
+
+    &__description, &__bottom-message {
+        margin: 0;
+        max-inline-size: 46rem;
+        font-size: 1.0625rem;
+        line-height: 1.75;
+        white-space: pre-line;
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(var(--work-columns, 3), minmax(0, 1fr));
+        align-items: stretch;
+        gap: 1.25rem;
+    }
+
+    &__card {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        min-inline-size: 0;
+        padding: clamp(1.25rem, 1.85vw, 1.75rem);
+        border: 1px solid rgba(#173C3A, .2);
+        border-radius: .75rem;
+        background: #F8F5EB;
+    }
+
+    &__identity, &__body {
+        min-inline-size: 0;
+        display: flex;
+        flex-direction: column;
+        gap: .75rem;
+    }
+
+    &__number {
+        font-family: $font-english-primary;
+        font-size: 2.25rem;
+        line-height: 1;
+        color: rgba(#173C3A, .65);
+    }
+
+    &__title {
+        margin: 0;
+        color: inherit;
+        font-family: $font-english-primary;
+        font-size: 1.625rem;
+        font-weight: 400;
+        line-height: 1.25;
+    }
+
+    &__card-description, &__details {
+        margin: 0;
+        font-size: 1rem;
+        line-height: 1.7;
+        white-space: pre-line;
+    }
+
+    &__details { font-size: .9375rem; }
+
+    &__link, &__button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: .75rem;
+        max-inline-size: 100%;
+        color: #173C3A;
+        font-size: .9375rem;
+        font-weight: 600;
+        line-height: 1.5;
+        text-decoration: none;
+
+        span { flex-shrink: 0; }
+        &:hover { color: #173C3A; text-decoration: underline; }
+        &:focus-visible { outline: 2px solid #173C3A; outline-offset: 5px; }
+    }
+
+    &__link { margin-block-start: auto; align-self: flex-start; }
+    &__button { border: 1px solid #173C3A; border-radius: 999px; padding: .85rem 1.75rem; }
+
+    &__card--full {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr) auto;
+        align-items: center;
+
+        .front-work-together__link { margin: 0; align-self: center; }
+    }
+
+    @media (max-width: 1199.98px) {
+        &__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        &__card--full { grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); }
+        &__card--full &__link { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 767.98px) {
+        &__container { gap: 2rem; }
+        &__grid, &__card--full { grid-template-columns: minmax(0, 1fr); }
+        &__title { font-size: 1.5rem; }
+        &__description, &__bottom-message { font-size: 1rem; }
+    }
+}
